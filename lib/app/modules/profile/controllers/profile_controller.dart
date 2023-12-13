@@ -1,23 +1,19 @@
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/routes/app_pages.dart';
+import 'package:teaching_with_purpose/app/services/storage.dart';
 
 class ProfileController extends GetxController {
-  //TODO: Implement ProfileController
+ RxBool isLoding = false.obs;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+
+
+//-----------------------logout-------------------------------
+  logout() async {
+    try {
+      Get.find<GetStorageService>().logout();
+      await Get.offAllNamed(Routes.LOGIN);
+    } catch (e) {
+      e.toString();
+    }
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

@@ -50,10 +50,10 @@ class LoginView extends GetView<LoginController> {
                       hint: StringConstants.passwordText,
                       controller: controller.passwordController,
                       textInputType: TextInputType.emailAddress,
-                      validator: (value) =>
-                          !isValidPassword(value, isRequired: true)
-                              ? 'Please enter a valid  Password'
-                              : null,
+                      // validator: (value) =>
+                      //     !isValidPassword(value, isRequired: true)
+                      //         ? 'Please enter a valid  Password'
+                      //         : null,
                       isObscure: !controller.isPassVisible.value,
                       onChanged: (value) => controller.password.value,
                       suffixIcon: InkWell(

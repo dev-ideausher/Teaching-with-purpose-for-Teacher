@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -13,6 +15,7 @@ class ProfileView extends GetView<ProfileController> {
   const ProfileView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    log('${controller.isLoding.value}');
     return Scaffold(
         appBar: AppBar(
           backgroundColor: context.kGreyBack,
@@ -130,7 +133,7 @@ class ProfileView extends GetView<ProfileController> {
         bottomSheetImg: Lottie.asset('assets/lottiefiles/rating.json'),
         title: 'Enjoying Teaching With Purpose ?',
         text1:
-            'Support us by giving rate and your precious review ! It will take few seconds only.',
+            'Support us by giving rate and your precious review !It will take few seconds only.',
         text2: 'Maybe Later',
       ),
     );
@@ -145,7 +148,10 @@ class ProfileView extends GetView<ProfileController> {
         middleTextStyle: TextStyleUtil.kText14_4(
             fontWeight: FontWeight.w400, color: Get.context!.kLightTextColor),
         cancel: TextButton(onPressed: ()=> Get.back(), child: const Text('No')),
-        confirm: TextButton(onPressed: ()=> Get.back(), child: const Text('Logout'))
+        confirm: TextButton(onPressed: (){
+          log('onTap');
+          controller.logout();
+        }, child: const Text('Logout'))
       );
   }
 }

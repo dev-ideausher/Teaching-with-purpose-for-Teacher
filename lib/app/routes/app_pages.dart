@@ -83,10 +83,7 @@ class AppPages {
     GetPage(
         name: _Paths.BOTTOM_NAV,
         page: () => const BottomNavbarView(),
-        bindings: [
-          BottomNavBinding(),
-
-        ]),
+        binding: BottomNavBinding()),
     GetPage(
       name: _Paths.FORGOT_PASSWORD,
       page: () => const ForgotPasswordView(),

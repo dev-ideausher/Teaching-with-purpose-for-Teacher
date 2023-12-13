@@ -1,9 +1,10 @@
+
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/components/custom_textfield.dart';
-import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/custom_button.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
@@ -43,23 +44,24 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
                 style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
               ),
               16.kheightBox,
-              CustomTextField(
-                hint: 'Select Date and Time',
-                controller: controller.dateAndTineController,
-                suffixIcon: Icon(
-                  Icons.calendar_month_outlined,
-                  color: context.kPrimary,
-                ),
-              ),
-            32.kheightBox,
+              Obx(() => CustomTextField(
+                    hint: 'Select Date and Time',
+                    controller: controller.dateAndTimeController.value,
+                    onTap: () => controller.chooseDate(context),
+                    suffixIcon: Icon(
+                      Icons.calendar_month_outlined,
+                      color: context.kPrimary,
+                    ),
+                  )),
+              32.kheightBox,
               Text(
-                'Date and Time',
+                'Instructions',
                 style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
               ),
               16.kheightBox,
               CustomTextField(
                 hint: 'Enter Instructions',
-                controller: controller.instructionsController,
+                controller: controller.instructionsController.value,
                 minLine: 6,
                 maxLines: 8,
               ),
@@ -71,41 +73,43 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
               16.kheightBox,
               CustomTextField(
                 hint: 'Enter Questions',
-                controller: controller.questionsController,
+                controller: controller.questionsController.value,
                 minLine: 6,
                 maxLines: 8,
               ),
-            24.kheightBox,
+              24.kheightBox,
               Text(
                 'Options',
                 style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
               ),
-            16.kheightBox,
+              16.kheightBox,
               CustomTextField(
                 hint: 'Enter Options1',
-                controller: controller.option1Controller,
+                controller: controller.option1Controller.value,
               ),
-            8.kheightBox,
+              8.kheightBox,
               CustomTextField(
                 hint: 'Enter Options2',
-                controller: controller.option2Controller,
+                controller: controller.option2Controller.value,
               ),
-            8.kheightBox,
+              8.kheightBox,
               CustomTextField(
                 hint: 'Enter Options3',
-                controller: controller.option3Controller,
+                controller: controller.option3Controller.value,
               ),
-            8.kheightBox,
+              8.kheightBox,
               CustomTextField(
                 hint: 'Enter Options4',
-                controller: controller.option4Controller,
+                controller: controller.option4Controller.value,
               ),
-            40.kheightBox,
-            SizedBox(
-              height: 56.kh,
-              width: 343.kw,
-              child: TButton(title: 'Add',onTap:() => Get.toNamed(Routes.LIVE_QUIZZ_SUCESS)),
-            )
+              40.kheightBox,
+              SizedBox(
+                height: 56.kh,
+                width: 343.kw,
+                child: TButton(title: 'Add', onTap: ()async{
+                  await controller.createQuiz();
+                }),
+              )
             ],
           ),
         ),

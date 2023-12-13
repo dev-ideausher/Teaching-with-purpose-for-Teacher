@@ -48,14 +48,14 @@ class ScheduleView extends GetView<ScheduleController> {
                 ],
               ),
               16.kheightBox,
-              Obx(() => SfDateRangePicker(
-                    selectionColor: context.kPrimary,
-                    selectionMode: DateRangePickerSelectionMode.single,
-                    onSelectionChanged:
-                        (DateRangePickerSelectionChangedArgs args) =>
-                            controller.setSelectedDate(args.value),
-                    initialSelectedDate: controller.selectedDate.value,
-                  )),
+              // Obx(() => SfDateRangePicker(
+              //       selectionColor: context.kPrimary,
+              //       selectionMode: DateRangePickerSelectionMode.single,
+              //       onSelectionChanged:
+              //           (DateRangePickerSelectionChangedArgs args) =>
+              //               controller.setSelectedDate(args.value),
+              //       initialSelectedDate: controller.selectedDate.value,
+              //     )),
               32.kheightBox,
               Text(
                 textAlign: TextAlign.center,

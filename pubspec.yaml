@@ -30,6 +30,12 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   syncfusion_flutter_datepicker: ^23.1.42
   dropdown_button2: ^2.3.9
+  firebase_auth: ^4.15.3
+  flutter_facebook_auth: ^6.0.3
+  stacked_firebase_auth: ^2.19.6
+  firebase_core: ^2.24.2
+  connectivity_plus: ^5.0.1
+  intl: ^0.18.1
 
 dev_dependencies: 
   flutter_lints: ^2.0.0
