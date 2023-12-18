@@ -12,4 +12,12 @@ class APIManager {
   static Future<Response> createQuiz({required dynamic body}) async => 
           await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true).post(Endpoints.createQuiz, data: jsonEncode(body)); 
 
+
+
+
+///Get API 
+
+static Future<Response> getAllStudent() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.getStudents);  
+
+static Future<Response> getResults() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.results);  
 }

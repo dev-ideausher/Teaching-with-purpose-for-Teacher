@@ -13,4 +13,10 @@ class Endpoints {
   static const String login = "user/login";
 
   static const String createQuiz = "api/quiz/save";
+
+  static const String getStudents = "user/all-students";
+
+  static const String results = "api/result/get";
+
+  static const String createChapter = "api/chapter/save";
 }

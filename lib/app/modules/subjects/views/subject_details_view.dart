@@ -1,8 +1,9 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
-import 'dart:io' show Platform;
+import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
@@ -13,7 +14,8 @@ class SubjectsDetailsScreen extends GetView<SubjectsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(),
+      appBar: PreferredSize(preferredSize: Size.fromHeight(46.kh),
+       child: CustomAppBar(title: 'Mathematics',isBack: true)),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -30,33 +32,13 @@ class SubjectsDetailsScreen extends GetView<SubjectsController> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {Get.toNamed(Routes.ADD_SUBJECTS);},
         backgroundColor: context.kPrimary,
         child: Icon(Icons.add, color: context.kWhite),
       ),
     );
   }
 
-// appbar widget
-  appBarWidget() {
-    IconData iconData =
-        Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back;
-    return AppBar(
-      centerTitle: true,
-      elevation: 0,
-      backgroundColor: Get.context!.kGreyBack,
-      automaticallyImplyLeading: false,
-      leading: IconButton(
-        onPressed: () => Get.back(),
-        icon: Icon(iconData, color: Get.context!.kPrimary),
-      ),
-      title: Text(
-        'Mathematics',
-        textAlign: TextAlign.center,
-        style: TextStyleUtil.kText20_6(fontWeight: FontWeight.w600),
-      ),
-    );
-  }
 
 // dropdawn widget
 

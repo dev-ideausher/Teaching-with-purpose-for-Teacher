@@ -9,7 +9,8 @@ class CustomAppBar extends StatelessWidget {
   final String title;
   bool isBack;
   List<Widget>? actions;
-  CustomAppBar({super.key, required this.title, this.isBack = false, this.actions});
+  PreferredSizeWidget? bottom;
+  CustomAppBar({super.key, required this.title, this.isBack = false, this.actions, this.bottom});
   @override
   Widget build(BuildContext context) {
     IconData iconData =
@@ -35,6 +36,7 @@ class CustomAppBar extends StatelessWidget {
       centerTitle: true,
       elevation: 0,
       actions: actions,
+      bottom: bottom,
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/modules/subjects/views/screens/add_subject/add_questions_view.dart';
+import 'package:teaching_with_purpose/app/modules/subjects/views/screens/add_subject/add_subjects_view.dart';
 
 import '../modules/announcements/bindings/announcements_binding.dart';
 import '../modules/announcements/views/announcements_view.dart';
@@ -48,7 +50,7 @@ import '../modules/schedule/views/screens/exam_datesheet_screen.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/subjects/bindings/subjects_binding.dart';
-import '../modules/subjects/views/screens/subject_details/subject_details_screen.dart';
+import '../modules/subjects/views/subject_details_view.dart';
 import '../modules/subjects/views/subjects_view.dart';
 import '../modules/verify/bindings/verify_binding.dart';
 import '../modules/verify/views/verify_view.dart';
@@ -178,6 +180,14 @@ class AppPages {
     GetPage(
       name: _Paths.SUBJECT_DETAILS,
       page: () => const SubjectsDetailsScreen(),
+    ),
+    GetPage(
+      name: _Paths.ADD_SUBJECTS,
+      page: () => const AddSubjectsView(),
+    ),
+    GetPage(
+      name: _Paths.ADD_QUESTIONS,
+      page: () => const AddQuestionsView(),
     ),
     GetPage(
       name: _Paths.RESULTS,

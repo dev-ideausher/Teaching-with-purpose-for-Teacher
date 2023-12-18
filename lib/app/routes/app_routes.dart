@@ -29,6 +29,8 @@ abstract class Routes {
   static const ASSIGNMENT_UPLODED = _Paths.ASSIGNMENT_UPLODED;
   static const SUBJECTS = _Paths.SUBJECTS;
   static const SUBJECT_DETAILS = _Paths.SUBJECT_DETAILS;
+  static const ADD_SUBJECTS = _Paths.ADD_SUBJECTS;
+  static const ADD_QUESTIONS = _Paths.ADD_QUESTIONS;
   static const RESULTS = _Paths.RESULTS;
   static const LIVE_QUIZZ = _Paths.LIVE_QUIZZ;
   static const LIVE_QUIZZ_SUCESS = _Paths.LIVE_QUIZZ_SUCESS;
@@ -65,6 +67,8 @@ abstract class _Paths {
   static const ASSIGNMENT_UPLODED = '/assignment-uploded';
   static const SUBJECTS = '/subjects';
   static const SUBJECT_DETAILS = '/subjects-details';
+  static const ADD_SUBJECTS = '/add-subjects';
+  static const ADD_QUESTIONS = '/add-questions';
   static const RESULTS = '/results';
   static const LIVE_QUIZZ = '/live-quizz';
   static const LIVE_QUIZZ_SUCESS = '/live-quiz-sucess';
