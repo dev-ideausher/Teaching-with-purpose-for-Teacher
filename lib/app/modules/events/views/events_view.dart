@@ -1,9 +1,10 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'dart:io' show Platform;
 import 'package:get/get.dart';
-import 'package:teaching_with_purpose/app/constants/string_constants.dart';
+import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
+import 'package:teaching_with_purpose/app/modules/home/controllers/home_controller.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
@@ -15,7 +16,9 @@ class EventsView extends GetView<EventsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(),
+      appBar:PreferredSize(
+          preferredSize: Size.fromHeight(46.kh),
+          child: CustomAppBar(title: 'Events', isBack: true)),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -24,35 +27,29 @@ class EventsView extends GetView<EventsController> {
             children: [
               selectMonthDropDawn(),
               32.kheightBox,
-              eventCardWidget(Assets.images.eventimg1.image()),
-              8.kheightBox,
-              eventCardWidget(Assets.images.eventimg2.image()),
-              8.kheightBox,
-              eventCardWidget(Assets.images.eventimg3.image()),
+             SizedBox(
+              height: 842.kh,
+              width: 343.kw,
+              child:ListView.separated(
+                      separatorBuilder:(context, index) => 8.kheightBox,
+                      itemCount: 1,
+                      itemBuilder: (context, index){
+                      String time = Get.find<HomeController>().eventModel.value.data?[index]?.date ?? '';
+                      String formattedTime = Get.find<HomeController>().formatTimestamp(time);
+                    return eventCardWidget(
+                    image: Get.find<HomeController>().eventModel.value.data?[index]?.image == null?
+                    Image.asset(Assets.images.eventimg1.path,height: 55.kh,width: 55.kw,fit: BoxFit.cover):
+                    CachedNetworkImage(imageUrl:Get.find<HomeController>().eventModel.value.data?[index]?.image?? '',height: 55.kh,width: 55.kw,fit: BoxFit.cover),
+                    title: Get.find<HomeController>().eventModel.value.data?[index]?.name ?? 'Sports Day',
+                    date: formattedTime,
+                    description: Get.find<HomeController>().eventModel.value.data?[index]?.desc ?? ''
+                  ); 
+                },
+               )
+             )
             ],
           ),
         ),
-      ),
-    );
-  }
-
-// appbar widget
-  appBarWidget() {
-    IconData iconData =
-        Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back;
-    return AppBar(
-      centerTitle: true,
-      elevation: 0,
-      backgroundColor: Get.context!.kGreyBack,
-      automaticallyImplyLeading: false,
-      leading: IconButton(
-        onPressed: () => Get.back(),
-        icon: Icon(iconData, color: Get.context!.kPrimary),
-      ),
-      title: Text(
-        'Events',
-        textAlign: TextAlign.center,
-        style: TextStyleUtil.kText20_6(fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -62,7 +59,8 @@ class EventsView extends GetView<EventsController> {
     return Obx(() => Container(
           decoration: BoxDecoration(
               color: Get.context!.kWhite,
-              borderRadius: BorderRadius.circular(8)),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Get.context!.kNeutral, width: 0.5)),
           child: DropdownButtonHideUnderline(
             child: DropdownButton2<String>(
               isExpanded: true,
@@ -84,7 +82,7 @@ class EventsView extends GetView<EventsController> {
   }
 
 // event card Widget
-  Widget eventCardWidget(Image img) {
+  Widget eventCardWidget({ required Widget image,  required String title, required String date, required String description}) {
     return SizedBox(
       height: 162.kh,
       width: 343.kw,
@@ -95,29 +93,24 @@ class EventsView extends GetView<EventsController> {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image(
-                  image: img.image,
-                  height: 55.kh,
-                  width: 55.kw,
-                  fit: BoxFit.cover,
-                )),
+                child: image),
             16.kwidthBox,
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Sports Day',
+                    title,
                     style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w600),
                   ),
                   4.kheightBox,
                   Text(
-                    'Date: 07 July 2023',
+                    date,
                     style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400),
                   ),
                   8.kheightBox,
                   Text(
-                    StringConstants.cardText,
+                   description,
                     maxLines: 4,
                     style: TextStyleUtil.kText12_4(
                         fontWeight: FontWeight.w400,

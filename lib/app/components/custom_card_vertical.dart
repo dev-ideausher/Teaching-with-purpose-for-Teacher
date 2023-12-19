@@ -8,7 +8,7 @@ class CustomCardVertical extends StatelessWidget {
   final String title;
   final String text1;
   final String text2;
-  final Image imagePath;
+  final String imagePath;
   final Color borderColor;
 
   const CustomCardVertical({
@@ -57,7 +57,7 @@ class CustomCardVertical extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         image: DecorationImage(
-                            image: imagePath.image, fit: BoxFit.fill))),
+                            image: NetworkImage(imagePath), fit: BoxFit.fill))),
                 16.kwidthBox,
                 Expanded(
                   child: Column(

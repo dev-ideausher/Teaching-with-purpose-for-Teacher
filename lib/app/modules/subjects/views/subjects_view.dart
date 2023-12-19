@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:io' show Platform;
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_richtext.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
@@ -14,18 +14,19 @@ class SubjectsView extends GetView<SubjectsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(),
+      appBar: PreferredSize(preferredSize: Size.fromHeight(46.kh),
+       child: CustomAppBar(title: 'Subjects',isBack: true)),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              subjectWidget('Mathematics', 'Classes ', '8-A, 8-B, 9-D',
-                  Assets.svg.mathsSmall, () => Get.toNamed(Routes.SUBJECT_DETAILS)),
+              subjectWidget(title: 'Mathematics', text1: 'Classes ', text2: '8-A, 8-B, 9-D',
+                  image: Assets.svg.mathsSmall, onTap: () => Get.toNamed(Routes.SUBJECT_DETAILS)),
               16.kheightBox,
-              subjectWidget('Chemistry', 'Classes ', '8-A, 8-B, 9-D',
-                  Assets.svg.mathsSmall, () {}),
+              subjectWidget(title: 'Chemistry', text1: 'Classes ', text2: '8-A, 8-B, 9-D',
+                  image: Assets.svg.mathsSmall, onTap: () {}),
             ],
           ),
         ),
@@ -33,30 +34,8 @@ class SubjectsView extends GetView<SubjectsController> {
     );
   }
 
-// appbar widget
-  appBarWidget() {
-    IconData iconData =
-        Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back;
-    return AppBar(
-      centerTitle: true,
-      elevation: 0,
-      backgroundColor: Get.context!.kGreyBack,
-      automaticallyImplyLeading: false,
-      leading: IconButton(
-        onPressed: () => Get.back(),
-        icon: Icon(iconData, color: Get.context!.kPrimary),
-      ),
-      title: Text(
-        'Subjects',
-        textAlign: TextAlign.center,
-        style: TextStyleUtil.kText20_6(fontWeight: FontWeight.w600),
-      ),
-    );
-  }
-
 //..
-  Widget subjectWidget(String title, String text1, String text2,
-      SvgGenImage image, void Function() onTap) {
+  Widget subjectWidget({required String title, required String text1, required String text2,required SvgGenImage image, required void Function() onTap}) {
     return InkWell(
       onTap: onTap,
       child: SizedBox(

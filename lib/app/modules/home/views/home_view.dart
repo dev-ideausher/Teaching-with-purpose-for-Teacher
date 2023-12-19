@@ -15,23 +15,16 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: context.kGreyBack,
-      body: SingleChildScrollView(
+      body: Obx(() => controller.isLoding.value?
+      Center(child: CircularProgressIndicator(color: context.kPrimary)):
+      SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 50),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                studentSection(
-                    Assets.images.profileSmall
-                        .image(height: 48.kh, width: 48.kw),
-                    'Hi, Patrick',
-                    'Subject: Mathematics',
-                    Icon(
-                      Icons.notifications_none_outlined,
-                      color: context.kPrimary,
-                    )),
+                studentSection(),
                 32.kheightBox,
                 clockWidget(),
                 32.kheightBox,
@@ -82,24 +75,27 @@ class HomeView extends GetView<HomeController> {
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     separatorBuilder: (context, index) => 16.kwidthBox,
-                    itemCount: 3,
-                    itemBuilder: (context, index) => CustomCardVertical(
+                    itemCount: controller.eventModel.value.data?.length?? 0,
+                    itemBuilder: (context, index) {
+                      String time = controller.eventModel.value.data?[index]?.date?? '';
+                      String formatTime = controller.formatTimestamp(time);
+                      return CustomCardVertical(
                         borderColor: context.kLightred,
-                        title: controller.eventsTitile[index],
-                        text1: controller.time[index],
-                        text2: controller.detailsText[index],
-                        imagePath: controller.eventImages[index]),
+                        title: controller.eventModel.value.data?[index]?.name?? '',
+                        text1: formatTime,
+                        text2: controller.eventModel.value.data?[index]?.desc?? '',
+                        imagePath: controller.eventModel.value.data?[index]?.image?? '');
+                    },
                ),
              ),
           ],
         )),
-      ),
+      ),)
     );
   }
 
 // section for the student details like roll Number and name with img
-  Widget studentSection(
-      Image teacherImg, String text1, String text2, Icon icon) {
+  Widget studentSection() {
     return SizedBox(
       width: 343.kw,
       height: 81.kh,
@@ -109,19 +105,20 @@ class HomeView extends GetView<HomeController> {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image(image: teacherImg.image)),
+                child: Assets.images.profileSmall
+                    .image(height: 48.kh, width: 48.kw)),
             16.kwidthBox,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  text1,
+                  'Hi, Patrick',
                   textAlign: TextAlign.center,
                   style: TextStyleUtil.kText20_6(fontWeight: FontWeight.w600),
                 ),
                 8.kheightBox,
                 Text(
-                  text2,
+                  'Subject: Mathematics',
                   textAlign: TextAlign.center,
                   style: TextStyleUtil.kText14_4(
                       fontWeight: FontWeight.w400,
@@ -130,7 +127,10 @@ class HomeView extends GetView<HomeController> {
               ],
             ),
             97.kwidthBox,
-            Icon(icon.icon, color: Get.context!.kPrimary)
+            Icon(
+              Icons.notifications_none_outlined,
+              color: Get.context!.kPrimary,
+            )
           ],
         ),
       ),
@@ -240,13 +240,13 @@ class HomeView extends GetView<HomeController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Principal',
+                  controller.announcement.value.data?.first?.postedBy?? 'Principal',
                   textAlign: TextAlign.center,
                   style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
                 ),
                 16.kheightBox,
                 Text(
-                  StringConstants.announcementText,
+                  controller.announcement.value.data?.first?.desc?? '',
                   maxLines: 5,
                   style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400),
                 ),

@@ -1,18 +1,32 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:teaching_with_purpose/app/data/models/announcement_model.dart';
+import 'package:teaching_with_purpose/app/data/models/events_model.dart';
+import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/gen/assets.gen.dart';
 
 class HomeController extends GetxController {
 
-  TextEditingController searchController = TextEditingController();
+
+@override
+  void onInit() {
+  showAnnouncements();
+    super.onInit();
+  }
 
   RxBool isClockIn = true.obs;
   RxString timerText = 'Work Duration: 00:00:00'.obs;
   Rx<DateTime> startTime = DateTime.now().obs;
   Timer? timer;
+  Rx<EventsModel> eventModel = EventsModel().obs;
+  Rx<AnnouncementModel> announcement = AnnouncementModel().obs;
+  RxBool isLoding = false.obs;
 
+  
 // event items to list
   List<String> eventsTitile = [
     'Sports Day',
@@ -53,4 +67,54 @@ class HomeController extends GetxController {
     final seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
     return '$hours:$minutes:$seconds';
   }
+
+
+String formatTimestamp(String timestamp) {
+  // Parse the timestamp
+  DateTime dateTime = DateTime.parse(timestamp);
+
+  // Format the time
+  String formattedTime = DateFormat('HH:mm').format(dateTime);
+
+  return formattedTime;
+}
+
+//-----------------------Announcements-------------------------------
+
+   Future<void> showAnnouncements()async{
+    isLoding(true);
+    try {
+      final responce = await APIManager.getAnnouncements();
+      if (responce.statusCode == 200) {
+        log('announcements...${responce.data}');
+        announcement.value = AnnouncementModel.fromJson(responce.data);
+        showEvents();
+      }
+    } catch (e) {
+     log('error..$e');
+    }finally{
+      isLoding(false);
+    }
+  }
+
+ 
+ //-----------------------Events-------------------------------
+
+  Future<void> showEvents()async{
+    isLoding(true);
+    try {
+      final responce = await APIManager.getEvents();
+      if (responce.statusCode == 200) {
+        log('events...${responce.data}');
+        eventModel .value = EventsModel.fromJson(responce.data);
+      }
+    } catch (e) {
+     log('error..$e');
+    }finally{
+      isLoding(false);
+    }
+  }
+
+
+
 }

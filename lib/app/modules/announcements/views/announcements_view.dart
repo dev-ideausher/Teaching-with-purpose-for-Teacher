@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:io' show Platform;
 import 'package:get/get.dart';
-import 'package:teaching_with_purpose/app/constants/string_constants.dart';
+import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
+import 'package:teaching_with_purpose/app/modules/home/controllers/home_controller.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
@@ -12,7 +12,9 @@ class AnnouncementsView extends GetView<AnnouncementsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(),
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(46.kh),
+          child: CustomAppBar(title: 'Announcements', isBack: true)),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -25,20 +27,31 @@ class AnnouncementsView extends GetView<AnnouncementsController> {
                 style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
               ),
             16.kheightBox,
-            annoucementWidget(),
-            8.kheightBox,
-            annoucementWidget(),
-            8.kheightBox,
-            annoucementWidget(),
+            SizedBox(
+              height: 352.kh,
+              width: 343.kw,
+              child: ListView.separated(
+                    separatorBuilder: (context, index) => 8.kheightBox,
+                    itemCount: Get.find<HomeController>().announcement.value.data?.length??0,
+                    itemBuilder: (context, index) {
+                      String time = Get.find<HomeController>().announcement.value.data?[index]?.date ?? '';
+                      String formattedTime = Get.find<HomeController>().formatTimestamp(time);
+                      return annoucementWidget(
+                      name: Get.find<HomeController>().announcement.value.data?[index]?.name?? '', 
+                      desc: Get.find<HomeController>().announcement.value.data?[index]?.desc?? '', 
+                      time: formattedTime
+                  );
+              },
+            )),
             20.kheightBox,
               Text(
                 'Yesterday',
                 style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
               ),
             16.kheightBox,
-            annoucementWidget(),
+            annoucementWidget(name: '', desc: '', time: ''),
             8.kheightBox, 
-            annoucementWidget(),          
+            annoucementWidget(name: '', desc: '', time: '')      
             ],
           ),
         ),
@@ -46,28 +59,8 @@ class AnnouncementsView extends GetView<AnnouncementsController> {
     );
   }
 
-// appbar widget
-  appBarWidget() {
-    IconData iconData =
-        Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back;
-    return AppBar(
-      centerTitle: true,
-      elevation: 0,
-      backgroundColor: Get.context!.kGreyBack,
-      automaticallyImplyLeading: false,
-      leading: IconButton(
-        onPressed: () => Get.back(),
-        icon: Icon(iconData, color: Get.context!.kPrimary),
-      ),
-      title: Text(
-        'Announcements',
-        textAlign: TextAlign.center,
-        style: TextStyleUtil.kText20_6(fontWeight: FontWeight.w600),
-      ),
-    );
-  }
-
-  Widget annoucementWidget() {
+//
+  Widget annoucementWidget({required String name, required String desc, required String time}) {
     return SizedBox(
       height: 82.kh,
       width: 343.kw,
@@ -88,12 +81,12 @@ class AnnouncementsView extends GetView<AnnouncementsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Principal',
+                    name,
                     style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
                   ),
                   4.kheightBox,
                   Text(
-                    StringConstants.announcementText2,
+                    desc,
                     maxLines: 2,
                     style: TextStyleUtil.kText14_4(
                         fontWeight: FontWeight.w400,
@@ -103,7 +96,7 @@ class AnnouncementsView extends GetView<AnnouncementsController> {
               ),
             ),
             Text(
-              '12:44 pm',
+              time,
               maxLines: 2,
               style: TextStyleUtil.kText14_4(
                   fontWeight: FontWeight.w400,

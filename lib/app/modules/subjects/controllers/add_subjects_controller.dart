@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 class AddSubjectsController extends GetxController with GetSingleTickerProviderStateMixin{
   late TabController tabController;
   var selectedTabIndex = 0.obs;
+  RxBool isLoding = false.obs;
+  RxString filePath = ''.obs;
+  
 
   var chapterNameController = TextEditingController();
   var topicNameController = TextEditingController();
@@ -24,7 +27,19 @@ class AddSubjectsController extends GetxController with GetSingleTickerProviderS
         .addListener(() => selectedTabIndex.value = tabController.index);
     super.onInit();
   }
+//-----------------------UploadFile-------------------------------
 
+
+
+//-----------------------Add Chapter -------------------------------
+
+
+
+
+//-----------------------Add Question-------------------------------
+  
+
+ 
 
   @override
   void onClose() {

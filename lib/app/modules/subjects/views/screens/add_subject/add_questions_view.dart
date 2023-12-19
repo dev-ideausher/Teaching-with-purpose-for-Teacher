@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_textfield.dart';
 import 'package:teaching_with_purpose/app/modules/subjects/controllers/add_subjects_controller.dart';
-import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/custom_button.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
@@ -107,7 +106,7 @@ class AddQuestionsView extends GetWidget<AddSubjectsController>{
                 SizedBox(
                     width: 343.kw,
                     height: 56.kh,
-                    child: TButton(title: 'Add', onTap: ()=>Get.toNamed(Routes.ADD_SUBJECTS)))         
+                    child: TButton(title: 'Add', onTap: (){}))         
         ],
       ),
     ),

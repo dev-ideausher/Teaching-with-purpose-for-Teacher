@@ -15,4 +15,6 @@ class SubjectsController extends GetxController {
   void selectClass(String item) {
     selectedValue.value = item;
   }
+
+ //-----------------------List Chapter -------------------------------
 }

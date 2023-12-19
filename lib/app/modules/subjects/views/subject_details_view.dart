@@ -14,8 +14,9 @@ class SubjectsDetailsScreen extends GetView<SubjectsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(preferredSize: Size.fromHeight(46.kh),
-       child: CustomAppBar(title: 'Mathematics',isBack: true)),
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(46.kh),
+          child: CustomAppBar(title: 'Mathematics', isBack: true)),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -24,15 +25,25 @@ class SubjectsDetailsScreen extends GetView<SubjectsController> {
             children: [
               Center(child: dropDawn()),
               32.kheightBox,
-              chapterWidget(),
+              chapterWidget(
+                  chapterName: 'Relations and Functions I',
+                  conceptName: 'Ordered Pairs',
+                  dec: 'Lorem ipsum dolor sit amet, consectetur ....',
+                  text: '1 Attachment'),
               16.kheightBox,
-              chapterWidget(),
+              chapterWidget(
+                  chapterName: 'Relations and Functions I',
+                  conceptName: 'Ordered Pairs',
+                  dec: 'Lorem ipsum dolor sit amet, consectetur ....',
+                  text: '1 Attachment'),
             ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {Get.toNamed(Routes.ADD_SUBJECTS);},
+        onPressed: () {
+          Get.toNamed(Routes.ADD_SUBJECTS);
+        },
         backgroundColor: context.kPrimary,
         child: Icon(Icons.add, color: context.kWhite),
       ),
@@ -73,7 +84,7 @@ class SubjectsDetailsScreen extends GetView<SubjectsController> {
   }
 
 //
-  Widget chapterWidget() {
+  Widget chapterWidget({required String chapterName,required String conceptName, required String dec, required String text}) {
     return SizedBox(
       height: 211.kh,
       width: 343.kw,
@@ -82,44 +93,55 @@ class SubjectsDetailsScreen extends GetView<SubjectsController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          Row(
-            children: [
-          Text(
-            'Chapter Name',
-            style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color: Get.context!.kLightTextColor),
-          ),
-          const Spacer(), 
-          Icon(Icons.edit, color: Get.context!.kPrimary,size: 15) ,
-          Icon(Icons.delete_outline_outlined,size: 15,color: Get.context!.kPrimary,) 
-            ],
-          ),
-          Text(
-            'Relations and Functions I',
-            style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
-          ),
-          8.kheightBox,
-          Text(
-            'Concept Name',
-            style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color: Get.context!.kLightTextColor),
-          ),
-          Text(
-            'Ordered Pairs',
-            style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
-          ),
-          8.kheightBox,
-          Text(
-            'Concept Description',
-            style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color: Get.context!.kLightTextColor),
-          ),
-          Text(
-            'Lorem ipsum dolor sit amet, consectetur ....',
-            style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
-          ),
-          8.kheightBox, 
-          Text(
-            '1 Attachment',
-            style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color: Get.context!.kPrimary),
-          ),      
+            Row(
+              children: [
+                Text(
+                  'Chapter Name',
+                  style: TextStyleUtil.kText14_4(
+                      fontWeight: FontWeight.w400,
+                      color: Get.context!.kLightTextColor),
+                ),
+                const Spacer(),
+                Icon(Icons.edit, color: Get.context!.kPrimary, size: 15),
+                Icon(
+                  Icons.delete_outline_outlined,
+                  size: 15,
+                  color: Get.context!.kPrimary,
+                )
+              ],
+            ),
+            Text(
+              chapterName,
+              style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
+            ),
+            8.kheightBox,
+            Text(
+              'Concept Name',
+              style: TextStyleUtil.kText14_4(
+                  fontWeight: FontWeight.w400,
+                  color: Get.context!.kLightTextColor),
+            ),
+            Text(
+              conceptName,
+              style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
+            ),
+            8.kheightBox,
+            Text(
+              'Concept Description',
+              style: TextStyleUtil.kText14_4(
+                  fontWeight: FontWeight.w400,
+                  color: Get.context!.kLightTextColor),
+            ),
+            Text(
+              dec,
+              style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
+            ),
+            8.kheightBox,
+            Text(
+              text,
+              style: TextStyleUtil.kText14_4(
+                  fontWeight: FontWeight.w400, color: Get.context!.kPrimary),
+            ),
           ],
         ),
       ),

@@ -73,14 +73,14 @@ class AddSubjectsView extends GetView<AddSubjectsController>{
                 style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
               ),
             16.kheightBox,
-            buildAddQuestionWidget(title: 'Add Questions', onTap:()=> Get.toNamed(Routes.ADD_QUESTIONS)),
+            // buildAddQuestionWidget(title: 'Add Questions', onTap:()=> Get.toNamed(Routes.ADD_QUESTIONS)),
             40.kheightBox,
             buildAddButton(text: 'Upload PDF Content',onTap: (){}),
           32.kheightBox,
                 SizedBox(
                     width: 343.kw,
                     height: 56.kh,
-                    child: TButton(title: StringConstants.save, onTap: () {}))          
+                    child: TButton(title: StringConstants.save, onTap: (){Get.offAllNamed(Routes.ADD_QUESTIONS);}))          
             ],
           ),
         ),
