@@ -1,29 +1,30 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
-import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
+import 'package:teaching_with_purpose/app/modules/add_chapters/controllers/add_chapters_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
 
-class SubjectsDetailsScreen extends GetView<SubjectsController> {
-  const SubjectsDetailsScreen({Key? key}) : super(key: key);
-
+class ChapterView extends GetView<AddChaptersController>{
+  const ChapterView({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    final controller = Get.put(AddChaptersController());
+    String selectedSubjectName = controller.subjectName;
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(46.kh),
-          child: CustomAppBar(title: 'Mathematics', isBack: true)),
+          child: CustomAppBar(title: selectedSubjectName, isBack: true)),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
           child: Column(
             children: [
-              Center(child: dropDawn()),
+              // Center(child: dropDawn()),
               32.kheightBox,
               chapterWidget(
                   chapterName: 'Relations and Functions I',
@@ -41,9 +42,7 @@ class SubjectsDetailsScreen extends GetView<SubjectsController> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed(Routes.ADD_SUBJECTS);
-        },
+        onPressed: () {Get.toNamed(Routes.ADD_CHAPTERS);},
         backgroundColor: context.kPrimary,
         child: Icon(Icons.add, color: context.kWhite),
       ),
@@ -51,37 +50,38 @@ class SubjectsDetailsScreen extends GetView<SubjectsController> {
   }
 
 
+
 // dropdawn widget
 
-  Widget dropDawn() {
-    return ColoredBox(
-        color: Get.context!.kLightBlue,
-        child: Obx(
-          () => DropdownButtonHideUnderline(
-            child: DropdownButton2<String>(
-              isExpanded: true,
-              hint: Text(
-                'Select class',
-                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400),
-              ),
-              items: controller.items
-                  .map((String item) =>
-                      DropdownMenuItem<String>(value: item, child: Text(item)))
-                  .toList(),
-              value: controller.selectedValue.value,
-              onChanged: (String? value) => controller.selectClass(value!),
-              buttonStyleData: ButtonStyleData(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                height: 40.kh,
-                width: 140.kw,
-              ),
-              menuItemStyleData: MenuItemStyleData(
-                height: 40.kh,
-              ),
-            ),
-          ),
-        ));
-  }
+  // Widget dropDawn() {
+  //   return ColoredBox(
+  //       color: Get.context!.kLightBlue,
+  //       child: Obx(
+  //         () => DropdownButtonHideUnderline(
+  //           child: DropdownButton2<String>(
+  //             isExpanded: true,
+  //             hint: Text(
+  //               'Select class',
+  //               style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400),
+  //             ),
+  //             items: controller.items
+  //                 .map((String item) =>
+  //                     DropdownMenuItem<String>(value: item, child: Text(item)))
+  //                 .toList(),
+  //             value: controller.selectedValue.value,
+  //             onChanged: (String? value) => controller.selectClass(value!),
+  //             buttonStyleData: ButtonStyleData(
+  //               padding: const EdgeInsets.symmetric(horizontal: 16),
+  //               height: 40.kh,
+  //               width: 140.kw,
+  //             ),
+  //             menuItemStyleData: MenuItemStyleData(
+  //               height: 40.kh,
+  //             ),
+  //           ),
+  //         ),
+  //       ));
+  // }
 
 //
   Widget chapterWidget({required String chapterName,required String conceptName, required String dec, required String text}) {

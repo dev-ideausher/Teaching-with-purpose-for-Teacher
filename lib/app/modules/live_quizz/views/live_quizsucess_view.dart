@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/modules/live_quizz/controllers/live_quizz_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/custom_button.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
-import 'dart:io' show Platform;
 
 class LiveQuizzSucessView extends GetView<LiveQuizzController>{
     const LiveQuizzSucessView({Key? key}) : super(key: key);
     @override
       Widget build(BuildContext context){
       return Scaffold(
-        appBar: appBarWidget(),
+        appBar:PreferredSize(preferredSize: Size.fromHeight(46.kh),
+       child: CustomAppBar(title: 'Live Quiz',isBack: true)),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 37,vertical: 52),
@@ -50,25 +51,4 @@ class LiveQuizzSucessView extends GetView<LiveQuizzController>{
 
 
 
-
-// appbar widget
-  appBarWidget() {
-    IconData iconData =
-        Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back;
-    return AppBar(
-      centerTitle: true,
-      elevation: 0,
-      backgroundColor: Get.context!.kGreyBack,
-      automaticallyImplyLeading: false,
-      leading: IconButton(
-        onPressed: () => Get.back(),
-        icon: Icon(iconData, color: Get.context!.kPrimary),
-      ),
-      title: Text(
-        'Live Quiz',
-        textAlign: TextAlign.center,
-        style: TextStyleUtil.kText20_6(fontWeight: FontWeight.w600),
-      ),
-    );
-  }
 }

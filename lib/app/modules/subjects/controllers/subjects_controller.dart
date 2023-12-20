@@ -1,20 +1,35 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/data/models/subjects_list_model.dart';
+import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 
 class SubjectsController extends GetxController {
-  var selectedValue = 'Class 8-A'.obs;
+  RxBool isLoding = false.obs;
+  Rx<SubjectsListModel> subjectLists= SubjectsListModel().obs;
 
-//... list of  class  for dropdawn
-  final List<String> items = [
-    'Class 8-A',
-    'Class 8-B',
-    'Class 9-D',
-    'Class 10-A',
-    'Class 10-C',
-  ];
-
-  void selectClass(String item) {
-    selectedValue.value = item;
+    @override
+  void onInit() {
+    getSubjects();
+    super.onInit();
   }
 
- //-----------------------List Chapter -------------------------------
+
+ //-----------------------List Subjects -------------------------------
+  Future<void> getSubjects()async{
+    isLoding(true);
+    try {
+      final responce = await APIManager.getSubjects();
+      if (responce.statusCode == 200) {
+        // log('subjects...${responce.data}');
+        subjectLists.value = SubjectsListModel.fromJson(responce.data);
+      }
+    } catch (e) {
+     log('error..$e');
+    }finally{
+      isLoding(false);
+    }
+  }
+
+
 }

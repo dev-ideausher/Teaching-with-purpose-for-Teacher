@@ -2,8 +2,8 @@
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'dart:io' show Platform;
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_textfield.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/custom_button.dart';
@@ -17,7 +17,9 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(),
+      appBar: PreferredSize(preferredSize: Size.fromHeight(46.kh),
+       child: CustomAppBar(title: 'Live Quiz',isBack: true,
+       actions: [Assets.svg.upload.svg(height: 24.kh, width: 24.kw)])),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -61,7 +63,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
               16.kheightBox,
               CustomTextField(
                 hint: 'Enter Instructions',
-                controller: controller.instructionsController.value,
+                controller: controller.instructionsController,
                 minLine: 6,
                 maxLines: 8,
               ),
@@ -73,7 +75,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
               16.kheightBox,
               CustomTextField(
                 hint: 'Enter Questions',
-                controller: controller.questionsController.value,
+                controller: controller.questionsController,
                 minLine: 6,
                 maxLines: 8,
               ),
@@ -85,30 +87,48 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
               16.kheightBox,
               CustomTextField(
                 hint: 'Enter Options1',
-                controller: controller.option1Controller.value,
+                controller: controller.option1Controller,
               ),
               8.kheightBox,
               CustomTextField(
                 hint: 'Enter Options2',
-                controller: controller.option2Controller.value,
+                controller: controller.option2Controller,
               ),
               8.kheightBox,
               CustomTextField(
                 hint: 'Enter Options3',
-                controller: controller.option3Controller.value,
+                controller: controller.option3Controller,
               ),
               8.kheightBox,
               CustomTextField(
                 hint: 'Enter Options4',
-                controller: controller.option4Controller.value,
+                controller: controller.option4Controller,
               ),
+              24.kheightBox,
+              Text(
+                'Correct Answer',
+                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
+              ),
+              16.kheightBox,
+              CustomTextField(
+                hint: 'Enter Option Number',
+                controller: controller.answerController,
+              ),
+              24.kheightBox,
+              Text(
+                'Mark',
+                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
+              ),
+              16.kheightBox, 
+              CustomTextField(
+                hint: 'mark',
+                controller: controller.markController,
+              ),                                        
               40.kheightBox,
               SizedBox(
                 height: 56.kh,
                 width: 343.kw,
-                child: TButton(title: 'Add', onTap: ()async{
-                  await controller.createQuiz();
-                }),
+                child: TButton(title: 'Add', onTap: ()=> controller.createQuiz()),
               )
             ],
           ),
@@ -117,29 +137,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
     );
   }
 
-// appbar widget
-  appBarWidget() {
-    IconData iconData =
-        Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back;
-    return AppBar(
-      centerTitle: true,
-      elevation: 0,
-      backgroundColor: Get.context!.kGreyBack,
-      automaticallyImplyLeading: false,
-      leading: IconButton(
-        onPressed: () => Get.back(),
-        icon: Icon(iconData, color: Get.context!.kPrimary),
-      ),
-      title: Text(
-        'Live Quiz',
-        textAlign: TextAlign.center,
-        style: TextStyleUtil.kText20_6(fontWeight: FontWeight.w600),
-      ),
-      actions: [
-        Assets.svg.upload.svg(height: 24.kh, width: 24.kw),
-      ],
-    );
-  }
+
 
 // subject dropDawn
   Widget selectSubjecttDropDawn() {

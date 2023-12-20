@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
@@ -16,21 +17,50 @@ class SubjectsView extends GetView<SubjectsController> {
     return Scaffold(
       appBar: PreferredSize(preferredSize: Size.fromHeight(46.kh),
        child: CustomAppBar(title: 'Subjects',isBack: true)),
-      body: SingleChildScrollView(
+      body: Obx(() => controller.isLoding.value?
+      Center(child: CircularProgressIndicator(color: context.kPrimary)):
+      SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              subjectWidget(title: 'Mathematics', text1: 'Classes ', text2: '8-A, 8-B, 9-D',
-                  image: Assets.svg.mathsSmall, onTap: () => Get.toNamed(Routes.SUBJECT_DETAILS)),
-              16.kheightBox,
-              subjectWidget(title: 'Chemistry', text1: 'Classes ', text2: '8-A, 8-B, 9-D',
-                  image: Assets.svg.mathsSmall, onTap: () {}),
+              SizedBox(
+                height: 343.kh,
+                width: 343.kw,
+                child: ListView.separated(
+                    separatorBuilder: (context, index) => 16.kheightBox,
+                    itemCount: controller.subjectLists.value.data?.length?? 0,
+                    itemBuilder: (context, index) {
+                      return subjectWidget(
+                        title: controller.subjectLists.value.data?[index]?.subject?? '',
+                        text1: '',
+                        text2: '', 
+                        image: Assets.svg.mathsSmall, 
+                        onTap: (){
+                        final selectedSubject = controller.subjectLists.value.data?[index];
+                        Get.toNamed(
+                        Routes.CHAPTER,
+                      arguments: {
+                        'subjectId': selectedSubject?.Id,
+                        'subjectName':selectedSubject?.subject
+                      }
+                    );
+                  }
+                );
+              },
+            ),
+          ),
+              // subjectWidget(title: 'Mathematics', text1: 'Classes ', text2: '8-A, 8-B, 9-D',
+              //     image: Assets.svg.mathsSmall, onTap: () {}),
+              // 16.kheightBox,
+              // subjectWidget(title: 'Chemistry', text1: 'Classes ', text2: '8-A, 8-B, 9-D',
+              //     image: Assets.svg.mathsSmall, onTap: () {}),
             ],
           ),
         ),
       ),
+      )
     );
   }
 

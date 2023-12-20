@@ -1,0 +1,160 @@
+import 'dart:developer';
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart'as route;
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:path/path.dart' as path;
+import 'package:teaching_with_purpose/app/data/models/chapter_model.dart';
+import 'package:teaching_with_purpose/app/data/models/file_upload_model.dart';
+import 'package:teaching_with_purpose/app/routes/app_pages.dart';
+import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
+import 'package:teaching_with_purpose/app/services/global_services.dart';
+import 'package:teaching_with_purpose/app/utils/utils.dart';
+
+class AddChaptersController extends GetxController {
+  var selectedValue = 'Class 8-A'.obs;
+  RxBool isLoding = false.obs;
+  RxString selectedFile = ''.obs;
+  RxString selectedPdf = ''.obs;
+  String subjectName = '';
+  String subjectId = '';
+  var chapterNameController = TextEditingController();
+  var topicNameController = TextEditingController();
+  var topicDescriptionController = TextEditingController();
+  Rx<FileUploadModel> fileUpload = FileUploadModel().obs;
+
+  @override
+  void onInit() {
+    final Map<String, dynamic> arguments = Get.arguments;
+    subjectName = arguments['subjectName'];
+    subjectId = arguments['subjectId'];
+    log('id...$subjectId');
+    super.onInit();
+  }
+
+  final List<String> items = [
+    'Class 8-A',
+    'Class 8-B',
+    'Class 9-D',
+    'Class 10-A',
+    'Class 10-C',
+  ];
+
+  void selectClass(String item) {
+    selectedValue.value = item;
+  }
+
+
+Future<String?> pickPdfFile() async {
+  List<String> pdfPaths = await Utils.pickMultipleFilesWithFilter(['pdf']);
+  if (pdfPaths.isNotEmpty) {
+    String pdfFilePath = pdfPaths.first;
+    log('Selected PDF file path: $pdfFilePath');
+    selectedPdf.value = pdfFilePath;
+    await uploadFile(pdfFilePath);
+  }
+  return null;
+}
+
+Future<String?> pickVideoFile() async {
+  List<String> videoPaths = await Utils.pickMultipleFilesWithFilter(['mp4', 'mov', 'avi', 'mkv']);
+  if (videoPaths.isNotEmpty) {
+    String videoFilePath = videoPaths.first;
+    log('Selected video file path: $videoFilePath');
+    selectedFile.value = videoFilePath;
+    await uploadFile(videoFilePath);
+    
+  }
+  return null;
+}
+
+
+
+//-----------------------File upload-------------------------------
+
+  Future<void> uploadFile(String filePath) async {
+    final File pickedFile = File(filePath);
+    final extension = path.extension(pickedFile.path).replaceAll(".", "");
+
+    final body = FormData.fromMap({
+      'file': await MultipartFile.fromFile(
+        pickedFile.path,
+        contentType: MediaType('application', extension),
+        filename: path.basename(pickedFile.path),
+      ),
+    });
+
+    try {
+      final response = await APIManager.fileUpload(body: body);
+      if (response.data['status'] == true) {
+        log('fileresponce...${response.data}');
+        fileUpload.value = FileUploadModel.fromJson(response.data);
+        Utils.showMySnackbar(desc: 'File sucessfully added '); 
+      }else{
+       Utils.showMySnackbar(desc: 'File upload failed. Please try again.'); 
+      }
+    } catch (e) {
+      log("e......$e");
+    }
+  }
+
+
+//-----------------------Add Chapter -------------------------------
+
+  Future<void> addChapter() async {
+    if (chapterNameController.text.isEmpty ||
+        topicNameController.text.isEmpty ||
+        topicDescriptionController.text.isEmpty) {
+      Utils.showMySnackbar(desc: 'Please fill all the fields');
+      return;
+    }
+
+    String selectedSubjectId = subjectId;
+
+    try {
+      if (selectedFile.value.isNotEmpty) {
+        await uploadFile(selectedFile.value);
+      }
+
+      var body = ChapterModel();
+      body.subjectId = selectedSubjectId;
+      body.chapterName = chapterNameController.text;
+      body.concept = topicNameController.text;
+      body.desc = topicDescriptionController.text;
+ 
+      if (selectedPdf.value.isNotEmpty) {
+        await uploadFile(selectedPdf.value);
+      }
+      
+      body.video = selectedFile.value.isNotEmpty ? fileUpload.value.url : '';
+      body.uploadPdf = selectedPdf.value.isNotEmpty ? fileUpload.value.url : '';
+
+      final response = await APIManager.createChapter(body: body);
+      if (response.data['status'] == true) {
+        log('chapter response...${response.data}');
+
+        Get.find<GlobalData>().chapterId.value = response.data['data']['subjectId'].toString();
+
+        Utils.showMySnackbar(desc: 'Chapter created successfully');
+
+        Get.offAllNamed(Routes.ADD_QUESTIONS);
+      } else {
+        Utils.showMySnackbar(desc: response.data['message']);
+      }
+    } catch (error) {
+      log('chapterError..$error');
+    }
+  }
+
+  @override
+  void onClose() {
+    chapterNameController.dispose();
+    topicNameController.dispose();
+    topicDescriptionController.dispose();
+    super.onClose();
+  }
+}

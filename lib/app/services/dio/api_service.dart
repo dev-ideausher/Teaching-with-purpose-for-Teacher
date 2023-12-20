@@ -32,7 +32,7 @@ static Future<Response> getResults() async => await DioClient(Dio(), showSnakbar
 
 static Future<Response> getChapter() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.getChapter);  
 
-static Future<Response> getSubjects() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.getSubjects);  
+static Future<Response> getSubjects() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.getSubjects);  
 
 static Future<Response> getAnnouncements() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.getAnnouncements);  
 

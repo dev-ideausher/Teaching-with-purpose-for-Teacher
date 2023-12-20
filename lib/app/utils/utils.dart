@@ -1,5 +1,6 @@
 
 import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -41,18 +42,23 @@ class Utils{
     return image;
   }
 
-  static Future<File?> pickVideoFromGallery() async {
-    File? video;
+  
+ static Future<List<String>> pickMultipleFilesWithFilter(List<String> allowedExtensions) async {
     try {
-      final pickedVideo = await ImagePicker().pickVideo(source: ImageSource.gallery);
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: allowedExtensions,
+      );
 
-      if (pickedVideo != null) {
-        video = File(pickedVideo.path);
+      if (result != null) {
+        return result.paths.map((path) => path!).toList();
+      } else {
+        return [];
       }
     } catch (e) {
-      showMySnackbar(desc: e.toString());
+      print('Error picking multiple files: $e');
+      return [];
     }
-    return video;
   } 
-   
 }

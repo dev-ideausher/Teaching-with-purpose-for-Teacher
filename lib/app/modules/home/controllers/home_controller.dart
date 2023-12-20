@@ -86,7 +86,7 @@ String formatTimestamp(String timestamp) {
     try {
       final responce = await APIManager.getAnnouncements();
       if (responce.statusCode == 200) {
-        log('announcements...${responce.data}');
+        // log('announcements...${responce.data}');
         announcement.value = AnnouncementModel.fromJson(responce.data);
         showEvents();
       }
@@ -105,7 +105,7 @@ String formatTimestamp(String timestamp) {
     try {
       final responce = await APIManager.getEvents();
       if (responce.statusCode == 200) {
-        log('events...${responce.data}');
+        // log('events...${responce.data}');
         eventModel .value = EventsModel.fromJson(responce.data);
       }
     } catch (e) {

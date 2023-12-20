@@ -88,31 +88,17 @@ class OnBoardView extends GetView<OnBoardController> {
       children: [
         Image(image: img.image),
         43.kheightBox,
-        Text(
-          textAlign: TextAlign.center,
+        ListTile(
+          title: Text(
           title,
-          style: TextStyleUtil.kText24_6(fontWeight: FontWeight.w700),
-        ),
-        16.kheightBox,
-        Text(
-          textAlign: TextAlign.center,
-          subTitle,
-          style: TextStyleUtil.kText16_5(
-              fontWeight: FontWeight.w400, color: Get.context!.kNeutral),
-        ),
-        // ListTile(
-        //   title: Text(
-        //     textAlign: TextAlign.center,
-        //     title,
-        //     style: TextStyleUtil.kText24_6(fontWeight: FontWeight.w700),
-        //   ),
-        //   subtitle: Text(
-        //     textAlign: TextAlign.center,
-        //     subTitle,
-        //     style: TextStyleUtil.kText16_5(
-        //         fontWeight: FontWeight.w400, color: Get.context!.kNeutral),
-        //   ),
-        // )
+            style: TextStyleUtil.kText24_6(fontWeight: FontWeight.w700),
+          ),
+          subtitle: Text(
+            subTitle,
+            style: TextStyleUtil.kText16_5(
+                fontWeight: FontWeight.w400, color: Get.context!.kNeutral),
+          ),
+        )
       ],
     );
   }
