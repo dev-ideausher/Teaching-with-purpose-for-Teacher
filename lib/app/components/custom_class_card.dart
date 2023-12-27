@@ -26,7 +26,7 @@ class CustomClassCard extends StatelessWidget {
                     Center(child: imageWidget),
                     Align(
                       alignment: Alignment.bottomLeft,
-                      child: Assets.svg.ellipseLight.svg(),
+                      child: Assets.svg.ellipseLight.svg()
                     )
                   ],
                 )),

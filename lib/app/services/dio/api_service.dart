@@ -21,6 +21,8 @@ class APIManager {
   static Future<Response> createQuestion({required dynamic body}) async => 
           await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true).post(Endpoints.createQuestions, data: jsonEncode(body)); 
 
+  static Future<Response> createAssignment({required dynamic body}) async => 
+          await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true).post(Endpoints.addAssignment, data: jsonEncode(body)); 
 
 
 
@@ -30,7 +32,7 @@ static Future<Response> getAllStudent() async => await DioClient(Dio(), showSnak
 
 static Future<Response> getResults() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.results);  
 
-static Future<Response> getChapter() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.getChapter);  
+static Future<Response> getChapter() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.getChapter);  
 
 static Future<Response> getSubjects() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.getSubjects);  
 

@@ -36,4 +36,6 @@ class Endpoints {
 
   static const String getQuestions = "api/question/get";
 
+  static const String addAssignment = "api/assignment/save";
+
 }

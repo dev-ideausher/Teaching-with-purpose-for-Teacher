@@ -144,6 +144,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
     return Obx(() => Container(
           decoration: BoxDecoration(
               color: Get.context!.kWhite,
+              border: Border.all(color: Get.context!.kNeutral, width: 0.5),
               borderRadius: BorderRadius.circular(8)),
           child: DropdownButtonHideUnderline(
             child: DropdownButton2<String>(
@@ -170,6 +171,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
     return Obx(() => Container(
           decoration: BoxDecoration(
               color: Get.context!.kWhite,
+              border: Border.all(color: Get.context!.kNeutral, width: 0.5),
               borderRadius: BorderRadius.circular(8)),
           child: DropdownButtonHideUnderline(
             child: DropdownButton2<String>(

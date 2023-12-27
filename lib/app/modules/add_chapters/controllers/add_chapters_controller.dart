@@ -9,6 +9,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as path;
 import 'package:teaching_with_purpose/app/data/models/chapter_model.dart';
+import 'package:teaching_with_purpose/app/data/models/chapters_list_model.dart';
 import 'package:teaching_with_purpose/app/data/models/file_upload_model.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
@@ -26,6 +27,7 @@ class AddChaptersController extends GetxController {
   var topicNameController = TextEditingController();
   var topicDescriptionController = TextEditingController();
   Rx<FileUploadModel> fileUpload = FileUploadModel().obs;
+  Rx<ChaptersListModel> chaptersList = ChaptersListModel().obs;
 
   @override
   void onInit() {
@@ -105,50 +107,73 @@ Future<String?> pickVideoFile() async {
 
 //-----------------------Add Chapter -------------------------------
 
-  Future<void> addChapter() async {
-    if (chapterNameController.text.isEmpty ||
-        topicNameController.text.isEmpty ||
-        topicDescriptionController.text.isEmpty) {
-      Utils.showMySnackbar(desc: 'Please fill all the fields');
-      return;
+Future<void> addChapter() async {
+  if (chapterNameController.text.isEmpty ||
+      topicNameController.text.isEmpty ||
+      topicDescriptionController.text.isEmpty) {
+    Utils.showMySnackbar(desc: 'Please fill all the fields');
+    return;
+  }
+
+  String selectedSubjectId = subjectId;
+
+  try {
+    String? videoUrl = '';
+    String? pdfUrl = '';
+
+    if (selectedFile.value.isNotEmpty) {
+      await uploadFile(selectedFile.value);
+      videoUrl = fileUpload.value.url;
     }
 
-    String selectedSubjectId = subjectId;
+    if (selectedPdf.value.isNotEmpty) {
+      await uploadFile(selectedPdf.value);
+      pdfUrl = fileUpload.value.url;
+    }
 
+    var body = ChapterModel();
+    body.subjectId = selectedSubjectId;
+    body.chapterName = chapterNameController.text;
+    body.concept = topicNameController.text;
+    body.desc = topicDescriptionController.text;
+    body.video = videoUrl;
+    body.uploadPdf = pdfUrl;
+
+    final response = await APIManager.createChapter(body: body);
+    if (response.data['status'] == true) {
+      log('chapter response...${response.data}');
+
+      Get.find<GlobalData>().chapterId.value = response.data['data']['subjectId'].toString();
+
+      Utils.showMySnackbar(desc: 'Chapter created successfully');
+
+      Get.offAllNamed(Routes.ADD_QUESTIONS);
+    } else {
+      Utils.showMySnackbar(desc: response.data['message']);
+    }
+  } catch (error) {
+    log('chapterError..$error');
+  }
+}
+
+
+//-----------------------Get Chapter's -------------------------------
+
+   Future<void> showListofChapters()async{
+    isLoding(true);
     try {
-      if (selectedFile.value.isNotEmpty) {
-        await uploadFile(selectedFile.value);
+      final responce = await APIManager.getChapter();
+      if (responce.statusCode == 200) {
+        // log('chapters...${responce.data}');
+       chaptersList.value = ChaptersListModel.fromJson(responce.data);  
       }
-
-      var body = ChapterModel();
-      body.subjectId = selectedSubjectId;
-      body.chapterName = chapterNameController.text;
-      body.concept = topicNameController.text;
-      body.desc = topicDescriptionController.text;
- 
-      if (selectedPdf.value.isNotEmpty) {
-        await uploadFile(selectedPdf.value);
-      }
-      
-      body.video = selectedFile.value.isNotEmpty ? fileUpload.value.url : '';
-      body.uploadPdf = selectedPdf.value.isNotEmpty ? fileUpload.value.url : '';
-
-      final response = await APIManager.createChapter(body: body);
-      if (response.data['status'] == true) {
-        log('chapter response...${response.data}');
-
-        Get.find<GlobalData>().chapterId.value = response.data['data']['subjectId'].toString();
-
-        Utils.showMySnackbar(desc: 'Chapter created successfully');
-
-        Get.offAllNamed(Routes.ADD_QUESTIONS);
-      } else {
-        Utils.showMySnackbar(desc: response.data['message']);
-      }
-    } catch (error) {
-      log('chapterError..$error');
+    } catch (e) {
+     log('error..$e');
+    }finally{
+      isLoding(false);
     }
   }
+
 
   @override
   void onClose() {

@@ -28,7 +28,7 @@ abstract class Routes {
   static const ASSIGNMENTS = _Paths.ASSIGNMENTS;
   static const ASSIGNMENT_UPLODED = _Paths.ASSIGNMENT_UPLODED;
   static const SUBJECTS = _Paths.SUBJECTS;
-  static const CHAPTER  = _Paths.CHAPTER;
+  static const CHAPTER = _Paths.CHAPTER;
   static const ADD_CHAPTERS = _Paths.ADD_CHAPTERS;
   static const ADD_QUESTIONS = _Paths.ADD_QUESTIONS;
   static const RESULTS = _Paths.RESULTS;
@@ -37,6 +37,7 @@ abstract class Routes {
   static const MARKS = _Paths.MARKS;
   static const EVENTS = _Paths.EVENTS;
   static const ANNOUNCEMENTS = _Paths.ANNOUNCEMENTS;
+  static const ADD_ASSIGNMENT = _Paths.ADD_ASSIGNMENT;
 }
 
 abstract class _Paths {
@@ -75,4 +76,5 @@ abstract class _Paths {
   static const MARKS = '/marks';
   static const EVENTS = '/events';
   static const ANNOUNCEMENTS = '/announcements';
+  static const ADD_ASSIGNMENT = '/add-assignment';
 }

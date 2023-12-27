@@ -1,15 +1,17 @@
 import 'package:get/get.dart';
-import 'package:teaching_with_purpose/app/modules/add_chapters/views/chapter_view.dart';
 
+import '../modules/add_assignment/bindings/add_assignment_binding.dart';
+import '../modules/add_assignment/views/add_assignment_view.dart';
 import '../modules/add_chapters/bindings/add_chapters_binding.dart';
 import '../modules/add_chapters/views/add_chapters_view.dart';
+import '../modules/add_chapters/views/chapter_view.dart';
 import '../modules/add_questions/bindings/add_questions_binding.dart';
 import '../modules/add_questions/views/add_questions_view.dart';
 import '../modules/announcements/bindings/announcements_binding.dart';
 import '../modules/announcements/views/announcements_view.dart';
 import '../modules/assignments/bindings/assignments_binding.dart';
 import '../modules/assignments/views/assignments_view.dart';
-import '../modules/assignments/views/screens/uploded_assignment/assignment_uploded_screen.dart';
+import '../modules/assignments/views/assignment_uploded_screen.dart';
 import '../modules/attendance/bindings/attendance_binding.dart';
 import '../modules/attendance/views/attendance_view.dart';
 import '../modules/bottom_nav/bindings/bottom_nav_binding.dart';
@@ -221,6 +223,11 @@ class AppPages {
       name: _Paths.ANNOUNCEMENTS,
       page: () => const AnnouncementsView(),
       binding: AnnouncementsBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_ASSIGNMENT,
+      page: () => const AddAssignmentView(),
+      binding: AddAssignmentBinding(),
     ),
   ];
 }
