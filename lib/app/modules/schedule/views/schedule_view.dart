@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/components/common_time_table.dart';
+import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
@@ -15,17 +15,9 @@ class ScheduleView extends GetView<ScheduleController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: context.kGreyBack,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Text(
-          textAlign: TextAlign.center,
-          'Schedule',
-          style: TextStyleUtil.kText20_6(fontWeight: FontWeight.w600),
-        ),
-        centerTitle: true,
-      ),
+      appBar:PreferredSize(
+        preferredSize: Size.fromHeight(46.kh),
+        child: CustomAppBar(title: 'Schedule', isBack: true)),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -48,33 +40,39 @@ class ScheduleView extends GetView<ScheduleController> {
                 ],
               ),
               16.kheightBox,
-              // Obx(() => SfDateRangePicker(
-              //       selectionColor: context.kPrimary,
-              //       selectionMode: DateRangePickerSelectionMode.single,
-              //       onSelectionChanged:
-              //           (DateRangePickerSelectionChangedArgs args) =>
-              //               controller.setSelectedDate(args.value),
-              //       initialSelectedDate: controller.selectedDate.value,
-              //     )),
+              Obx(() => SfDateRangePicker(
+                    selectionColor: context.kPrimary,
+                    selectionMode: DateRangePickerSelectionMode.single,
+                    onSelectionChanged:
+                        (DateRangePickerSelectionChangedArgs args) =>
+                            controller.setSelectedDate(args.value),
+                    initialSelectedDate: controller.selectedDate.value,
+                  )),
               32.kheightBox,
-              Text(
-                textAlign: TextAlign.center,
-                '27th October 2023 (Friday)',
-                style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
-              ),
+                    Text(
+                    '${controller.formattedDate}',
+                    style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
+                  ),
               16.kheightBox,
               const CommoncardTable(),
               32.kheightBox,
               Text(
-                textAlign: TextAlign.center,
-                'Exam Datesheet',
-                style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600)),
+                  textAlign: TextAlign.center,
+                  'Exam Datesheet',
+                  style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600)),
               16.kheightBox,
-              examSheetWidget( 'Class 8th', Assets.svg.examSheet, Assets.svg.download,() => Get.toNamed(Routes.EXAM_DATE_SHEET),),
+              examSheetWidget(
+                'Class 8th',
+                Assets.svg.examSheet,
+                Assets.svg.download,
+                () => Get.toNamed(Routes.EXAM_DATE_SHEET),
+              ),
               8.kheightBox,
-              examSheetWidget( 'Class 9th', Assets.svg.examSheet, Assets.svg.download,(){}),
+              examSheetWidget('Class 9th', Assets.svg.examSheet,
+                  Assets.svg.download, () {}),
               8.kheightBox,
-              examSheetWidget( 'Class 10th', Assets.svg.examSheet, Assets.svg.download,(){}),
+              examSheetWidget('Class 10th', Assets.svg.examSheet,
+                  Assets.svg.download, () {}),
             ],
           ),
         ),
@@ -83,17 +81,21 @@ class ScheduleView extends GetView<ScheduleController> {
   }
 
 //examSheet Widget list
-
-  Widget examSheetWidget( String text, SvgGenImage img1, SvgGenImage img2,void Function() onTap,) {
+  Widget examSheetWidget(
+    String text,
+    SvgGenImage img1,
+    SvgGenImage img2,
+    void Function() onTap,
+  ) {
     return InkWell(
       onTap: onTap,
       child: Container(
         height: 56.kh,
         width: 343.kw,
         decoration: BoxDecoration(
-        color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
           child: Row(
             children: [
               img1.svg(),

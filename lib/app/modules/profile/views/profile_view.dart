@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_bottomsheet.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
@@ -17,25 +19,18 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     log('${controller.isLoding.value}');
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: context.kGreyBack,
-          elevation: 0,
-          automaticallyImplyLeading: false,
-          title: Text(
-            textAlign: TextAlign.center,
-            'Profile',
-            style: TextStyleUtil.kText20_6(fontWeight: FontWeight.w600),
-          ),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
+        appBar:PreferredSize(preferredSize: Size.fromHeight(46.kh),
+        child: CustomAppBar(title: 'Profile', isBack: false)),
+        body: Obx(() => controller.isLoding.value?
+        Center(child: CircularProgressIndicator(color: context.kPrimary)):
+         SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                profileImage(Assets.images.profileImgLarge.image(height: 100.kh,width: 100.kw), () {}),
+                profileImage(),
                 32.kheightBox,
                 profileSectionWidget(Assets.svg.editProfile, 'Edit Profile',
                     ()=> Get.toNamed(Routes.EDIT_PROFILE)),
@@ -63,10 +58,12 @@ class ProfileView extends GetView<ProfileController> {
               ],
             ),
           ),
+        )
         ));
   }
 
-  Widget profileImage(Image profileImg, void Function() onTap) {
+//
+  Widget profileImage() {
     return Column(
       children: [
         Stack(
@@ -74,27 +71,41 @@ class ProfileView extends GetView<ProfileController> {
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image(image: profileImg.image),
+                child: imgWidget(),
               ),
             ),
             Positioned(
                 bottom: 12,
                 right: 120,
                 child: InkWell(
-                    onTap: onTap,
+                    onTap: () {},
                     child: Assets.svg.addPlus.svg(height: 29.kh, width: 29.kw)))
           ],
         ),
         8.kheightBox,
         Text(
           textAlign: TextAlign.center,
-          'Hi, Patrick',
+          'Hi, ${controller.teachermodel.value.data?.first?.name ?? ''}',
           style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
         ),
       ],
     );
   }
 
+
+  Widget imgWidget(){
+    if (controller.teachermodel.value.data?.first?.image != null) {
+      return CachedNetworkImage(
+          imageUrl: controller.teachermodel.value.data?.first?.image ?? '',
+          width: 100.kw,
+          height: 100.kh,
+          fit: BoxFit.cover);
+    }
+    return Assets.images.profileImgLarge.image(height: 100.kh,width: 100.kw,fit: BoxFit.cover);
+  }
+
+
+//
   Widget profileSectionWidget(
       SvgGenImage image, String title, void Function() onTap) {
     return InkWell(

@@ -1,13 +1,17 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_textfield.dart';
 import 'package:teaching_with_purpose/app/constants/string_constants.dart';
+import 'package:teaching_with_purpose/app/modules/profile/controllers/profile_controller.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/custom_button.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
 import 'package:teaching_with_purpose/gen/assets.gen.dart';
-import 'dart:io' show Platform;
 import '../controllers/edit_profile_controller.dart';
 
 class EditProfileView extends GetView<EditProfileController> {
@@ -15,7 +19,9 @@ class EditProfileView extends GetView<EditProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBarWidget(),
+        appBar:PreferredSize(
+            preferredSize: Size.fromHeight(46.kh),
+            child: CustomAppBar(title: 'Profile', isBack: true)),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
@@ -23,21 +29,21 @@ class EditProfileView extends GetView<EditProfileController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                updateProfileImage(Assets.images.profileImgLarge.image(height: 100.kh,width: 100.kw), () {}),
+                updateProfileImage(),
                 32.kheightBox,
-                editProfileTextfelds('Full Name*', StringConstants.name,
-                    controller.nameController),
-                editProfileTextfelds('Email Address', StringConstants.emailAddress,
-                    controller.emailController),
-                editProfileTextfelds('Gender', StringConstants.gender,
-                    controller.emailController),
-                editProfileTextfelds('Age', StringConstants.age,
-                    controller.emailController),
+                editProfileTextfelds(title: 'Full Name*',inputText:  StringConstants.name,
+                   controller:  controller.nameController),
+                editProfileTextfelds(title: 'Email Address',inputText: StringConstants.emailAddress,
+                    controller: controller.emailController,readOnly: true),
+                editProfileTextfelds(title: 'Gender',inputText:  StringConstants.gender,
+                    controller: controller.genderController,readOnly: true),
+                editProfileTextfelds(title: 'Age',inputText:  StringConstants.age,
+                    controller: controller.ageCOntroller),
                 56.kheightBox,
                 SizedBox(
                     width: 343.kw,
                     height: 56.kh,
-                    child: TButton(title: StringConstants.save, onTap: () {})),
+                    child: TButton(title: StringConstants.save, onTap: ()=> controller.onClick())),
                 16.kheightBox,
                 Container(
                   height: 56.kh,
@@ -62,51 +68,23 @@ class EditProfileView extends GetView<EditProfileController> {
   }
 
 
-
-
-
-
-// abbbar widget
-  appBarWidget() {
-    IconData iconData =
-        Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back;
-    return AppBar(
-      centerTitle: true,
-      elevation: 0,
-      backgroundColor: Get.context!.kGreyBack,
-      automaticallyImplyLeading: false,
-      leading: IconButton(
-        onPressed: () => Get.back(),
-        icon: Icon(iconData, color: Get.context!.kPrimary),
-      ),
-      title: Text(
-        textAlign: TextAlign.center,
-        'Profile',
-        style: TextStyleUtil.kText20_6(fontWeight: FontWeight.w600),
-      ),
-    );
-  }
-
-
-
-
   // widget for profile update
-  Widget updateProfileImage(Image profileImg, void Function() onTap) {
+  Widget updateProfileImage() {
     return Column(
       children: [
         Stack(
           children: [
             Center(
-              child: ClipRRect(
+              child: Obx(() => ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child:Image(image: profileImg.image)
-              ),
+                child: profileImg()
+              ),)
             ),
             Positioned(
                 bottom: 12,
                 right: 120,
                 child: InkWell(
-                    onTap: onTap,
+                    onTap: ()=> controller.pickImageFromGallery(),
                     child: Assets.svg.addPlus.svg(height: 29.kh, width: 29.kw)))
           ],
         ),
@@ -121,12 +99,24 @@ class EditProfileView extends GetView<EditProfileController> {
     );
   }
 
+// profile img widget
+
+Widget profileImg(){
+     if (controller.pickedImagePath.value.isNotEmpty) {
+      return Image.file(File(controller.pickedImagePath.value),
+          width: 100.kw, height: 100.kh, fit: BoxFit.cover);
+    }
+    if(Get.find<ProfileController>().teachermodel.value.data?.first?.image != null){
+    return CachedNetworkImage(imageUrl: Get.find<ProfileController>().teachermodel.value.data?.first?.image ?? '',height: 100.kh,width: 100.kw,fit: BoxFit.cover);
+    }
+    return Assets.images.profileImgLarge.image(height: 100.kh,width: 100.kw,fit: BoxFit.cover);
+}
 
 
 
 
 // widget for calling textfiels insted of callin one by one
-  Widget editProfileTextfelds(String title, String inputText, TextEditingController controller) {
+  Widget editProfileTextfelds({required String title, required String inputText, required TextEditingController controller,bool readOnly = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -140,6 +130,7 @@ class EditProfileView extends GetView<EditProfileController> {
         CustomTextField(
             hint: inputText,
             controller: controller,
+            readOnly:readOnly ,
             textInputType: TextInputType.emailAddress),
         16.kheightBox,
       ],

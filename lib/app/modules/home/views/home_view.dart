@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/components/custom_card_vertical.dart';
 import 'package:teaching_with_purpose/app/components/custom_class_card.dart';
 import 'package:teaching_with_purpose/app/constants/string_constants.dart';
+import 'package:teaching_with_purpose/app/modules/profile/controllers/profile_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
@@ -24,7 +26,7 @@ class HomeView extends GetView<HomeController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                studentSection(),
+                buildTeacherSection(),
                 32.kheightBox,
                 clockWidget(),
                 32.kheightBox,
@@ -94,25 +96,26 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-// section for the student details like roll Number and name with img
-  Widget studentSection() {
-    return SizedBox(
+// section for the teacher
+  Widget buildTeacherSection() {
+    return Obx(() => Get.find<ProfileController>().isLoding.value?
+    CircularProgressIndicator(color: Get.context!.kPrimary):
+    SizedBox(
       width: 343.kw,
-      height: 81.kh,
+      height: 89.kh,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
         child: Row(
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Assets.images.profileSmall
-                    .image(height: 48.kh, width: 48.kw)),
+                child: buildProfileImg()),
             16.kwidthBox,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Hi, Patrick',
+                  'Hi, ${Get.find<ProfileController>().teachermodel.value.data?.first?.name ?? ''}',
                   textAlign: TextAlign.center,
                   style: TextStyleUtil.kText20_6(fontWeight: FontWeight.w600),
                 ),
@@ -134,8 +137,22 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
       ),
+    )
     );
   }
+
+//image logic
+  Widget buildProfileImg() {
+    if (Get.find<ProfileController>().teachermodel.value.data?.first?.image !=null) {
+      return CachedNetworkImage(
+          imageUrl:
+              Get.find<ProfileController>().teachermodel.value.data?.first?.image ??'',
+          width: 48.kw,
+          height: 48.kh,
+          fit: BoxFit.cover);
+    }
+    return Assets.images.profileSmall.image(height: 48.kh, width: 48.kw, fit: BoxFit.cover);
+  }  
 
 // custom clock widget
   clockWidget() {

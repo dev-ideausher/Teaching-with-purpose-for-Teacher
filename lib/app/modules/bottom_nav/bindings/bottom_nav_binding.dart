@@ -14,8 +14,9 @@ class BottomNavBinding extends Bindings {
     Get.lazyPut<HomeController>(
       () => HomeController(),
     );
-    Get.lazyPut<ScheduleController>(
-      () => ScheduleController(),
+    Get.put<ScheduleController>(
+       ScheduleController(),
+       permanent: true,
     );
     Get.lazyPut<ProfileController>(
       () => ProfileController(),

@@ -30,6 +30,8 @@ class APIManager {
 
 static Future<Response> getAllStudent() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.getStudents);  
 
+  static Future<Response> getTeacherDetail({required String id}) async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.getTeacherDetail + id);  
+
 static Future<Response> getResults() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.results);  
 
 static Future<Response> getChapter() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.getChapter);  
@@ -42,10 +44,13 @@ static Future<Response> getEvents() async => await DioClient(Dio(), showSnakbar:
 
 static Future<Response> getQuestions() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.getQuestions);  
 
+static Future<Response> getExamSheet() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.examSheet);  
 
 
 
 ///Patch API
+
+  static Future<Response> updateTeacherDetails({required String id,required dynamic body}) async =>await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch("${Endpoints.updateTeacher}/$id",data: jsonEncode(body));
 
 
  

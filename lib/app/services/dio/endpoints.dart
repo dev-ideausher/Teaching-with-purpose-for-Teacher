@@ -14,9 +14,15 @@ class Endpoints {
 
   static const String uploadFile = "file-upload/file";
 
+  static const String getTeacherDetail = "user/all-teachers?_id=";
+
+  static const String updateTeacher = "user/updateTeacher";
+
   static const String createQuiz = "api/quiz/save";
 
   static const String getStudents = "user/all-students";
+
+  static const String getStudentDeatils = "user/all-students?_id=";
 
   static const getSubjects = "api/subject/get";
 
@@ -37,5 +43,11 @@ class Endpoints {
   static const String getQuestions = "api/question/get";
 
   static const String addAssignment = "api/assignment/save";
+
+  static const String updateAssignment = "api/assignment/update";
+
+  static const String examSheet = "api/examdate/get";
+
+  static const String timeTable = "api/timetable/get";
 
 }

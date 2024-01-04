@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_exam_sheet.dart';
 import 'package:teaching_with_purpose/app/modules/schedule/controllers/schedule_controller.dart';
-import 'dart:io' show Platform;
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
@@ -12,7 +12,10 @@ class ExamDateSheetScreen extends GetView<ScheduleController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(46.kh),
+        child: CustomAppBar(title: 'Exam Datesheet', isBack: true),
+      ),
     body: SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
@@ -84,24 +87,5 @@ class ExamDateSheetScreen extends GetView<ScheduleController> {
 
 
 
-// appbar widget
-  appBarWidget() {
-    IconData iconData =
-        Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back;
-    return AppBar(
-      centerTitle: true,
-      elevation: 0,
-      backgroundColor: Get.context!.kGreyBack,
-      automaticallyImplyLeading: false,
-      leading: IconButton(
-        onPressed: () => Get.back(),
-        icon: Icon(iconData, color: Get.context!.kPrimary),
-      ),
-      title: Text(
-        textAlign: TextAlign.center,
-        'Exam Datesheet',
-        style: TextStyleUtil.kText20_6(fontWeight: FontWeight.w600),
-      ),
-    );
-  }
+
 }

@@ -80,14 +80,22 @@ Future<void> addAssignment()async{
    if(addedFile.value.isNotEmpty){
     await uploadFile(addedFile.value);
    }
-    var assignment = AssignmentModel();
-    assignment.title = titleController.text;
-    assignment.desc = decriptionController.text;
-    assignment.dueDate = dateController.value.text;
-    assignment.totalMarks = markController.text;
-    assignment.uploadFile = addedFile.value.isNotEmpty? fileUpload.value.url:'';
+    // var assignment = AssignmentModel();
+    // assignment.title = titleController.text;
+    // assignment.desc = decriptionController.text;
+    // assignment.dueDate = dateController.value.text;
+    // assignment.totalMarks = markController.text;
+    // assignment.uploadFile = addedFile.value.isNotEmpty? fileUpload.value.url:'';
 
-    final response = await APIManager.createAssignment(body: assignment);
+  var body = {
+  "title": "Essay on Global Warming",
+  "desc": "Write an essay discussing the impact of global warming on the environment.",
+  "totalMarks": "50",
+  "dueDate": "2023-12-01",
+  "uploadFile": "https://example.com/global-warming-essay.pdf"
+};
+
+    final response = await APIManager.createAssignment(body: body);
     if (response.data['status'] == true) {
       log('assignment response...${response.data}');
 
