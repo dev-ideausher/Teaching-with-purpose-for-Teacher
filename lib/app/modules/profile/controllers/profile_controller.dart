@@ -27,7 +27,7 @@ Future<void> getTeacher()async{
     var responce = await APIManager.getTeacherDetail(id: Get.find<GetStorageService>().id);
     if(responce.statusCode == 200){
       
-    log('teacherdetails...${jsonEncode(responce.data)}');
+    // log('teacherdetails...${jsonEncode(responce.data)}');
     teachermodel.value = TeacherDetailsModel.fromJson(responce.data);
     }
   } catch (e) {

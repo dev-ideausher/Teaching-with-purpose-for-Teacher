@@ -144,7 +144,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
     return Obx(() => Container(
           decoration: BoxDecoration(
               color: Get.context!.kWhite,
-              border: Border.all(color: Get.context!.kNeutral, width: 0.5),
+              // border: Border.all(color: Get.context!.kNeutral, width: 0.5),
               borderRadius: BorderRadius.circular(8)),
           child: DropdownButtonHideUnderline(
             child: DropdownButton2<String>(
@@ -157,7 +157,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
               ),
               items: controller.items
                   .map((String item) =>
-                      DropdownMenuItem<String>(value: item, child: Text(item)))
+                      DropdownMenuItem<String>(value: item, child: Text(item,style:TextStyleUtil.kText16_5(fontWeight: FontWeight.w400))))
                   .toList(),
               value: controller.selectedSubject.value,
               onChanged: (String? value) => controller.selectSubject(value!),
@@ -171,7 +171,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
     return Obx(() => Container(
           decoration: BoxDecoration(
               color: Get.context!.kWhite,
-              border: Border.all(color: Get.context!.kNeutral, width: 0.5),
+              // border: Border.all(color: Get.context!.kNeutral, width: 0.5),
               borderRadius: BorderRadius.circular(8)),
           child: DropdownButtonHideUnderline(
             child: DropdownButton2<String>(
@@ -184,7 +184,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
               ),
               items: controller.classes
                   .map((String item) =>
-                      DropdownMenuItem<String>(value: item, child: Text(item)))
+                      DropdownMenuItem<String>(value: item, child: Text(item,style:TextStyleUtil.kText16_5(fontWeight: FontWeight.w400))))
                   .toList(),
               value: controller.selectedValue.value,
               onChanged: (String? value) => controller.selectClass(value!),

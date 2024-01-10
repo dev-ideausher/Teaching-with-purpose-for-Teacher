@@ -1,23 +1,31 @@
+
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 
 class MarksController extends GetxController {
-  //TODO: Implement MarksController
 
-  final count = 0.obs;
-  @override
+final subjectsController = Get.find<SubjectsController>();
+
+RxString examTypeString = ''.obs;
+RxString passOrFailTextString = ''.obs;
+
+
+
+ List<String> examType = ['Yearly','Half-Yearly','Live Quiz'];
+
+ List<String> passOrFailText = ['Pass','Fail'];
+
+@override
   void onInit() {
-    super.onInit();
+  initilize();
+  super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+
+void initilize() {
+    subjectsController.updateSubjectItems();
+    subjectsController.updateClassItems();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
-  void increment() => count.value++;
 }

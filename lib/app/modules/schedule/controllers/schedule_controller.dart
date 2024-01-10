@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:teaching_with_purpose/app/data/models/exam_sheet_model.dart';
@@ -13,10 +12,18 @@ class ScheduleController extends GetxController {
   RxBool isLoding = false.obs;
 
 
+ @override
+  void onInit() {
+  examSheet();
+    super.onInit();
+  }
+
   void setSelectedDate(DateTime date) {
     selectedDate.value = date;
     formattedDate.value = DateFormat('dd MMMM yyyy (EEEE)').format(date);
   }
+
+
 
 
   //-----------------------Exam sheet-------------------------------

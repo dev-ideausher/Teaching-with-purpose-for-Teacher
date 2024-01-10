@@ -38,6 +38,7 @@ abstract class Routes {
   static const EVENTS = _Paths.EVENTS;
   static const ANNOUNCEMENTS = _Paths.ANNOUNCEMENTS;
   static const ADD_ASSIGNMENT = _Paths.ADD_ASSIGNMENT;
+  static const ADD_MARKS = _Paths.ADD_MARKS;
 }
 
 abstract class _Paths {
@@ -77,4 +78,5 @@ abstract class _Paths {
   static const EVENTS = '/events';
   static const ANNOUNCEMENTS = '/announcements';
   static const ADD_ASSIGNMENT = '/add-assignment';
+  static const ADD_MARKS = '/add-marks';
 }

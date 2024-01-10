@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:teaching_with_purpose/app/data/models/announcement_model.dart';
 import 'package:teaching_with_purpose/app/data/models/events_model.dart';
+import 'package:teaching_with_purpose/app/data/models/students_model.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
+import 'package:teaching_with_purpose/app/utils/utils.dart';
 import 'package:teaching_with_purpose/gen/assets.gen.dart';
 
 class HomeController extends GetxController {
@@ -22,9 +24,11 @@ class HomeController extends GetxController {
   RxString timerText = 'Work Duration: 00:00:00'.obs;
   Rx<DateTime> startTime = DateTime.now().obs;
   Timer? timer;
+  RxBool isLoding = false.obs;
+  
   Rx<EventsModel> eventModel = EventsModel().obs;
   Rx<AnnouncementModel> announcement = AnnouncementModel().obs;
-  RxBool isLoding = false.obs;
+  Rx<StudentsModel> studentsmodel = StudentsModel().obs;
 
   
 // event items to list
@@ -88,7 +92,7 @@ String formatTimestamp(String timestamp) {
       if (responce.statusCode == 200) {
         // log('announcements...${responce.data}');
         announcement.value = AnnouncementModel.fromJson(responce.data);
-        showEvents();
+        await showEvents();
       }
     } catch (e) {
      log('error..$e');
@@ -107,6 +111,7 @@ String formatTimestamp(String timestamp) {
       if (responce.statusCode == 200) {
         // log('events...${responce.data}');
         eventModel .value = EventsModel.fromJson(responce.data);
+        await listAllStudents();
       }
     } catch (e) {
      log('error..$e');
@@ -115,6 +120,27 @@ String formatTimestamp(String timestamp) {
     }
   }
 
+//-----------------------Students list -------------------------------
 
+  Future<void> listAllStudents()async{
+    isLoding(true);
+  try {
+    final responce = await APIManager.getAllStudent();
+    if(responce.statusCode == 200){
+
+      studentsmodel.value = StudentsModel.fromJson(responce.data);
+
+      log('studentslist..${responce.data}');
+    } else{
+
+      Utils.showMySnackbar(desc: responce.data['message']);
+    }
+  } catch (error) {
+    log('error...$error');
+  }finally{
+    isLoding(false);
+  }
+
+  }
 
 }

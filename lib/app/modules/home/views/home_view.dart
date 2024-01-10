@@ -46,23 +46,17 @@ class HomeView extends GetView<HomeController> {
                           mainAxisSpacing: 27.5),
                   children: [
                     CustomClassCard(
-                        imageWidget: Assets.svg.myClass.svg(),
-                        text: StringConstants.myclass, onTap: () => Get.toNamed(Routes.MY_CLASSES)),
+                        imageWidget: Assets.svg.myClass.svg(),text: StringConstants.myclass, onTap: () => Get.toNamed(Routes.MY_CLASSES)),
                     CustomClassCard(
-                        imageWidget: Assets.svg.subjects.svg(),
-                        text: StringConstants.subjects, onTap: ()=> Get.toNamed(Routes.SUBJECTS)),
+                        imageWidget: Assets.svg.subjects.svg(),text: StringConstants.subjects, onTap: ()=> Get.toNamed(Routes.SUBJECTS)),
                     CustomClassCard(
-                        imageWidget: Assets.svg.assignment.svg(),
-                        text: StringConstants.assignment, onTap: () => Get.toNamed(Routes.ASSIGNMENTS)),
+                        imageWidget: Assets.svg.assignment.svg(),text: StringConstants.assignment, onTap: () => Get.toNamed(Routes.ASSIGNMENTS)),
                     CustomClassCard(
-                        imageWidget: Assets.svg.quiz.svg(),
-                        text: StringConstants.quiz,onTap: () => Get.toNamed(Routes.LIVE_QUIZZ)),
+                        imageWidget: Assets.svg.quiz.svg(),text: StringConstants.quiz, onTap: () => Get.toNamed(Routes.LIVE_QUIZZ)),
                     CustomClassCard(
-                        imageWidget: Assets.svg.result.svg(),
-                        text: StringConstants.result,onTap: () => Get.toNamed(Routes.RESULTS)),
+                        imageWidget: Assets.svg.result.svg(),text: StringConstants.result, onTap: () => Get.toNamed(Routes.RESULTS)),
                     CustomClassCard(
-                        imageWidget: Assets.svg.marks.svg(),
-                        text: StringConstants.marks, onTap: () => Get.toNamed(Routes.MARKS)),
+                        imageWidget: Assets.svg.marks.svg(),text: StringConstants.marks, onTap: () => Get.toNamed(Routes.MARKS)),
                   ],
                 ),
                 32.kheightBox,

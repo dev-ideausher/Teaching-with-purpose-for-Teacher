@@ -25,7 +25,7 @@ class CustomStudentCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: SizedBox(
-          height: 62.kh,
+          height: 66.kh,
           width: 343.kw,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),

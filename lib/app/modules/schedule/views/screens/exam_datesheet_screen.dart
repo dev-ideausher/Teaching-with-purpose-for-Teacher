@@ -16,7 +16,9 @@ class ExamDateSheetScreen extends GetView<ScheduleController> {
         preferredSize: Size.fromHeight(46.kh),
         child: CustomAppBar(title: 'Exam Datesheet', isBack: true),
       ),
-    body: SingleChildScrollView(
+    body: Obx(() => controller.isLoding.value?
+    Center(child: CircularProgressIndicator(color: context.kPrimary)):
+    SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40,horizontal: 16),
@@ -36,56 +38,25 @@ class ExamDateSheetScreen extends GetView<ScheduleController> {
                 ),
               ),
               40.kheightBox,
-                ExamSheet(
-                  title: 'Physics',
-                  text1: 'Date: 07 July 2023',
-                  text2: 'Time: 9:00 am to 10:30 am',
-                  text3: 'Full marks: 50',
-                  text4: 'Passing marks: 20',
-                  borderColor: context.kLightred),
-              16.kheightBox,
-              ExamSheet(
-                  title: 'Chemistry',
-                  text1: 'Date: 07 July 2023',
-                  text2: 'Time: 9:00 am to 10:30 am',
-                  text3: 'Full marks: 50',
-                  text4: 'Passing marks: 20',
-                  borderColor: context.kPrimary),
-              16.kheightBox,
-              const ExamSheet(
-                  title: 'English',
-                  text1: 'Date: 07 July 2023',
-                  text2: 'Time: 9:00 am to 10:30 am',
-                  text3: 'Full marks: 50',
-                  text4: 'Passing marks: 20',
-                  borderColor: Colors.amber),
-              16.kheightBox,
-              ExamSheet(
-                  title: 'Mathematics',
-                  text1: 'Date: 07 July 2023',
-                  text2: 'Time: 9:00 am to 10:30 am',
-                  text3: 'Full marks: 50',
-                  text4: 'Passing marks: 20',
-                  borderColor: context.kLightBlue),
-              16.kheightBox,
-              ExamSheet(
-                  title: 'History',
-                  text1: 'Date: 07 July 2023',
-                  text2: 'Time: 9:00 am to 10:30 am',
-                  text3: 'Full marks: 50',
-                  text4: 'Passing marks: 20',
-                  borderColor: context.kRed),
+              ListView.separated(
+                shrinkWrap: true,
+                 separatorBuilder: (context, index) => 16.kheightBox,
+                 itemCount: controller.examsheetmodel.value.data?.length?? 0,
+                itemBuilder: (context, index) => ExamSheet(
+                title: controller.examsheetmodel.value.data?[index]?.examTitle?? '',
+                text1: 'Date: 07 July 2023',
+                text2: 'Time: ${controller.examsheetmodel.value.data?[index]?.examTime?? ''}',
+                text3: 'Full marks: ${controller.examsheetmodel.value.data?[index]?.fullMarks?? ''}',
+                text4: 'Passing marks: ${controller.examsheetmodel.value.data?[index]?.passingMarks?? ''}',
+                borderColor: context.kLightred),
+                            ),
           ],
         ),
       ),
     ),
+    )
   
     );
   }
-
-
-
-
-
-
 }
+ 

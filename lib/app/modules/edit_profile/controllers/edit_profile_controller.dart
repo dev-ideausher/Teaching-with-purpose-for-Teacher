@@ -12,6 +12,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as path;
 import 'package:intl/intl.dart';
 import 'package:teaching_with_purpose/app/data/models/file_upload_model.dart';
+import 'package:teaching_with_purpose/app/data/models/teacher_details_upload_model.dart';
 import 'package:teaching_with_purpose/app/modules/profile/controllers/profile_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
@@ -28,6 +29,7 @@ class EditProfileController extends GetxController {
   RxString pickedImagePath = ''.obs;
   RxString selectedDate = ''.obs;
   Rx<FileUploadModel> fileUpload = FileUploadModel().obs;
+  Rx<TeacherDetailsUploadModel> updateTeacher = TeacherDetailsUploadModel().obs;
 
  @override
   void onInit() {
@@ -85,7 +87,7 @@ class EditProfileController extends GetxController {
     try {
       final responce = await APIManager.updateTeacherDetails( body: body, id: Get.find<GetStorageService>().id);
       if (responce.statusCode == 200) {
-      // updateData.value = StudentUpdateModel.fromJson(responce.data);
+      updateTeacher.value = TeacherDetailsUploadModel.fromJson(responce.data);
       log('teacher..${responce.data}');
       Utils.showMySnackbar(  title: 'Sucess' ,desc: 'Profile updated Successfully');
       Get.find<ProfileController>().getTeacher();

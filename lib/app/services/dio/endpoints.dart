@@ -50,4 +50,8 @@ class Endpoints {
 
   static const String timeTable = "api/timetable/get";
 
+  static const String getClasses = "api/class/get";
+
+  static const String addMarks = "api/mark/save";
+
 }
