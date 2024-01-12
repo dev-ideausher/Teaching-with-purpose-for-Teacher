@@ -25,7 +25,7 @@ class MarksView extends GetView<MarksController> {
     return Scaffold(
       appBar: PreferredSize(preferredSize: Size.fromHeight(46.kh),
        child: CustomAppBar(title: 'Marks',isBack: true)),
-      body: SingleChildScrollView(
+      body:        SingleChildScrollView(  
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 39),
@@ -95,10 +95,12 @@ class MarksView extends GetView<MarksController> {
                 rollNber: 'Roll No. -${Get.find<HomeController>().studentsmodel.value.data?[index]?.rollNumber?? ''}',
                 onTap: (){
                 final data = Get.find<HomeController>().studentsmodel.value.data?[index]; 
-                Get.toNamed(Routes.ADD_MARKS,arguments: data);}
+                log('studentid.......${data?.Id}');
+                Get.toNamed(Routes.ADD_MARKS,
+                arguments: data
+              );}
                 ),
                )
-
             ],
           ),
         ),

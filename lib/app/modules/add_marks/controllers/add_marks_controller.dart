@@ -13,21 +13,33 @@ class AddMarksController extends GetxController {
 var selectedPeriod = 'Yearly'.obs;
 var selectedResult = 'Pass'.obs;
 
+// var selectedClass = ''.obs;
+// var selectedSubject = ''.obs;
+
+String id = '';
 var marksController = TextEditingController();
 var gradesController = TextEditingController();
 Rx<StudentsModelData> studentModel = StudentsModelData().obs;
 
 @override
   void onInit() {
-  seArguments();
+    seArguments();
     super.onInit();
   }
 
  void seArguments(){
- studentModel.value = Get.arguments;
+    studentModel.value = Get.arguments;
+    // selectedClass.value = Get.find<SubjectsController>().selectedClass.value;
+    // selectedSubject.value = Get.find<SubjectsController>().selectedSubject.value;
  }
 
+  // void onClassSelected(String value) {
+  //   selectedClass.value = value;
+  // }
 
+  // void onSubjectSelected(String value) {
+  //   selectedSubject.value = value;
+  // }
 
 
 
@@ -35,7 +47,6 @@ Rx<StudentsModelData> studentModel = StudentsModelData().obs;
 
 Future<void> addMarkstoStudent() async {
     if (marksController.text.isEmpty || gradesController.text.isEmpty) {
-
       Utils.showMySnackbar(desc: 'Please fill the fields');
       return;
     }
@@ -50,16 +61,16 @@ Future<void> addMarkstoStudent() async {
         "grade": gradesController.text,
         "passOrFail": selectedResult.value.toLowerCase()
       };
-    
-    log('body..$body');
+
+      log('body..$body');
 
       final responce = await APIManager.addMarks(body: body);
 
       if (responce.data['status'] == true) {
-      
-      Get.toNamed(Routes.HOME);
-      
+
+        Get.toNamed(Routes.BOTTOM_NAV);
         Utils.showMySnackbar(desc: 'Marks Added Successfully');
+
       } else {
         Utils.showMySnackbar(desc: responce.data['message']);
       }

@@ -6,14 +6,6 @@ class MarksController extends GetxController {
 
 final subjectsController = Get.find<SubjectsController>();
 
-RxString examTypeString = ''.obs;
-RxString passOrFailTextString = ''.obs;
-
-
-
- List<String> examType = ['Yearly','Half-Yearly','Live Quiz'];
-
- List<String> passOrFailText = ['Pass','Fail'];
 
 @override
   void onInit() {
