@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
+import 'package:teaching_with_purpose/app/data/models/subjects_list_model.dart';
 import 'package:teaching_with_purpose/app/modules/assignments/controllers/assignments_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
@@ -61,18 +62,21 @@ class AssignmentUplodedScreen extends GetWidget<AssignmentsController> {
               color: Get.context!.kWhite,
               borderRadius: BorderRadius.circular(8)),
           child: DropdownButtonHideUnderline(
-            child: DropdownButton2<String>(
+            child: DropdownButton2<SubjectsListModelData?>(
               isExpanded: true,
-              hint: Text(
-                'Select Subject',
-                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400),
-              ),
-              items: controller.items
-                  .map((String item) =>
-                      DropdownMenuItem<String>(value: item, child: Text(item)))
-                  .toList(),
-              value: controller.selectedSubject.value,
-              onChanged: (String? value) => controller.selectSubject(value!),
+              hint: Text('Select Subject',
+                  style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
+              items: controller.subjectsController.subjectItems.map((SubjectsListModelData? item) =>
+                      DropdownMenuItem<SubjectsListModelData?>(
+                        value: item,
+                        child: Text(item?.subject ?? '',
+                            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
+              value: controller.subjectsController.selectedSubject.value == ''? null
+                  : controller.subjectsController.subjectItems.firstWhere((SubjectsListModelData? item) =>
+                          item?.subject == controller.subjectsController.selectedSubject.value),
+              onChanged: (SubjectsListModelData? value) {
+                controller.subjectsController.selectedSubject.value = value?.subject ?? '';
+              },
             ),
           ),
         ));

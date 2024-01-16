@@ -15,9 +15,9 @@ class ScheduleView extends GetView<ScheduleController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:PreferredSize(
-        preferredSize: Size.fromHeight(46.kh),
-        child: CustomAppBar(title: 'Schedule', isBack: true)),
+      appBar: PreferredSize(
+      preferredSize: Size.fromHeight(46.kh),
+      child: CustomAppBar(title: 'Schedule', isBack: false)),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -28,7 +28,6 @@ class ScheduleView extends GetView<ScheduleController> {
               Row(
                 children: [
                   Text(
-                    textAlign: TextAlign.center,
                     'Timetable',
                     style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
                   ),
@@ -49,17 +48,16 @@ class ScheduleView extends GetView<ScheduleController> {
                     initialSelectedDate: controller.selectedDate.value,
                   )),
               32.kheightBox,
-                    Text(
-                    '${controller.formattedDate}',
+              Obx(() => Text(
+                    "${controller.formattedDate}",
                     style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
-                  ),
+                  )),
               16.kheightBox,
               const CommoncardTable(),
               32.kheightBox,
               Text(
-                  textAlign: TextAlign.center,
-                  'Exam Datesheet',
-                  style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600)),
+              'Exam Datesheet',
+              style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600)),
               16.kheightBox,
               examSheetWidget(
                 'Class 8th',
@@ -93,7 +91,7 @@ class ScheduleView extends GetView<ScheduleController> {
         height: 56.kh,
         width: 343.kw,
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+        color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
           child: Row(
@@ -102,7 +100,6 @@ class ScheduleView extends GetView<ScheduleController> {
               15.kwidthBox,
               Text(
                 text,
-                textAlign: TextAlign.center,
                 style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
               ),
               const Spacer(),

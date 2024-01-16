@@ -59,8 +59,7 @@ class EventsView extends GetView<EventsController> {
     return Obx(() => Container(
           decoration: BoxDecoration(
               color: Get.context!.kWhite,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Get.context!.kNeutral, width: 0.5)),
+              borderRadius: BorderRadius.circular(8)),
           child: DropdownButtonHideUnderline(
             child: DropdownButton2<String>(
               isExpanded: true,
@@ -72,7 +71,7 @@ class EventsView extends GetView<EventsController> {
               ),
               items: controller.items
                   .map((String item) =>
-                      DropdownMenuItem<String>(value: item, child: Text(item)))
+                      DropdownMenuItem<String>(value: item, child: Text(item,style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400))))
                   .toList(),
               value: controller.selectedValue.value,
               onChanged: (String? value) => controller.selectedMonth(value!),

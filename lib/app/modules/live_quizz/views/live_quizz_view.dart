@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_textfield.dart';
+import 'package:teaching_with_purpose/app/data/models/class_model.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/custom_button.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
 import 'package:teaching_with_purpose/gen/assets.gen.dart';
+import '../../../data/models/subjects_list_model.dart';
 import '../controllers/live_quizz_controller.dart';
 
 class LiveQuizzView extends GetView<LiveQuizzController> {
@@ -144,23 +146,24 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
     return Obx(() => Container(
           decoration: BoxDecoration(
               color: Get.context!.kWhite,
-              // border: Border.all(color: Get.context!.kNeutral, width: 0.5),
               borderRadius: BorderRadius.circular(8)),
           child: DropdownButtonHideUnderline(
-            child: DropdownButton2<String>(
+            child: DropdownButton2<SubjectsListModelData?>(
               isExpanded: true,
-              hint: Text(
-                'Select Subject',
-                style: TextStyleUtil.kText14_4(
-                    fontWeight: FontWeight.w400,
-                    color: Get.context!.kLightTextColor),
-              ),
-              items: controller.items
-                  .map((String item) =>
-                      DropdownMenuItem<String>(value: item, child: Text(item,style:TextStyleUtil.kText16_5(fontWeight: FontWeight.w400))))
-                  .toList(),
-              value: controller.selectedSubject.value,
-              onChanged: (String? value) => controller.selectSubject(value!),
+              hint: Text('Select Subject',
+                  style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
+              items: controller.subjectsController.subjectItems.map((SubjectsListModelData? item) =>
+                      DropdownMenuItem<SubjectsListModelData?>(
+                        value: item,
+                        child: Text(item?.subject ?? '',
+                            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
+              value: controller.subjectsController.selectedSubject.value == ''? null
+                  : controller.subjectsController.subjectItems.firstWhere((SubjectsListModelData? item) =>
+                          item?.subject == controller.subjectsController.selectedSubject.value),
+              onChanged: (SubjectsListModelData? value) {
+                // log('Selected Subject: ${value?.subject}');
+                controller.subjectsController.selectedSubject.value = value?.subject ?? '';
+              },
             ),
           ),
         ));
@@ -171,23 +174,20 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
     return Obx(() => Container(
           decoration: BoxDecoration(
               color: Get.context!.kWhite,
-              // border: Border.all(color: Get.context!.kNeutral, width: 0.5),
               borderRadius: BorderRadius.circular(8)),
           child: DropdownButtonHideUnderline(
-            child: DropdownButton2<String>(
+            child: DropdownButton2<ClassModelData?>(
               isExpanded: true,
-              hint: Text(
-                'Select Classes',
-                style: TextStyleUtil.kText14_4(
-                    fontWeight: FontWeight.w400,
-                    color: Get.context!.kLightTextColor),
-              ),
-              items: controller.classes
-                  .map((String item) =>
-                      DropdownMenuItem<String>(value: item, child: Text(item,style:TextStyleUtil.kText16_5(fontWeight: FontWeight.w400))))
-                  .toList(),
-              value: controller.selectedValue.value,
-              onChanged: (String? value) => controller.selectClass(value!),
+              hint: Text('Select Class',
+                  style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
+              items: controller.subjectsController.classItems.map((ClassModelData? item) =>
+                      DropdownMenuItem<ClassModelData?>(
+                        value: item,
+                        child: Text(item?.className ?? '',
+                            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
+              onChanged: (ClassModelData? value) {
+                controller.subjectsController.selectedClass.value = value?.className ?? '';
+              },
             ),
           ),
         ));

@@ -30,7 +30,7 @@ class Endpoints {
 
   static const String createChapter = "api/chapter/save";
 
-  static const String getChapter = "api/chapter/get";
+  static const String getChapter = "api/chapter/get?subjectId=";
 
   static const String getAnnouncements = "api/announcment/get";
 
@@ -40,7 +40,7 @@ class Endpoints {
 
   static const String updateQuestions = "api/question/update";
 
-  static const String getQuestions = "api/question/get";
+  static const String getQuestions = "api/question/get?chapterId=";
 
   static const String addAssignment = "api/assignment/save";
 
@@ -53,5 +53,9 @@ class Endpoints {
   static const String getClasses = "api/class/get";
 
   static const String addMarks = "api/mark/save";
+
+  static const String ratings = "api/rating/save";
+
+  static const String addResult = "api/result/save";
 
 }

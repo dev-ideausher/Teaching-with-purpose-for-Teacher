@@ -17,7 +17,6 @@ import 'package:teaching_with_purpose/app/services/global_services.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
 
 class AddChaptersController extends GetxController {
-  var selectedValue = 'Class 8-A'.obs;
   RxBool isLoding = false.obs;
   RxString selectedFile = ''.obs;
   RxString selectedPdf = ''.obs;
@@ -27,28 +26,23 @@ class AddChaptersController extends GetxController {
   var topicNameController = TextEditingController();
   var topicDescriptionController = TextEditingController();
   Rx<FileUploadModel> fileUpload = FileUploadModel().obs;
-  Rx<ChaptersListModel> chaptersList = ChaptersListModel().obs;
+  Rx<ChaptersModel> chapters = ChaptersModel().obs;
 
   @override
   void onInit() {
+   getArguments();
+    super.onInit();
+  }
+
+
+  void getArguments()async{
     final Map<String, dynamic> arguments = Get.arguments;
     subjectName = arguments['subjectName'];
     subjectId = arguments['subjectId'];
     log('id...$subjectId');
-    super.onInit();
+    await getChapters();
   }
 
-  final List<String> items = [
-    'Class 8-A',
-    'Class 8-B',
-    'Class 9-D',
-    'Class 10-A',
-    'Class 10-C',
-  ];
-
-  void selectClass(String item) {
-    selectedValue.value = item;
-  }
 
 
 Future<String?> pickPdfFile() async {
@@ -73,8 +67,6 @@ Future<String?> pickVideoFile() async {
   }
   return null;
 }
-
-
 
 //-----------------------File upload-------------------------------
 
@@ -159,13 +151,13 @@ Future<void> addChapter() async {
 
 //-----------------------Get Chapter's -------------------------------
 
-   Future<void> showListofChapters()async{
+   Future<void> getChapters()async{
     isLoding(true);
     try {
-      final responce = await APIManager.getChapter();
+      final responce = await APIManager.getChapter(subjectId: subjectId);
       if (responce.statusCode == 200) {
-        // log('chapters...${responce.data}');
-       chaptersList.value = ChaptersListModel.fromJson(responce.data);  
+        //log('chapters...${responce.data}');
+       chapters.value = ChaptersModel.fromJson(responce.data);  
       }
     } catch (e) {
      log('error..$e');

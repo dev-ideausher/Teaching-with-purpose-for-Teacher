@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 import 'dart:developer';
 
 import 'package:get/get.dart';
@@ -6,6 +6,7 @@ import 'package:teaching_with_purpose/app/data/models/teacher_details_model.dart
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/app/services/storage.dart';
+import 'package:teaching_with_purpose/app/utils/utils.dart';
 
 class ProfileController extends GetxController {
 
@@ -15,16 +16,16 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() {
-  getTeacher();
+  getUser();
     super.onInit();
   }
 
- //-----------------------Get Teacher details-------------------------------
+ //-----------------------Get user-------------------------------
  
-Future<void> getTeacher()async{
+Future<void> getUser()async{
   isLoding(true);
   try {
-    var responce = await APIManager.getTeacherDetail(id: Get.find<GetStorageService>().id);
+    var responce = await APIManager.getuser(id: Get.find<GetStorageService>().id);
     if(responce.statusCode == 200){
       
     // log('teacherdetails...${jsonEncode(responce.data)}');
@@ -36,6 +37,30 @@ Future<void> getTeacher()async{
     isLoding(false);
   }
 }
+
+//-----------------------App Rating-------------------------------
+
+  Future<void> giveRating(String rating) async {
+    try {
+      var body = {"rating": rating};
+
+      final responce = await APIManager.giveRating(body: body);
+
+      if (responce.data['status'] == true) {
+
+        //log('rating...${responce.data}');
+
+        Utils.showMySnackbar(title: 'Rating Submitted',desc:'Thankyou for the Rating' );
+
+      } else {
+        Utils.showMySnackbar(desc: 'An error occured!');
+      }
+    } catch (e) {
+      log('*.error..$e');
+    }
+  }
+
+
 
 
 //-----------------------logout-------------------------------

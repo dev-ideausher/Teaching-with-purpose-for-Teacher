@@ -9,8 +9,7 @@ class ResponseBottomSheet extends StatefulWidget {
   final String title;
   final String text1;
   final String text2;
-  // final Widget ratingWidget;
-  void Function() onTap;
+  void Function(double) onTap;
   ResponseBottomSheet(
       {super.key,
       required this.bottomSheetImg,
@@ -24,9 +23,11 @@ class ResponseBottomSheet extends StatefulWidget {
 }
 
 class _ResponseBottomSheetState extends State<ResponseBottomSheet> {
+
   Future<bool> onWillPop() async {
     return false;
   }
+  double selectedRating = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -78,11 +79,17 @@ class _ResponseBottomSheetState extends State<ResponseBottomSheet> {
                       Icons.star,
                       color: Colors.amber,
                     ),
-                    onRatingUpdate: (rating) {},
+                    onRatingUpdate: (rating) {
+                    setState(() {
+                      selectedRating = rating;
+                    });
+                    },
                   ),
                   48.kheightBox,
                   InkWell(
-                    onTap: widget.onTap,
+                    onTap: (){
+                    widget.onTap(selectedRating);
+                    },
                     child: Text(
                       textAlign: TextAlign.center,
                       widget.text2,

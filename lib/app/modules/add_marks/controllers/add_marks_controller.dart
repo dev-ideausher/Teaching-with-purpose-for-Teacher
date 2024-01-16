@@ -13,9 +13,6 @@ class AddMarksController extends GetxController {
 var selectedPeriod = 'Yearly'.obs;
 var selectedResult = 'Pass'.obs;
 
-// var selectedClass = ''.obs;
-// var selectedSubject = ''.obs;
-
 String id = '';
 var marksController = TextEditingController();
 var gradesController = TextEditingController();
@@ -29,17 +26,8 @@ Rx<StudentsModelData> studentModel = StudentsModelData().obs;
 
  void seArguments(){
     studentModel.value = Get.arguments;
-    // selectedClass.value = Get.find<SubjectsController>().selectedClass.value;
-    // selectedSubject.value = Get.find<SubjectsController>().selectedSubject.value;
  }
 
-  // void onClassSelected(String value) {
-  //   selectedClass.value = value;
-  // }
-
-  // void onSubjectSelected(String value) {
-  //   selectedSubject.value = value;
-  // }
 
 
 
@@ -83,6 +71,6 @@ Future<void> addMarkstoStudent() async {
   void onClose() {
   marksController.dispose();
   gradesController.dispose();
-    super.onClose();
+  super.onClose();
   }
 }

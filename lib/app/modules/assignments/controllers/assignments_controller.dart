@@ -1,35 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 
 class AssignmentsController extends GetxController  with GetSingleTickerProviderStateMixin{
   late TabController tabController;
-  var selectedSubject = 'Mathematics'.obs;
   var selctedTabIndex = 0.obs;
 
-//... list of  subject  for dropdawn
-  final List<String> items = [
-    'Mathematics',
-    'English',
-  ];
+  final subjectsController = Get.find<SubjectsController>();
 
 
-// ...... for tab ......
   @override
   void onInit() {
-    tabController = TabController(length: 2, vsync: this);
-    tabController
-        .addListener(() => selctedTabIndex.value = tabController.index);
+    initilize();
     super.onInit();
   }
+
+
+ void initilize(){
+    tabController = TabController(length: 2, vsync: this);
+    tabController.addListener(() => selctedTabIndex.value = tabController.index);
+
+    subjectsController.updateSubjectItems();
+ }
+
 
   @override
   void onClose() {
     tabController.dispose();
     super.onClose();
-  }
-
-// ..........function for dropDawn
-  void selectSubject(String item) {
-    selectedSubject.value = item;
   }
 }

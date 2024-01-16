@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:io' show Platform;
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
@@ -14,7 +14,9 @@ class AssignmentsView extends GetView<AssignmentsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBarWidget(),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(46.kh),
+          child: CustomAppBar(title: 'Assignment', isBack: true)),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
           child: Column(
@@ -42,27 +44,6 @@ class AssignmentsView extends GetView<AssignmentsController> {
             ],
           ),
         ));
-  }
-
-// appbar widget
-  appBarWidget() {
-    IconData iconData =
-        Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back;
-    return AppBar(
-      centerTitle: true,
-      elevation: 0,
-      backgroundColor: Get.context!.kGreyBack,
-      automaticallyImplyLeading: false,
-      leading: IconButton(
-        onPressed: () => Get.back(),
-        icon: Icon(iconData, color: Get.context!.kPrimary),
-      ),
-      title: Text(
-        'Assignment',
-        textAlign: TextAlign.center,
-        style: TextStyleUtil.kText20_6(fontWeight: FontWeight.w600),
-      ),
-    );
   }
 
   Widget classContainer(String text, void Function() onTap) {

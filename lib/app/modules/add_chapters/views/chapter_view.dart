@@ -18,7 +18,9 @@ class ChapterView extends GetView<AddChaptersController>{
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(46.kh),
           child: CustomAppBar(title: selectedSubjectName, isBack: true)),
-      body: SingleChildScrollView(
+      body: Obx(() => controller.isLoding.value?
+      Center(child: CircularProgressIndicator(color: context.kPrimary)):
+        SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
@@ -26,20 +28,23 @@ class ChapterView extends GetView<AddChaptersController>{
             children: [
               // Center(child: dropDawn()),
               32.kheightBox,
-              chapterWidget(
-                  chapterName: 'Relations and Functions I',
-                  conceptName: 'Ordered Pairs',
-                  dec: 'Lorem ipsum dolor sit amet, consectetur ....',
-                  text: '1 Attachment'),
-              16.kheightBox,
-              chapterWidget(
-                  chapterName: 'Relations and Functions I',
-                  conceptName: 'Ordered Pairs',
-                  dec: 'Lorem ipsum dolor sit amet, consectetur ....',
-                  text: '1 Attachment'),
+              ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              separatorBuilder: (context, index) => 16.kheightBox, 
+              itemCount: controller.chapters.value.data?.length?? 0,
+              itemBuilder: (context, index) {
+                return chapterWidget(
+                  chapterName: controller.chapters.value.data?[index]?.chapterName?? '',
+                  conceptName: controller.chapters.value.data?[index]?.concept?? '',
+                  dec: '${controller.chapters.value.data?[index]?.desc?? ''} ....',
+                  text: '1 Attachment'
+                );
+              },),
             ],
           ),
         ),
+      ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {Get.toNamed(Routes.ADD_CHAPTERS);},
@@ -134,6 +139,7 @@ class ChapterView extends GetView<AddChaptersController>{
             ),
             Text(
               dec,
+              maxLines: 1,
               style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
             ),
             8.kheightBox,

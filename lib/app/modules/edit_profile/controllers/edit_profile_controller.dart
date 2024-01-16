@@ -36,7 +36,7 @@ class EditProfileController extends GetxController {
   nameController.value = TextEditingValue(text: Get.find<ProfileController>().teachermodel.value.data?.first?.name?? '');
   emailController.value = TextEditingValue(text: Get.find<ProfileController>().teachermodel.value.data?.first?.email?? '');
   genderController.value = TextEditingValue(text: Get.find<ProfileController>().teachermodel.value.data?.first?.gender?? '');
-  ageCOntroller.value = TextEditingValue(text: '30');
+  ageCOntroller.value = const TextEditingValue(text: '30');
     super.onInit();
   }
 
@@ -45,15 +45,17 @@ class EditProfileController extends GetxController {
     if(pickedImagePath.isNotEmpty){
       await uploadImage();
     }else{
-      updateProfile();
+      updateUser();
     }
   }
 
 
 
   //-----------------------Upload File-------------------------------
+
     Future<void> uploadImage() async {
     final File pickedImageFile = File(pickedImagePath.value);
+    
     String extension = path.extension(pickedImageFile.path).replaceAll(".", "");
 
     final body = FormData.fromMap({
@@ -64,10 +66,13 @@ class EditProfileController extends GetxController {
       )});
     try {
        final responce = await APIManager.fileUpload(body: body);
+
        if(responce.data['status'] == true){
+
         fileUpload.value =  FileUploadModel.fromJson(responce.data);
+
         log('fileupload....${fileUpload.value.url}');
-        updateProfile();
+        updateUser();
        }
     } catch (e) {
       log("$e");
@@ -75,24 +80,36 @@ class EditProfileController extends GetxController {
   }
 
  //-----------------------update Profile-------------------------------
-  Future<void> updateProfile() async {  
+
+  Future<void> updateUser() async {  
+
   var body = {
     "name" : nameController.value.text,
     "Image": fileUpload.value.url,
     "gender": genderController.value.text,
     "dob": ageCOntroller.value.text
   };
+
   log('$body');
   log(Get.find<GetStorageService>().id.toString());
+
     try {
-      final responce = await APIManager.updateTeacherDetails( body: body, id: Get.find<GetStorageService>().id);
+      final responce = await APIManager.updateUser( body: body, id: Get.find<GetStorageService>().id);
+
       if (responce.statusCode == 200) {
+
       updateTeacher.value = TeacherDetailsUploadModel.fromJson(responce.data);
+
       log('teacher..${responce.data}');
-      Utils.showMySnackbar(  title: 'Sucess' ,desc: 'Profile updated Successfully');
-      Get.find<ProfileController>().getTeacher();
+
+      Utils.showMySnackbar( desc: 'Profile updated Successfully');
+
+      await Get.find<ProfileController>().getUser();
+
       Get.toNamed(Routes.BOTTOM_NAV);
+
       }else{
+        
         Utils.showMySnackbar(desc: responce.data['message']);
       }
     } catch (e) {

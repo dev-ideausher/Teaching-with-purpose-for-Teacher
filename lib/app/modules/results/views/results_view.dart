@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,8 @@ import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
 import 'package:teaching_with_purpose/gen/assets.gen.dart';
+import '../../../data/models/class_model.dart';
+import '../../../data/models/subjects_list_model.dart';
 import '../controllers/results_controller.dart';
 
 class ResultsView extends GetView<ResultsController> {
@@ -18,7 +22,7 @@ class ResultsView extends GetView<ResultsController> {
     return Scaffold(
       appBar: PreferredSize(preferredSize: Size.fromHeight(46.kh),
        child: CustomAppBar(title: 'Results',isBack: true)),
-      body:       SingleChildScrollView(
+      body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
@@ -47,8 +51,8 @@ class ResultsView extends GetView<ResultsController> {
               itemBuilder: (context, index) {
                 return WidgetConstants.buildStudentCard(
                 image: Get.find<HomeController>().studentsmodel.value.data?[index]?.image == null?
-                 Assets.images.studImg1.image(height: 40.kh,width: 40.kw,fit: BoxFit.cover):
-                 CachedNetworkImage(imageUrl:Get.find<HomeController>().studentsmodel.value.data?[index]?.image?? ''),
+                       Assets.images.studImg1.image(height: 40.kh,width: 40.kw,fit: BoxFit.cover):
+                       CachedNetworkImage(imageUrl:Get.find<HomeController>().studentsmodel.value.data?[index]?.image?? ''),
                 name: Get.find<HomeController>().studentsmodel.value.data?[index]?.name?? '',
                 rollNber: 'Roll No. ${Get.find<HomeController>().studentsmodel.value.data?[index]?.rollNumber?? ''}',
                 onTap: (){}
@@ -63,55 +67,53 @@ class ResultsView extends GetView<ResultsController> {
   }
 
 Widget buildClassDropdawn() {
-  return Obx(() => Container(
-        decoration: BoxDecoration(
-            color: Get.context!.kWhite,
-            borderRadius: BorderRadius.circular(8)),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton2<String>(
-            isExpanded: true,
-            hint: Text(
-              'Select Classes',
-              style: TextStyleUtil.kText14_4(
-                  fontWeight: FontWeight.w400,
-                  color: Get.context!.kLightTextColor),
+    return Obx(() => Container(
+          decoration: BoxDecoration(
+              color: Get.context!.kWhite,
+              borderRadius: BorderRadius.circular(8)),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton2<ClassModelData?>(
+              isExpanded: true,
+              hint: Text('Select Class',
+                  style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
+              items: controller.subjectsController.classItems.map((ClassModelData? item) =>
+                      DropdownMenuItem<ClassModelData?>(
+                        value: item,
+                        child: Text(item?.className ?? '',
+                            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
+              onChanged: (ClassModelData? value) {
+                controller.subjectsController.selectedClass.value = value?.className ?? '';
+              },
             ),
-            items: controller.classes
-                .map((String item) =>
-                    DropdownMenuItem<String>(value: item, child: Text(item,style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400))))
-                .toList(),
-            value: controller.selectedValue.value,
-            onChanged: (String? value) =>
-                controller.selectClass(value ?? ''), 
           ),
-        ),
-      ));
-}
+        ));
+  }
 
 Widget buildSubjectDropdawn() {
-  return Obx(() => Container(
-        decoration: BoxDecoration(
-            color: Get.context!.kWhite,
-            borderRadius: BorderRadius.circular(8)),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton2<String>(
-            isExpanded: true,
-            hint: Text(
-              'Select Subject',
-              style: TextStyleUtil.kText14_4(
-                  fontWeight: FontWeight.w400,
-                  color: Get.context!.kLightTextColor),
+    return Obx(() => Container(
+          decoration: BoxDecoration(
+              color: Get.context!.kWhite,
+              borderRadius: BorderRadius.circular(8)),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton2<SubjectsListModelData?>(
+              isExpanded: true,
+              hint: Text('Select Subject',
+                  style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
+              items: controller.subjectsController.subjectItems.map((SubjectsListModelData? item) =>
+                      DropdownMenuItem<SubjectsListModelData?>(
+                        value: item,
+                        child: Text(item?.subject ?? '',
+                            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
+              value: controller.subjectsController.selectedSubject.value == ''? null
+                  : controller.subjectsController.subjectItems.firstWhere((SubjectsListModelData? item) =>
+                          item?.subject == controller.subjectsController.selectedSubject.value),
+              onChanged: (SubjectsListModelData? value) {
+                // log('Selected Subject: ${value?.subject}');
+                controller.subjectsController.selectedSubject.value = value?.subject ?? '';
+              },
             ),
-            items: controller.items
-                .map((String item) =>
-                    DropdownMenuItem<String>(value: item, child: Text(item,style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400))))
-                .toList(),
-            value: controller.selectedSubject.value,
-            onChanged: (String? value) =>
-                controller.selectSubject(value ?? ''), 
           ),
-        ),
-      ));
-}
+        ));
+  }
 
 }

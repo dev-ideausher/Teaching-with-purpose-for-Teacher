@@ -10,6 +10,7 @@ import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
+import 'package:teaching_with_purpose/app/utils/utils.dart';
 import 'package:teaching_with_purpose/gen/assets.gen.dart';
 import '../controllers/profile_controller.dart';
 
@@ -84,7 +85,6 @@ class ProfileView extends GetView<ProfileController> {
         ),
         8.kheightBox,
         Text(
-          textAlign: TextAlign.center,
           'Hi, ${controller.teachermodel.value.data?.first?.name ?? ''}',
           style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
         ),
@@ -95,19 +95,15 @@ class ProfileView extends GetView<ProfileController> {
 
   Widget imgWidget(){
     if (controller.teachermodel.value.data?.first?.image != null) {
-      return CachedNetworkImage(
-          imageUrl: controller.teachermodel.value.data?.first?.image ?? '',
-          width: 100.kw,
-          height: 100.kh,
-          fit: BoxFit.cover);
+      return CachedNetworkImage(imageUrl: controller.teachermodel.value.data?.first?.image ?? '',
+          width: 100.kw,height: 100.kh,fit: BoxFit.cover);
     }
     return Assets.images.profileImgLarge.image(height: 100.kh,width: 100.kw,fit: BoxFit.cover);
   }
 
 
 //
-  Widget profileSectionWidget(
-      SvgGenImage image, String title, void Function() onTap) {
+  Widget profileSectionWidget(SvgGenImage image, String title, void Function() onTap) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -121,7 +117,6 @@ class ProfileView extends GetView<ProfileController> {
             16.kwidthBox,
             Text(
                 title,
-                textAlign: TextAlign.center,
                 style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500)),
             const Spacer(),
              const Icon(Icons.arrow_forward_ios,size: 15)
@@ -140,12 +135,22 @@ class ProfileView extends GetView<ProfileController> {
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => ResponseBottomSheet(
-        onTap: () => Get.back(),
+        onTap: (double selectedRating){
+        if(selectedRating > 0){
+
+        controller.giveRating(selectedRating.toString());
+
+        Get.back();
+
+       } else{
+
+        Utils.showMySnackbar(desc: 'Please select rating, Before Submitting');
+          }
+        },
         bottomSheetImg: Lottie.asset('assets/lottiefiles/rating.json'),
         title: 'Enjoying Teaching With Purpose ?',
-        text1:
-            'Support us by giving rate and your precious review !It will take few seconds only.',
-        text2: 'Maybe Later',
+        text1:'Support us by giving rate and your precious review !It will take few seconds only.',
+        text2: 'Submit',
       ),
     );
   }
@@ -156,12 +161,13 @@ class ProfileView extends GetView<ProfileController> {
         title: 'Confirm Logout',
         titleStyle: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
         middleText: 'Are you sure you want to logout ?',
-        middleTextStyle: TextStyleUtil.kText14_4(
-            fontWeight: FontWeight.w400, color: Get.context!.kLightTextColor),
+        middleTextStyle: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400, color: Get.context!.kLightTextColor),
         cancel: TextButton(onPressed: ()=> Get.back(), child: const Text('No')),
-        confirm: TextButton(onPressed: (){
+        confirm: TextButton(
+        onPressed: (){
           log('onTap');
           controller.logout();
+
         }, child: const Text('Logout'))
       );
   }

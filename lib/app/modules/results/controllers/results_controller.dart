@@ -1,35 +1,18 @@
 
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 
 class ResultsController extends GetxController {
-  RxString selectedSubject = 'Mathematics'.obs;
-  RxString selectedValue = 'Class 8-A'.obs;
+  final subjectsController = Get.find<SubjectsController>();
 
-
-
-
-//... list of  subject  for dropdawn
-  final List<String> items = [
-    'Mathematics',
-    'English',
-  ];
-
-// ..........function for  subject dropDawn
-  void selectSubject(String item) {
-    selectedSubject.value = item;
+  @override
+  void onInit() {
+    initilize();
+    super.onInit();
   }
 
-//... list of  class  for dropdawn
-  final List<String> classes = [
-    'Class 8-A',
-    'Class 8-B',
-    'Class 9-D',
-    'Class 10-A',
-    'Class 10-C',
-  ];
-
-  void selectClass(String item) {
-    selectedValue.value = item;
+  void initilize() {
+    subjectsController.updateSubjectItems();
+    subjectsController.updateClassItems();
   }
-
 }

@@ -8,7 +8,6 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
-import 'package:teaching_with_purpose/app/data/models/assignment_model.dart';
 import 'package:teaching_with_purpose/app/data/models/file_upload_model.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
@@ -77,22 +76,19 @@ Future<void> addAssignment()async{
  }
 
   try {
+    String? url = '';
+
    if(addedFile.value.isNotEmpty){
     await uploadFile(addedFile.value);
+    url = fileUpload.value.url;
    }
-    // var assignment = AssignmentModel();
-    // assignment.title = titleController.text;
-    // assignment.desc = decriptionController.text;
-    // assignment.dueDate = dateController.value.text;
-    // assignment.totalMarks = markController.text;
-    // assignment.uploadFile = addedFile.value.isNotEmpty? fileUpload.value.url:'';
 
   var body = {
-  "title": "Essay on Global Warming",
-  "desc": "Write an essay discussing the impact of global warming on the environment.",
-  "totalMarks": "50",
-  "dueDate": "2023-12-01",
-  "uploadFile": "https://example.com/global-warming-essay.pdf"
+  "title": titleController.text,
+  "desc": decriptionController.text,
+  "totalMarks": markController.text,
+  "dueDate": selectedDate.value.toString(),
+  "uploadFile": url
 };
 
     final response = await APIManager.createAssignment(body: body);
@@ -100,7 +96,7 @@ Future<void> addAssignment()async{
       log('assignment response...${response.data}');
 
       Utils.showMySnackbar(desc: 'Assignment created successfully');
-      route.Get.toNamed(Routes.ASSIGNMENTS);
+      route.Get.toNamed(Routes.BOTTOM_NAV);
     } else {
       Utils.showMySnackbar(desc: response.data['message']);
     }

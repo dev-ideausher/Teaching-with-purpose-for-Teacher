@@ -25,7 +25,7 @@ class MarksView extends GetView<MarksController> {
     return Scaffold(
       appBar: PreferredSize(preferredSize: Size.fromHeight(46.kh),
        child: CustomAppBar(title: 'Marks',isBack: true)),
-      body:        SingleChildScrollView(  
+        body: SingleChildScrollView(  
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 39),
@@ -37,50 +37,56 @@ class MarksView extends GetView<MarksController> {
                 style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
               ),
               8.kheightBox,
-             Obx(() => Container(
-                  decoration: BoxDecoration(
-                  color: context.kWhite,
-                  borderRadius: BorderRadius.circular(8)
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton2<ClassModelData?>(
-                    isExpanded: true,
-                    hint: Text('Select Class',style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-                    items: controller.subjectsController.classItems.map((ClassModelData? item) => DropdownMenuItem<ClassModelData?>(
-                    value: item,
-                    child: Text(item?.className ?? '',style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
-                    onChanged: (ClassModelData? value) {
-                    log('Selected Class: ${value?.className}');
-                    controller.subjectsController.selectedClass.value = value?.className ?? '';
-                    },
-                  ),
-                ),
-              ),), 
+              Obx(() => Container(
+                    decoration: BoxDecoration(
+                        color: context.kWhite,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton2<ClassModelData?>(
+                        isExpanded: true,
+                        hint: Text('Select Class',
+                            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
+                        items: controller.subjectsController.classItems.map((ClassModelData? item) =>
+                        DropdownMenuItem<ClassModelData?>(
+                        value: item,
+                        child: Text(item?.className ?? '',
+                              style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
+                        onChanged: (ClassModelData? value) {
+                          controller.subjectsController.selectedClass.value = value?.className ?? '';
+                        },
+                      ),
+                    ),
+                  )), 
              16.kheightBox,          
               Text(
                 'Subject',
                 style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
               ),
               8.kheightBox,
-             Obx(() => Container(
+              Obx(() => Container(
                     decoration: BoxDecoration(
-                    color: context.kWhite,
-                    borderRadius: BorderRadius.circular(8)
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton2<SubjectsListModelData?>(
-                    isExpanded: true,
-                    hint: Text('Select Subject',style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-                    items: controller.subjectsController.subjectItems.map((SubjectsListModelData? item) => DropdownMenuItem<SubjectsListModelData?>( 
-                    value: item,
-                    child: Text(item?.subject ?? '',style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
-                    onChanged: (SubjectsListModelData? value) {
-                    log('Selected Subject: ${value?.subject}');
-                    controller.subjectsController.selectedSubject.value = value?.subject ?? '';
-                    },
-                  ),
-                  ),
-                ), ),
+                        color: context.kWhite,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton2<SubjectsListModelData?>(
+                        isExpanded: true,
+                        hint: Text('Select Subject',
+                            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
+                        items: controller.subjectsController.subjectItems.map((SubjectsListModelData? item) =>
+                        DropdownMenuItem<SubjectsListModelData?>(
+                        value: item,
+                        child: Text(item?.subject ?? '',
+                              style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
+                        value: controller.subjectsController.selectedSubject.value == ''? null: 
+                        controller.subjectsController.subjectItems.firstWhere((SubjectsListModelData? item) =>
+                        item?.subject == controller.subjectsController.selectedSubject.value),
+                        onChanged: (SubjectsListModelData? value) {
+                        log('Selected Subject: ${value?.subject}');
+                        controller.subjectsController.selectedSubject.value = value?.subject ?? '';
+                        },
+                      ),
+                    ),
+                  )),
             47.kheightBox,
             ListView.separated(
             shrinkWrap: true,

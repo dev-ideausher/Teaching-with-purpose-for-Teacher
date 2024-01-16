@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
@@ -19,33 +20,17 @@ class LiveQuizzController extends GetxController {
   var answerController = TextEditingController();
   var markController = TextEditingController();
 
-  var selectedSubject = 'Mathematics'.obs;
-  var selectedValue = 'Class 8-A'.obs;
+
   RxBool isLoding = false.obs;
   RxString selectedDate = ''.obs;
 
-//... list of  subject  for dropdawn
-  final List<String> items = [
-    'Mathematics',
-    'English',
-  ];
+  final subjectsController = Get.find<SubjectsController>();
 
-// ..........function for  subject dropDawn
-  void selectSubject(String item) {
-    selectedSubject.value = item;
-  }
-
-//... list of  class  for dropdawn
-  final List<String> classes = [
-    'Class 8-A',
-    'Class 8-B',
-    'Class 9-D',
-    'Class 10-A',
-    'Class 10-C',
-  ];
-
-  void selectClass(String item) {
-    selectedValue.value = item;
+ @override
+  void onInit() {
+  subjectsController.updateSubjectItems();
+  subjectsController.updateClassItems();
+    super.onInit();
   }
 
 //-----------------------Date Picker-------------------------------
@@ -77,40 +62,40 @@ class LiveQuizzController extends GetxController {
       return;
     }
 
-//  var  body = {
-//   "subject": selectedSubject.text,
-//   "class": selectedValue.text,
-//   "date": dateAndTimeController.value.text,
-//   "instructions": instructionsController.text,
-//   "question": [
-//     {
-//       "questionText": questionsController.text,
-//       "answer": answerController.text,
-//       "points": markController.text,
-//       "options": [
-//         option1Controller.value.text,
-//         option2Controller.value.text,
-//         option3Controller.value.text,
-//         option4Controller.value.text
-//       ]
-//     },
-//   ]
-// };
-
     var body = {
       "subject": "english",
       "class": "8-A",
-      "date": "2023-11-23",
-      "instructions": "Read the questions carefully.",
+      "date": dateAndTimeController.value.text,
+      "instructions": instructionsController.text,
       "question": [
         {
-          "questionText": "What is 2 + 2?",
-          "answer": 4,
-          "points": 5,
-          "options": ["3", "4", "5", "6"]
-        }
+          "questionText": questionsController.text,
+          "answer": answerController.text,
+          "points": markController.text,
+          "options": [
+            option1Controller.text,
+            option2Controller.text,
+            option3Controller.text,
+            option4Controller.text
+          ]
+        },
       ]
     };
+
+    // var body = {
+    //   "subject": "english",
+    //   "class": "8-A",
+    //   "date": "2023-11-23",
+    //   "instructions": "Read the questions carefully.",
+    //   "question": [
+    //     {
+    //       "questionText": "What is 2 + 2?",
+    //       "answer": 4,
+    //       "points": 5,
+    //       "options": ["3", "4", "5", "6"]
+    //     }
+    //   ]
+    // };
 
     try {
       final responce = await APIManager.createQuiz(body: body);
