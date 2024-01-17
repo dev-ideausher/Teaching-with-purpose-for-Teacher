@@ -13,6 +13,7 @@ import 'package:teaching_with_purpose/app/services/text_style_util.dart';
 import 'package:teaching_with_purpose/gen/assets.gen.dart';
 import '../../../data/models/class_model.dart';
 import '../../../data/models/subjects_list_model.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/results_controller.dart';
 
 class ResultsView extends GetView<ResultsController> {
@@ -55,7 +56,10 @@ class ResultsView extends GetView<ResultsController> {
                        CachedNetworkImage(imageUrl:Get.find<HomeController>().studentsmodel.value.data?[index]?.image?? ''),
                 name: Get.find<HomeController>().studentsmodel.value.data?[index]?.name?? '',
                 rollNber: 'Roll No. ${Get.find<HomeController>().studentsmodel.value.data?[index]?.rollNumber?? ''}',
-                onTap: (){}
+                onTap: (){
+                  final data = Get.find<HomeController>().studentsmodel.value.data?[index];
+                  Get.toNamed(Routes.ADD_RESULTS, arguments: data);
+                }
                 );
               },
               )

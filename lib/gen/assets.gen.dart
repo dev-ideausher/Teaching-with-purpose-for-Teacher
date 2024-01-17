@@ -179,6 +179,9 @@ class $AssetsSvgGen {
   SvgGenImage get cardDecLight =>
       const SvgGenImage('assets/svg/card_dec_light.svg');
 
+  /// File path: assets/svg/chapter.svg
+  SvgGenImage get chapter => const SvgGenImage('assets/svg/chapter.svg');
+
   /// File path: assets/svg/chat.svg
   SvgGenImage get chat => const SvgGenImage('assets/svg/chat.svg');
 
@@ -192,6 +195,9 @@ class $AssetsSvgGen {
 
   /// File path: assets/svg/download.svg
   SvgGenImage get download => const SvgGenImage('assets/svg/download.svg');
+
+  /// File path: assets/svg/edit_pencil.svg
+  SvgGenImage get editPencil => const SvgGenImage('assets/svg/edit_pencil.svg');
 
   /// File path: assets/svg/edit_profile.svg
   SvgGenImage get editProfile =>
@@ -266,10 +272,12 @@ class $AssetsSvgGen {
         attendance,
         calendar,
         cardDecLight,
+        chapter,
         chat,
         decroationLight,
         discusionDec,
         download,
+        editPencil,
         editProfile,
         eduProfile,
         ellipseLight,

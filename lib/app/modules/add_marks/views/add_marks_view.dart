@@ -84,8 +84,7 @@ class AddMarksView extends GetView<AddMarksController> {
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton2<String>(
                         items: [
-                          DropdownMenuItem(
-                              value: 'Pass',child: Text('Pass',style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400))),
+                          DropdownMenuItem(value: 'Pass',child: Text('Pass',style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400))),
                           DropdownMenuItem(value: 'Fail',child: Text('Fail',style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400))),
                         ],
                         value: controller.selectedResult.value,

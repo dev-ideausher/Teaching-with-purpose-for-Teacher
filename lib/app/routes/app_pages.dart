@@ -9,6 +9,8 @@ import '../modules/add_marks/bindings/add_marks_binding.dart';
 import '../modules/add_marks/views/add_marks_view.dart';
 import '../modules/add_questions/bindings/add_questions_binding.dart';
 import '../modules/add_questions/views/add_questions_view.dart';
+import '../modules/add_results/bindings/add_results_binding.dart';
+import '../modules/add_results/views/add_results_view.dart';
 import '../modules/announcements/bindings/announcements_binding.dart';
 import '../modules/announcements/views/announcements_view.dart';
 import '../modules/assignments/bindings/assignments_binding.dart';
@@ -235,6 +237,11 @@ class AppPages {
       name: _Paths.ADD_MARKS,
       page: () => const AddMarksView(),
       binding: AddMarksBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_RESULTS,
+      page: () => const AddResultsView(),
+      binding: AddResultsBinding(),
     ),
   ];
 }

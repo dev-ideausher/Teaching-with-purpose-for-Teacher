@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:teaching_with_purpose/app/components/common_time_table.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
@@ -53,7 +52,7 @@ class ScheduleView extends GetView<ScheduleController> {
                     style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
                   )),
               16.kheightBox,
-              const CommoncardTable(),
+              timeTable(),
               32.kheightBox,
               Text(
               'Exam Datesheet',
@@ -112,4 +111,44 @@ class ScheduleView extends GetView<ScheduleController> {
       ),
     );
   }
+
+
+Widget timeTable(){
+  return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text('Time', style:TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
+              Text('Subject', style:TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
+              Text('Class', style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400))
+            ],
+          ),
+        ),
+        24.kheightBox,
+        SizedBox(
+          width: double.infinity,
+          child: Column(
+            children: List.generate(6,
+                (index) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text('10.00-11.00 AM',
+                      style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color:Get.context!.kLightTextColor)),
+
+                  Text('Mathematics',
+                      style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color:Get.context!.kLightTextColor)),
+                  Text('8-B',
+                      style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color: Get.context!.kLightTextColor))
+                ],
+              );
+            }),
+          ),
+        ),
+      ],
+    );
+}
 }
