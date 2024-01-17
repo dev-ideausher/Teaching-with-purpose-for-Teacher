@@ -13,6 +13,8 @@ import '../modules/add_results/bindings/add_results_binding.dart';
 import '../modules/add_results/views/add_results_view.dart';
 import '../modules/announcements/bindings/announcements_binding.dart';
 import '../modules/announcements/views/announcements_view.dart';
+import '../modules/assignment_completion/bindings/assignment_completion_binding.dart';
+import '../modules/assignment_completion/views/assignment_completion_view.dart';
 import '../modules/assignments/bindings/assignments_binding.dart';
 import '../modules/assignments/views/assignment_uploded_screen.dart';
 import '../modules/assignments/views/assignments_view.dart';
@@ -23,10 +25,14 @@ import '../modules/bottom_nav/views/bottom_nav_view.dart';
 import '../modules/change_password/bindings/change_password_binding.dart';
 import '../modules/change_password/views/change_pass_sucess_view.dart';
 import '../modules/change_password/views/change_password_view.dart';
+import '../modules/course_completion/bindings/course_completion_binding.dart';
+import '../modules/course_completion/views/course_completion_view.dart';
 import '../modules/edit_profile/bindings/edit_profile_binding.dart';
 import '../modules/edit_profile/views/edit_profile_view.dart';
 import '../modules/events/bindings/events_binding.dart';
 import '../modules/events/views/events_view.dart';
+import '../modules/exam_score/bindings/exam_score_binding.dart';
+import '../modules/exam_score/views/exam_score_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/help_center/bindings/help_center_binding.dart';
@@ -42,10 +48,6 @@ import '../modules/marks/bindings/marks_binding.dart';
 import '../modules/marks/views/marks_view.dart';
 import '../modules/my_classes/bindings/my_classes_binding.dart';
 import '../modules/my_classes/views/my_classes_view.dart';
-import '../modules/my_classes/views/screens/assignment_completion/assignment_complection_screen.dart';
-import '../modules/my_classes/views/screens/cource_completion/cource_completion_screen.dart';
-import '../modules/my_classes/views/screens/student_behaviour/student_behaviour_screen.dart';
-import '../modules/my_classes/views/screens/student_details/student_details_screen.dart';
 import '../modules/on_board/bindings/on_board_binding.dart';
 import '../modules/on_board/views/get_started_view.dart';
 import '../modules/on_board/views/on_board_view.dart';
@@ -58,6 +60,10 @@ import '../modules/schedule/views/schedule_view.dart';
 import '../modules/schedule/views/screens/exam_datesheet_screen.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/student_behavior/bindings/student_behavior_binding.dart';
+import '../modules/student_behavior/views/student_behavior_view.dart';
+import '../modules/student_details/bindings/student_details_binding.dart';
+import '../modules/student_details/views/student_details_view.dart';
 import '../modules/subjects/bindings/subjects_binding.dart';
 import '../modules/subjects/views/subjects_view.dart';
 import '../modules/verify/bindings/verify_binding.dart';
@@ -153,24 +159,8 @@ class AppPages {
       binding: MyClassesBinding(),
     ),
     GetPage(
-      name: _Paths.STUDENT_DETAILS,
-      page: () => const StudentDetailsScreen(),
-    ),
-    GetPage(
-      name: _Paths.COURCE_COMPLETION,
-      page: () => const CourceCompletionScreen(),
-    ),
-    GetPage(
-      name: _Paths.ASSIGNMENT_COMPLETION,
-      page: () => const AssignmentComplectionScreen(),
-    ),
-    GetPage(
       name: _Paths.EXAM_TRACKING,
       page: () => const ExamDateSheetScreen(),
-    ),
-    GetPage(
-      name: _Paths.STUDENT_BECHAVIOUR,
-      page: () => const StudentBehaviourScreen(),
     ),
     GetPage(
       name: _Paths.ASSIGNMENTS,
@@ -242,6 +232,31 @@ class AppPages {
       name: _Paths.ADD_RESULTS,
       page: () => const AddResultsView(),
       binding: AddResultsBinding(),
+    ),
+    GetPage(
+      name: _Paths.STUDENT_DETAILS,
+      page: () => const StudentDetailsView(),
+      binding: StudentDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.COURSE_COMPLETION,
+      page: () => const CourseCompletionView(),
+      binding: CourseCompletionBinding(),
+    ),
+    GetPage(
+      name: _Paths.ASSIGNMENT_COMPLETION,
+      page: () => const AssignmentCompletionView(),
+      binding: AssignmentCompletionBinding(),
+    ),
+    GetPage(
+      name: _Paths.EXAM_SCORE,
+      page: () => const ExamScoreView(),
+      binding: ExamScoreBinding(),
+    ),
+    GetPage(
+      name: _Paths.STUDENT_BEHAVIOR,
+      page: () => const StudentBehaviorView(),
+      binding: StudentBehaviorBinding(),
     ),
   ];
 }

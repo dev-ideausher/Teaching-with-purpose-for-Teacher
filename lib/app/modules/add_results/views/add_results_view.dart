@@ -170,7 +170,9 @@ class AddResultsView extends GetView<AddResultsController> {
               SizedBox(
                   width: 343.kw,
                   height: 56.kh,
-                  child: TButton(title: StringConstants.submit, onTap: () {})),
+                  child: TButton(title: StringConstants.submit, onTap: () {
+                    controller.postResults();
+                  })),
             ],
           ),
         ),
@@ -180,19 +182,19 @@ class AddResultsView extends GetView<AddResultsController> {
 
 
 Widget buildSelectedWidget() {
-  final widgetMap = {
-    'Yearly': examMarkWidget(),
-    'Half-Yearly': examMarkWidget(),
-    'Assignment': assignmentWidget(),
-    'Live Quiz': quizWidget(),
-  };
+    final widgetMap = {
+      'Yearly': examMarkWidget(),
+      'Half-Yearly': examMarkWidget(),
+      'Assignment': assignmentWidget(),
+      'Live Quiz': quizWidget(),
+    };
 
-  return Obx(() => widgetMap[controller.selectedExamType.value] ?? Container());
-}
+    return Obx(() => widgetMap[controller.selectedExamType.value] ?? Container());
+  }
 
 
 
-  Widget examMarkWidget() {
+Widget examMarkWidget() {
     return Column(
       children: [
         SizedBox(
@@ -232,11 +234,12 @@ Widget buildSelectedWidget() {
     );
   }
 
-  Widget assignmentWidget() {
+
+Widget assignmentWidget() {
     return WidgetConstants.resultCard(type: 'Assignment 1', topic: 'Topic: Ordered Pair', mark: '23/30');
   }
 
-  Widget quizWidget() {
+Widget quizWidget() {
     return WidgetConstants.resultCard(type: 'Quiz 1', topic: 'Topic: Ordered Pair', mark: '23/30');
   }
 }

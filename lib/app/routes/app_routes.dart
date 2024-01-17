@@ -20,11 +20,7 @@ abstract class Routes {
   static const ATTENDANCE = _Paths.ATTENDANCE;
   static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
   static const MY_CLASSES = _Paths.MY_CLASSES;
-  static const STUDENT_DETAILS = _Paths.STUDENT_DETAILS;
-  static const COURCE_COMPLETION = _Paths.COURCE_COMPLETION;
-  static const ASSIGNMENT_COMPLETION = _Paths.ASSIGNMENT_COMPLETION;
   static const EXAM_TRACKING = _Paths.EXAM_TRACKING;
-  static const STUDENT_BECHAVIOUR = _Paths.STUDENT_BECHAVIOUR;
   static const ASSIGNMENTS = _Paths.ASSIGNMENTS;
   static const ASSIGNMENT_UPLODED = _Paths.ASSIGNMENT_UPLODED;
   static const SUBJECTS = _Paths.SUBJECTS;
@@ -40,6 +36,11 @@ abstract class Routes {
   static const ADD_ASSIGNMENT = _Paths.ADD_ASSIGNMENT;
   static const ADD_MARKS = _Paths.ADD_MARKS;
   static const ADD_RESULTS = _Paths.ADD_RESULTS;
+  static const STUDENT_DETAILS = _Paths.STUDENT_DETAILS;
+  static const COURSE_COMPLETION = _Paths.COURSE_COMPLETION;
+  static const ASSIGNMENT_COMPLETION = _Paths.ASSIGNMENT_COMPLETION;
+  static const EXAM_SCORE = _Paths.EXAM_SCORE;
+  static const STUDENT_BEHAVIOR = _Paths.STUDENT_BEHAVIOR;
 }
 
 abstract class _Paths {
@@ -61,11 +62,7 @@ abstract class _Paths {
   static const ATTENDANCE = '/attendance';
   static const EDIT_PROFILE = '/edit-profile';
   static const MY_CLASSES = '/my-classes';
-  static const STUDENT_DETAILS = '/student-details';
-  static const COURCE_COMPLETION = '/cource-complection';
-  static const ASSIGNMENT_COMPLETION = '/assignment-completion';
   static const EXAM_TRACKING = '/exam-tracking';
-  static const STUDENT_BECHAVIOUR = '/student-behaviour';
   static const ASSIGNMENTS = '/assignments';
   static const ASSIGNMENT_UPLODED = '/assignment-uploded';
   static const SUBJECTS = '/subjects';
@@ -81,4 +78,9 @@ abstract class _Paths {
   static const ADD_ASSIGNMENT = '/add-assignment';
   static const ADD_MARKS = '/add-marks';
   static const ADD_RESULTS = '/add-results';
+  static const STUDENT_DETAILS = '/student-details';
+  static const COURSE_COMPLETION = '/course-completion';
+  static const ASSIGNMENT_COMPLETION = '/assignment-completion';
+  static const EXAM_SCORE = '/exam-score';
+  static const STUDENT_BEHAVIOR = '/student-behavior';
 }

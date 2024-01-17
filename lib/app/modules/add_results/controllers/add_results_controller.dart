@@ -35,12 +35,13 @@ Future<void> postResults() async {
       Utils.showMySnackbar(desc: 'Please fill the fields');
       return;
     }
+     String? id = studentsData.value.Id;
 
     try {
       var body = {
         "subject": "english",
         "class": "8-A",
-        "studentId": studentsData.value.Id,
+        "studentId": id,
         "resultType": selectedExamType.value,
         "markId": "603bb054d9a7c8bcdc48a825",
         "topic": topicController.text,
@@ -48,10 +49,14 @@ Future<void> postResults() async {
         "performance": selectedPerformance.value
       };
 
+      log('..$body');
+
       final responce = await APIManager.addResult(body: body);
 
       if (responce.data['status'] == true) {
+        log(responce.data);
         Get.toNamed(Routes.BOTTOM_NAV);
+        Utils.showMySnackbar(desc: 'Results added Sucessfully');
       } else {
         Utils.showMySnackbar(desc: responce.data['message']);
       }

@@ -14,8 +14,8 @@ class SubjectsController extends GetxController {
   RxList<SubjectsListModelData?> subjectItems = <SubjectsListModelData?>[].obs;
   RxList<ClassModelData?> classItems = <ClassModelData?>[].obs;
 
-  RxString selectedSubject = ''.obs;
-  RxString selectedClass = ''.obs;
+  RxString selectedSubject = 'English'.obs;
+  RxString selectedClass = '8-A'.obs;
 
   @override
   void onInit() {

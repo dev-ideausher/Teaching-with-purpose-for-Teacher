@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
+import 'package:teaching_with_purpose/app/services/global_services.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
 
 import '../../../data/models/students_model.dart';
@@ -55,9 +56,12 @@ Future<void> addMarkstoStudent() async {
       final responce = await APIManager.addMarks(body: body);
 
       if (responce.data['status'] == true) {
+      
+      Get.find<GlobalData>().markId.value = responce.data['id'];
 
-        Get.toNamed(Routes.BOTTOM_NAV);
-        Utils.showMySnackbar(desc: 'Marks Added Successfully');
+      Get.toNamed(Routes.BOTTOM_NAV);
+
+      Utils.showMySnackbar(desc: 'Marks Added Successfully');
 
       } else {
         Utils.showMySnackbar(desc: responce.data['message']);
