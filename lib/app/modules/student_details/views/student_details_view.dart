@@ -70,6 +70,7 @@ class StudentDetailsView extends GetView<StudentDetailsController> {
               Text('Result',
                   style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600)),
               16.kheightBox,
+              examMarkWidget(),
             ],
           ),
         ),
@@ -170,5 +171,44 @@ class StudentDetailsView extends GetView<StudentDetailsController> {
       ),
     );
   }
- 
+
+Widget examMarkWidget() {
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text('Subjects', style:TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
+              Text('Grade', style:TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
+              Text('Mark', style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400))
+            ],
+          ),
+        ),
+        24.kheightBox,
+        SizedBox(
+          width: double.infinity,
+          child: Column(
+            children: List.generate(6,
+                (index) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text('Physics',
+                      style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color:Get.context!.kLightTextColor)),
+        
+                  Text('A',
+                      style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color:Get.context!.kLightTextColor)),
+        
+                  Text('88',
+                      style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color: Get.context!.kLightTextColor))
+                ],
+              );
+            }),
+          ),
+        ),
+      ],
+    );
+  }
 }

@@ -14,12 +14,13 @@ class AddQuestionsView extends GetView<AddQuestionsController> {
   const AddQuestionsView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+ String selectedSubjectName = controller.subjectName;
     return DefaultTabController(
       initialIndex: controller.selectedTabIndex.value,
       length: 2,
       child: Scaffold(
       appBar:  PreferredSize(preferredSize: Size.fromHeight(100.kh),
-         child: CustomAppBar(title: 'Mathematics',isBack: true,
+         child: CustomAppBar(title: selectedSubjectName,isBack: true,
          bottom:TabBar(
               controller: controller.tabController,
               indicatorPadding: const EdgeInsets.symmetric(horizontal: 16),

@@ -11,6 +11,7 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
   late TabController tabController;
   var selectedTabIndex = 0.obs;
   RxBool isLoding = false.obs;
+  String subjectName = '';
   var questionController = TextEditingController();
   var solutionController = TextEditingController();
   var options1 = TextEditingController();
@@ -20,9 +21,16 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
    
   @override
   void onInit() {
+    intinilize();
+    super.onInit();
+  }
+
+
+  void intinilize(){
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() => selectedTabIndex.value = tabController.index);
-    super.onInit();
+    final Map<String, dynamic> arguments = Get.arguments;
+    subjectName = arguments['subjectName'];
   }
   
 //-----------------------Add Question-------------------------------
@@ -41,12 +49,14 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
     };
     try {
       final responce = await APIManager.createQuestion(body: body);
+
       if (responce.data['status'] == true) {
+
         log('question responce...${responce.data}');
 
         Utils.showMySnackbar(desc: 'Question added sucessfully');
         
-        Get.offAllNamed(Routes.SUBJECTS);
+        Get.offAllNamed(Routes.BOTTOM_NAV);
       } else {
         Utils.showMySnackbar(desc: responce.data['message']);
       }

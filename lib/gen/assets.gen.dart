@@ -27,6 +27,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/Group.png
   AssetGenImage get group => const AssetGenImage('assets/images/Group.png');
 
+  /// File path: assets/images/box_effect.png
+  AssetGenImage get boxEffect =>
+      const AssetGenImage('assets/images/box_effect.png');
+
   /// File path: assets/images/eventimg1.png
   AssetGenImage get eventimg1 =>
       const AssetGenImage('assets/images/eventimg1.png');
@@ -109,6 +113,7 @@ class $AssetsImagesGen {
   /// List of all assets
   List<AssetGenImage> get values => [
         group,
+        boxEffect,
         eventimg1,
         eventimg2,
         eventimg3,
@@ -163,6 +168,10 @@ class $AssetsSvgGen {
   /// File path: assets/svg/add_plus.svg
   SvgGenImage get addPlus => const SvgGenImage('assets/svg/add_plus.svg');
 
+  /// File path: assets/svg/all_subjects.svg
+  SvgGenImage get allSubjects =>
+      const SvgGenImage('assets/svg/all_subjects.svg');
+
   /// File path: assets/svg/arrow_fwd.svg
   SvgGenImage get arrowFwd => const SvgGenImage('assets/svg/arrow_fwd.svg');
 
@@ -171,6 +180,9 @@ class $AssetsSvgGen {
 
   /// File path: assets/svg/attendance.svg
   SvgGenImage get attendance => const SvgGenImage('assets/svg/attendance.svg');
+
+  /// File path: assets/svg/biology.svg
+  SvgGenImage get biology => const SvgGenImage('assets/svg/biology.svg');
 
   /// File path: assets/svg/calendar.svg
   SvgGenImage get calendar => const SvgGenImage('assets/svg/calendar.svg');
@@ -184,6 +196,9 @@ class $AssetsSvgGen {
 
   /// File path: assets/svg/chat.svg
   SvgGenImage get chat => const SvgGenImage('assets/svg/chat.svg');
+
+  /// File path: assets/svg/chemistry.svg
+  SvgGenImage get chemistry => const SvgGenImage('assets/svg/chemistry.svg');
 
   /// File path: assets/svg/decroation_light.svg
   SvgGenImage get decroationLight =>
@@ -213,8 +228,17 @@ class $AssetsSvgGen {
   /// File path: assets/svg/exam_sheet.svg
   SvgGenImage get examSheet => const SvgGenImage('assets/svg/exam_sheet.svg');
 
+  /// File path: assets/svg/eye.svg
+  SvgGenImage get eye => const SvgGenImage('assets/svg/eye.svg');
+
+  /// File path: assets/svg/geography.svg
+  SvgGenImage get geography => const SvgGenImage('assets/svg/geography.svg');
+
   /// File path: assets/svg/help-circle.svg
   SvgGenImage get helpCircle => const SvgGenImage('assets/svg/help-circle.svg');
+
+  /// File path: assets/svg/history.svg
+  SvgGenImage get history => const SvgGenImage('assets/svg/history.svg');
 
   /// File path: assets/svg/home.svg
   SvgGenImage get home => const SvgGenImage('assets/svg/home.svg');
@@ -231,6 +255,9 @@ class $AssetsSvgGen {
   /// File path: assets/svg/marks.svg
   SvgGenImage get marks => const SvgGenImage('assets/svg/marks.svg');
 
+  /// File path: assets/svg/maths.svg
+  SvgGenImage get maths => const SvgGenImage('assets/svg/maths.svg');
+
   /// File path: assets/svg/maths_small.svg
   SvgGenImage get mathsSmall => const SvgGenImage('assets/svg/maths_small.svg');
 
@@ -239,6 +266,9 @@ class $AssetsSvgGen {
 
   /// File path: assets/svg/password.svg
   SvgGenImage get password => const SvgGenImage('assets/svg/password.svg');
+
+  /// File path: assets/svg/physics_red.svg
+  SvgGenImage get physicsRed => const SvgGenImage('assets/svg/physics_red.svg');
 
   /// File path: assets/svg/q_a.svg
   SvgGenImage get qA => const SvgGenImage('assets/svg/q_a.svg');
@@ -267,13 +297,16 @@ class $AssetsSvgGen {
         person,
         schedule,
         addPlus,
+        allSubjects,
         arrowFwd,
         assignment,
         attendance,
+        biology,
         calendar,
         cardDecLight,
         chapter,
         chat,
+        chemistry,
         decroationLight,
         discusionDec,
         download,
@@ -282,15 +315,20 @@ class $AssetsSvgGen {
         eduProfile,
         ellipseLight,
         examSheet,
+        eye,
+        geography,
         helpCircle,
+        history,
         home,
         language,
         logout,
         mail,
         marks,
+        maths,
         mathsSmall,
         myClass,
         password,
+        physicsRed,
         qA,
         quiz,
         ratingOutline,

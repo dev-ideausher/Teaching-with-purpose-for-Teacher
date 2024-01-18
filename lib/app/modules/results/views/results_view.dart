@@ -86,6 +86,7 @@ Widget buildClassDropdawn() {
                         child: Text(item?.className ?? '',
                             style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
               onChanged: (ClassModelData? value) {
+                log('Selected Clsss: ${value?.className}');
                 controller.subjectsController.selectedClass.value = value?.className ?? '';
               },
             ),
@@ -112,7 +113,7 @@ Widget buildSubjectDropdawn() {
                   : controller.subjectsController.subjectItems.firstWhere((SubjectsListModelData? item) =>
                           item?.subject == controller.subjectsController.selectedSubject.value),
               onChanged: (SubjectsListModelData? value) {
-                // log('Selected Subject: ${value?.subject}');
+                log('Selected Subject: ${value?.subject}');
                 controller.subjectsController.selectedSubject.value = value?.subject ?? '';
               },
             ),

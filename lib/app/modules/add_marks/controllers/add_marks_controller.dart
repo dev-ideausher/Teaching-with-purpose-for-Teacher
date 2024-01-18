@@ -1,7 +1,8 @@
-import 'dart:developer';
 
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/app/services/global_services.dart';
@@ -14,7 +15,7 @@ class AddMarksController extends GetxController {
 var selectedPeriod = 'Yearly'.obs;
 var selectedResult = 'Pass'.obs;
 
-String id = '';
+RxString markId = ''.obs;
 var marksController = TextEditingController();
 var gradesController = TextEditingController();
 Rx<StudentsModelData> studentModel = StudentsModelData().obs;
@@ -29,7 +30,8 @@ Rx<StudentsModelData> studentModel = StudentsModelData().obs;
     studentModel.value = Get.arguments;
  }
 
-
+     String? selectedSubject = Get.find<SubjectsController>().selectedSubject.value;
+     String? selectedClass = Get.find<SubjectsController>().selectedClass.value;
 
 
 //-----------------------Add Marks-------------------------------
@@ -40,16 +42,17 @@ Future<void> addMarkstoStudent() async {
       return;
     }
 
-    try {
       var body = {
-        "subject": "math",
-        "class": "8-A",
+        "subject": selectedSubject,
+        "class": selectedClass,
         "studentId": studentModel.value.Id,
         "examType": selectedPeriod.value.toLowerCase(),
-        "marks": marksController.text,
+        "marks": int.parse(marksController.text),
         "grade": gradesController.text,
         "passOrFail": selectedResult.value.toLowerCase()
       };
+
+    try {
 
       log('body..$body');
 
@@ -57,9 +60,14 @@ Future<void> addMarkstoStudent() async {
 
       if (responce.data['status'] == true) {
       
-      Get.find<GlobalData>().markId.value = responce.data['id'];
+      log('${responce.data}');
+        String markId = responce.data['data']['_id'] ?? '';
 
-      Get.toNamed(Routes.BOTTOM_NAV);
+        Get.find<GlobalData>().markId.value = markId;  
+
+        //log('id..${Get.find<GlobalData>().markId.value}');   
+
+       Get.toNamed(Routes.BOTTOM_NAV);
 
       Utils.showMySnackbar(desc: 'Marks Added Successfully');
 
@@ -68,6 +76,7 @@ Future<void> addMarkstoStudent() async {
       }
     } catch (e) {
       log('*...$e');
+
     }
   }
 

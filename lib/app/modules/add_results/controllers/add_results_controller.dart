@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/data/models/students_model.dart';
+import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
+import 'package:teaching_with_purpose/app/services/global_services.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
 
 class AddResultsController extends GetxController {
@@ -28,6 +30,11 @@ class AddResultsController extends GetxController {
   }
 
 
+     String? selectedSubject = Get.find<SubjectsController>().selectedSubject.value;
+     String? selectedClass = Get.find<SubjectsController>().selectedClass.value;
+     String markId = Get.find<GlobalData>().markId.value;
+
+
 //-----------------------Post results-------------------------------
 
 Future<void> postResults() async {
@@ -35,27 +42,28 @@ Future<void> postResults() async {
       Utils.showMySnackbar(desc: 'Please fill the fields');
       return;
     }
-     String? id = studentsData.value.Id;
+    var body = {
+      "subject": "English",
+      "class": "8-A",
+      "studentId": "603bb054d9a7c8bcdc48a824",
+      "resultType": "yearly",
+      "markId": "603bb054d9a7c8bcdc48a825",
+      "topic": "Grammar",
+      "remarks": "Excellent performance!",
+      "performance": "excellent"
+    };
 
     try {
-      var body = {
-        "subject": "english",
-        "class": "8-A",
-        "studentId": id,
-        "resultType": selectedExamType.value,
-        "markId": "603bb054d9a7c8bcdc48a825",
-        "topic": topicController.text,
-        "remarks": remarksController.text,
-        "performance": selectedPerformance.value
-      };
 
       log('..$body');
 
       final responce = await APIManager.addResult(body: body);
 
       if (responce.data['status'] == true) {
-        log(responce.data);
+        log('results..${responce.data}');
+
         Get.toNamed(Routes.BOTTOM_NAV);
+
         Utils.showMySnackbar(desc: 'Results added Sucessfully');
       } else {
         Utils.showMySnackbar(desc: responce.data['message']);

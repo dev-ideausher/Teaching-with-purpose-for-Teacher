@@ -133,13 +133,16 @@ Future<void> addChapter() async {
 
     final response = await APIManager.createChapter(body: body);
     if (response.data['status'] == true) {
+
       log('chapter response...${response.data}');
 
-      Get.find<GlobalData>().chapterId.value = response.data['data']['subjectId'].toString();
+      Get.find<GlobalData>().chapterId.value = response.data['data']['_id'].toString();
 
       Utils.showMySnackbar(desc: 'Chapter created successfully');
 
-      Get.offAllNamed(Routes.ADD_QUESTIONS);
+      Get.offAllNamed(Routes.ADD_QUESTIONS,arguments: {
+       'subjectName':subjectName
+      });
     } else {
       Utils.showMySnackbar(desc: response.data['message']);
     }

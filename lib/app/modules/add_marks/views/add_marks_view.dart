@@ -61,7 +61,7 @@ class AddMarksView extends GetView<AddMarksController> {
                 style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
               ),
               8.kheightBox,
-            CustomTextField(hint: 'Enter marks', controller: controller.marksController),
+            CustomTextField(hint: 'Enter marks', controller: controller.marksController,textInputType: TextInputType.number),
             16.kheightBox,
               Text(
                 'Grades',
