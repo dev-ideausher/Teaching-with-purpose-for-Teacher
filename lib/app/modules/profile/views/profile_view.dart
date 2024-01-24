@@ -18,7 +18,6 @@ class ProfileView extends GetView<ProfileController> {
   const ProfileView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    log('${controller.isLoding.value}');
     return Scaffold(
         appBar:PreferredSize(preferredSize: Size.fromHeight(46.kh),
         child: CustomAppBar(title: 'Profile', isBack: false)),
@@ -39,8 +38,10 @@ class ProfileView extends GetView<ProfileController> {
                 profileSectionWidget(Assets.svg.attendance, 'My Attendance',
                     () => Get.toNamed(Routes.ATTENDANCE)),
                 8.kheightBox,
-                profileSectionWidget(
-                    Assets.svg.ratingOutline,
+                profileSectionWidget(Assets.svg.feedback, 'My Feedback',
+                    () =>Get.toNamed(Routes.FEEDBACK)),
+                8.kheightBox,
+                profileSectionWidget(Assets.svg.ratingOutline,
                     'App Review & Ratings',
                     () => showBottomSheetWidget(context)),
                 8.kheightBox,

@@ -1,4 +1,5 @@
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 
@@ -9,8 +10,10 @@ final subjectsController = Get.find<SubjectsController>();
 
 @override
   void onInit() {
-  initilize();
   super.onInit();
+ WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+     initilize();
+  });
   }
 
 

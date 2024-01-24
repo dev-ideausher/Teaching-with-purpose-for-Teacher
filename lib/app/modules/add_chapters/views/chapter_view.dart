@@ -1,7 +1,11 @@
 
+import 'dart:developer';
+
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
+import 'package:teaching_with_purpose/app/data/models/class_model.dart';
 import 'package:teaching_with_purpose/app/modules/add_chapters/controllers/add_chapters_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
@@ -26,7 +30,7 @@ class ChapterView extends GetView<AddChaptersController>{
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
           child: Column(
             children: [
-              // Center(child: dropDawn()),
+              Center(child: dropDawn()),
               32.kheightBox,
               ListView.separated(
               shrinkWrap: true,
@@ -34,11 +38,15 @@ class ChapterView extends GetView<AddChaptersController>{
               separatorBuilder: (context, index) => 16.kheightBox, 
               itemCount: controller.chapters.value.data?.length?? 0,
               itemBuilder: (context, index) {
+              final chapterData = controller.chapters.value.data?[index];
+              final videoCount = chapterData?.video != null ? 1 : 0;
+              final pdfCount = chapterData?.uploadPdf != null ? 1 : 0;
+              final totalAttachments = videoCount + pdfCount;
                 return chapterWidget(
-                  chapterName: controller.chapters.value.data?[index]?.chapterName?? '',
-                  conceptName: controller.chapters.value.data?[index]?.concept?? '',
-                  dec: '${controller.chapters.value.data?[index]?.desc?? ''} ....',
-                  text: '1 Attachment'
+                  chapterName: chapterData?.chapterName?? '',
+                  conceptName: chapterData?.concept?? '',
+                  dec: '${chapterData?.desc?? ''} ....',
+                  text: '$totalAttachments Attachment${totalAttachments != 1 ? 's' : ''}',
                 );
               },),
             ],
@@ -58,35 +66,32 @@ class ChapterView extends GetView<AddChaptersController>{
 
 // dropdawn widget
 
-  // Widget dropDawn() {
-  //   return ColoredBox(
-  //       color: Get.context!.kLightBlue,
-  //       child: Obx(
-  //         () => DropdownButtonHideUnderline(
-  //           child: DropdownButton2<String>(
-  //             isExpanded: true,
-  //             hint: Text(
-  //               'Select class',
-  //               style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400),
-  //             ),
-  //             items: controller.items
-  //                 .map((String item) =>
-  //                     DropdownMenuItem<String>(value: item, child: Text(item)))
-  //                 .toList(),
-  //             value: controller.selectedValue.value,
-  //             onChanged: (String? value) => controller.selectClass(value!),
-  //             buttonStyleData: ButtonStyleData(
-  //               padding: const EdgeInsets.symmetric(horizontal: 16),
-  //               height: 40.kh,
-  //               width: 140.kw,
-  //             ),
-  //             menuItemStyleData: MenuItemStyleData(
-  //               height: 40.kh,
-  //             ),
-  //           ),
-  //         ),
-  //       ));
-  // }
+  Widget dropDawn() {
+    return Obx(() => Container(
+          decoration: BoxDecoration(
+          color: Get.context!.kLightBlue,
+          borderRadius: BorderRadius.circular(8)),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton2<ClassModelData?>(
+              isExpanded: true,
+              hint: Text('Select Class',
+                  style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
+              items: controller.subjectsController.classItems
+                  .map((ClassModelData? item) =>
+                      DropdownMenuItem<ClassModelData?>(
+                        value: item,
+                        child: Text(item?.className ?? '',
+                            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
+                onChanged: (ClassModelData? value) {
+                Future.delayed(Duration.zero, () {
+                  controller.subjectsController.selectedClass.value = value?.className ?? '';
+                log('${value?.className}');
+                });
+              },
+            ),
+          ),
+        ));
+  }
 
 //
   Widget chapterWidget({required String chapterName,required String conceptName, required String dec, required String text}) {
@@ -137,10 +142,12 @@ class ChapterView extends GetView<AddChaptersController>{
                   fontWeight: FontWeight.w400,
                   color: Get.context!.kLightTextColor),
             ),
-            Text(
-              dec,
-              maxLines: 1,
-              style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
+            Expanded(
+              child: Text(
+                dec,
+                maxLines: 1,
+                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
+              ),
             ),
             8.kheightBox,
             Text(

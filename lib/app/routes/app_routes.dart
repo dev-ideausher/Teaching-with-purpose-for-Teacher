@@ -22,7 +22,7 @@ abstract class Routes {
   static const MY_CLASSES = _Paths.MY_CLASSES;
   static const EXAM_TRACKING = _Paths.EXAM_TRACKING;
   static const ASSIGNMENTS = _Paths.ASSIGNMENTS;
-  static const ASSIGNMENT_UPLODED = _Paths.ASSIGNMENT_UPLODED;
+  static const SELECT_SUB = _Paths.SELECT_SUB;
   static const SUBJECTS = _Paths.SUBJECTS;
   static const CHAPTER = _Paths.CHAPTER;
   static const ADD_CHAPTERS = _Paths.ADD_CHAPTERS;
@@ -41,6 +41,9 @@ abstract class Routes {
   static const ASSIGNMENT_COMPLETION = _Paths.ASSIGNMENT_COMPLETION;
   static const EXAM_SCORE = _Paths.EXAM_SCORE;
   static const STUDENT_BEHAVIOR = _Paths.STUDENT_BEHAVIOR;
+  static const FEEDBACK = _Paths.FEEDBACK;
+  static const STUDENT_RATING  = _Paths.STUDENT_RATING;
+  static const PRINCIPALS_EVALUATION  = _Paths.PRINCIPALS_EVALUATION;
 }
 
 abstract class _Paths {
@@ -64,7 +67,7 @@ abstract class _Paths {
   static const MY_CLASSES = '/my-classes';
   static const EXAM_TRACKING = '/exam-tracking';
   static const ASSIGNMENTS = '/assignments';
-  static const ASSIGNMENT_UPLODED = '/assignment-uploded';
+  static const SELECT_SUB = '/select-sub';
   static const SUBJECTS = '/subjects';
   static const CHAPTER = '/chapter';
   static const ADD_CHAPTERS = '/add-chapters';
@@ -83,4 +86,7 @@ abstract class _Paths {
   static const ASSIGNMENT_COMPLETION = '/assignment-completion';
   static const EXAM_SCORE = '/exam-score';
   static const STUDENT_BEHAVIOR = '/student-behavior';
+  static const FEEDBACK = '/feedback';
+  static const STUDENT_RATING = '/student-rating';
+  static const PRINCIPALS_EVALUATION = '/principal-evaluation';
 }

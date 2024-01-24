@@ -9,6 +9,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 import 'package:teaching_with_purpose/app/data/models/file_upload_model.dart';
+import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
@@ -66,6 +67,7 @@ Future<String?> pickFile() async {
     }
   }
 
+
 //-----------------------Add Assignment -------------------------------
 
 Future<void> addAssignment()async{
@@ -74,6 +76,7 @@ Future<void> addAssignment()async{
   Utils.showMySnackbar(desc: 'Please fill all the fields');
   return;
  }
+  String? selectedSub = route. Get.find<SubjectsController>().selectedSubject.value;
 
   try {
     String? url = '';
@@ -83,13 +86,15 @@ Future<void> addAssignment()async{
     url = fileUpload.value.url;
    }
 
-  var body = {
-  "title": titleController.text,
-  "desc": decriptionController.text,
-  "totalMarks": markController.text,
-  "dueDate": selectedDate.value.toString(),
-  "uploadFile": url
-};
+      var body = {
+        "subject": selectedSub,
+        "class": "8-A",
+        "title": titleController.text,
+        "desc": decriptionController.text,
+        "totalMarks": markController.text,
+        "dueDate": selectedDate.value.toString(),
+        "uploadFile": url
+      };
 
     final response = await APIManager.createAssignment(body: body);
     if (response.data['status'] == true) {

@@ -101,7 +101,7 @@ class AddMarksView extends GetView<AddMarksController> {
                     child: TButton(title: StringConstants.submit, onTap: () {
                       log('onTaped');
                       controller.addMarkstoStudent();
-                    })),                                  
+                    })),
             ],
           ),
         ),

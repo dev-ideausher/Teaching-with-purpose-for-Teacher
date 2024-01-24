@@ -1,5 +1,7 @@
 
 
+import 'dart:developer';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -114,6 +116,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
               16.kheightBox,
               CustomTextField(
                 hint: 'Enter Option Number',
+                textInputType: TextInputType.number,
                 controller: controller.answerController,
               ),
               24.kheightBox,
@@ -124,6 +127,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
               16.kheightBox, 
               CustomTextField(
                 hint: 'mark',
+                textInputType: TextInputType.number,
                 controller: controller.markController,
               ),                                        
               40.kheightBox,
@@ -152,18 +156,29 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
               isExpanded: true,
               hint: Text('Select Subject',
                   style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-              items: controller.subjectsController.subjectItems.map((SubjectsListModelData? item) =>
+              items: controller.subjectsController.subjectItems
+                  .map((SubjectsListModelData? item) =>
                       DropdownMenuItem<SubjectsListModelData?>(
                         value: item,
                         child: Text(item?.subject ?? '',
-                            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
-              value: controller.subjectsController.selectedSubject.value == ''? null
-                  : controller.subjectsController.subjectItems.firstWhere((SubjectsListModelData? item) =>
-                          item?.subject == controller.subjectsController.selectedSubject.value),
+                            style: TextStyleUtil.kText16_5(
+                                fontWeight: FontWeight.w400)),
+                      ))
+                  .toList(),
+              value: controller.subjectsController.selectedSubject.value == ''
+                  ? null
+                  : controller.subjectsController.subjectItems.firstWhere(
+                      (SubjectsListModelData? item) =>
+                          item?.subject ==
+                          controller.subjectsController.selectedSubject.value),
               onChanged: (SubjectsListModelData? value) {
-                // log('Selected Subject: ${value?.subject}');
-                controller.subjectsController.selectedSubject.value = value?.subject ?? '';
+                log('Selected Subject: ${value?.subject}');
+                Future.delayed(Duration.zero, () {
+                  controller.subjectsController.selectedSubject.value =
+                      value?.subject ?? '';
+                });
               },
+
             ),
           ),
         ));
@@ -180,13 +195,20 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
               isExpanded: true,
               hint: Text('Select Class',
                   style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-              items: controller.subjectsController.classItems.map((ClassModelData? item) =>
+              items: controller.subjectsController.classItems
+                  .map((ClassModelData? item) =>
                       DropdownMenuItem<ClassModelData?>(
                         value: item,
                         child: Text(item?.className ?? '',
-                            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
+                            style: TextStyleUtil.kText16_5(
+                                fontWeight: FontWeight.w400)),
+                      ))
+                  .toList(),
               onChanged: (ClassModelData? value) {
-                controller.subjectsController.selectedClass.value = value?.className ?? '';
+                Future.delayed(Duration.zero, () {
+                  controller.subjectsController.selectedClass.value =
+                      value?.className ?? '';
+                });
               },
             ),
           ),

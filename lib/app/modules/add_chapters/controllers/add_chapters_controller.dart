@@ -11,6 +11,7 @@ import 'package:path/path.dart' as path;
 import 'package:teaching_with_purpose/app/data/models/chapter_model.dart';
 import 'package:teaching_with_purpose/app/data/models/chapters_list_model.dart';
 import 'package:teaching_with_purpose/app/data/models/file_upload_model.dart';
+import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/app/services/global_services.dart';
@@ -28,9 +29,13 @@ class AddChaptersController extends GetxController {
   Rx<FileUploadModel> fileUpload = FileUploadModel().obs;
   Rx<ChaptersModel> chapters = ChaptersModel().obs;
 
+  final subjectsController = Get.find<SubjectsController>();
+
   @override
   void onInit() {
-   getArguments();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+     getArguments();
+  });
     super.onInit();
   }
 
@@ -40,6 +45,7 @@ class AddChaptersController extends GetxController {
     subjectName = arguments['subjectName'];
     subjectId = arguments['subjectId'];
     log('id...$subjectId');
+    subjectsController.updateClassItems();
     await getChapters();
   }
 

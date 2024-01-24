@@ -80,14 +80,20 @@ Widget buildClassDropdawn() {
               isExpanded: true,
               hint: Text('Select Class',
                   style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-              items: controller.subjectsController.classItems.map((ClassModelData? item) =>
+              items: controller.subjectsController.classItems
+                  .map((ClassModelData? item) =>
                       DropdownMenuItem<ClassModelData?>(
                         value: item,
                         child: Text(item?.className ?? '',
-                            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
+                            style: TextStyleUtil.kText16_5(
+                                fontWeight: FontWeight.w400)),
+                      ))
+                  .toList(),
               onChanged: (ClassModelData? value) {
-                log('Selected Clsss: ${value?.className}');
-                controller.subjectsController.selectedClass.value = value?.className ?? '';
+                Future.delayed(Duration.zero, () {
+                  controller.subjectsController.selectedClass.value =
+                      value?.className ?? '';
+                });
               },
             ),
           ),
@@ -104,17 +110,27 @@ Widget buildSubjectDropdawn() {
               isExpanded: true,
               hint: Text('Select Subject',
                   style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-              items: controller.subjectsController.subjectItems.map((SubjectsListModelData? item) =>
+              items: controller.subjectsController.subjectItems
+                  .map((SubjectsListModelData? item) =>
                       DropdownMenuItem<SubjectsListModelData?>(
                         value: item,
                         child: Text(item?.subject ?? '',
-                            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
-              value: controller.subjectsController.selectedSubject.value == ''? null
-                  : controller.subjectsController.subjectItems.firstWhere((SubjectsListModelData? item) =>
-                          item?.subject == controller.subjectsController.selectedSubject.value),
+                            style: TextStyleUtil.kText16_5(
+                                fontWeight: FontWeight.w400)),
+                      ))
+                  .toList(),
+              value: controller.subjectsController.selectedSubject.value == ''
+                  ? null
+                  : controller.subjectsController.subjectItems.firstWhere(
+                      (SubjectsListModelData? item) =>
+                          item?.subject ==
+                          controller.subjectsController.selectedSubject.value),
               onChanged: (SubjectsListModelData? value) {
                 log('Selected Subject: ${value?.subject}');
-                controller.subjectsController.selectedSubject.value = value?.subject ?? '';
+                Future.delayed(Duration.zero, () {
+                  controller.subjectsController.selectedSubject.value =
+                      value?.subject ?? '';
+                });
               },
             ),
           ),

@@ -73,10 +73,14 @@ class AddChaptersView extends GetView<AddChaptersController> {
                 controller.pickVideoFile();
             }),
             16.kheightBox,
-               Text(
-                controller.selectedFile.value,
-                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
-              ),
+            Obx(() =>Visibility(
+              visible: controller.selectedFile.value.isNotEmpty,
+              replacement: const SizedBox.shrink(),
+                 child: Text(
+                  controller.selectedFile.value,
+                  style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
+                   ),
+               ),),
             16.kheightBox,
             // buildAddQuestionWidget(title: 'Add Questions', onTap:()=> Get.toNamed(Routes.ADD_QUESTIONS)),
             40.kheightBox,
@@ -86,10 +90,14 @@ class AddChaptersView extends GetView<AddChaptersController> {
             }
           ),
           16.kheightBox,
-               Text(
-                controller.selectedPdf.value,
-                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
-              ),
+            Obx(() =>Visibility(
+              visible: controller.selectedPdf.value.isNotEmpty,
+              replacement: const SizedBox.shrink(),
+                 child: Text(
+                  controller.selectedPdf.value,
+                  style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
+                   ),
+               ),),
           32.kheightBox,
                 SizedBox(
                     width: 343.kw,

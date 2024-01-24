@@ -231,6 +231,9 @@ class $AssetsSvgGen {
   /// File path: assets/svg/eye.svg
   SvgGenImage get eye => const SvgGenImage('assets/svg/eye.svg');
 
+  /// File path: assets/svg/feedback.svg
+  SvgGenImage get feedback => const SvgGenImage('assets/svg/feedback.svg');
+
   /// File path: assets/svg/geography.svg
   SvgGenImage get geography => const SvgGenImage('assets/svg/geography.svg');
 
@@ -316,6 +319,7 @@ class $AssetsSvgGen {
         ellipseLight,
         examSheet,
         eye,
+        feedback,
         geography,
         helpCircle,
         history,

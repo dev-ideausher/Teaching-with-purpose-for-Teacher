@@ -84,4 +84,27 @@ static   Widget buildStudentCard({required Widget image, required String name, r
     );
  }
   
+
+  static   Widget profileSectionWidget(SvgGenImage image, String title, void Function() onTap) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 57.kh,
+        width: 343.kw,
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),color: Get.context!.kWhite),
+        child: Row(
+          children: [
+            image.svg(),
+            16.kwidthBox,
+            Text(
+                title,
+                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500)),
+            const Spacer(),
+             const Icon(Icons.arrow_forward_ios,size: 15)
+          ],
+        ),
+      ),
+    );
+  }
 }

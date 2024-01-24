@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,12 +11,12 @@ import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
 
-class AssignmentUplodedScreen extends GetWidget<AssignmentsController> {
-  const AssignmentUplodedScreen({Key? key}) : super(key: key);
+class SelectSubView extends GetView<AssignmentsController>{
+  const SelectSubView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context){
+  return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(46.kh),
           child: CustomAppBar(title: 'Assignment', isBack: true)),
@@ -25,23 +27,6 @@ class AssignmentUplodedScreen extends GetWidget<AssignmentsController> {
             children: [
               subjectDropDawn(),
               32.kheightBox,
-              // DefaultTabController(
-              //   length: 2,
-              //   child: Column(
-              //     children: [
-              //       TabBar(
-              //           controller: controller.tabController,
-              //           indicatorWeight: 3,
-              //           indicatorColor: context.kPrimary,
-              //           labelColor: context.kPrimary,
-              //           unselectedLabelColor: context.kLightTextColor,
-              //           tabs: const [Text('Assigned'), Text('Submited')]),
-              //       TabBarView(
-              //           controller: controller.tabController,
-              //           children: [Text('Assigned'), Text('Submited')])
-              //     ],
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -66,19 +51,30 @@ class AssignmentUplodedScreen extends GetWidget<AssignmentsController> {
               isExpanded: true,
               hint: Text('Select Subject',
                   style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-              items: controller.subjectsController.subjectItems.map((SubjectsListModelData? item) =>
+              items: controller.subjectsController.subjectItems
+                  .map((SubjectsListModelData? item) =>
                       DropdownMenuItem<SubjectsListModelData?>(
                         value: item,
                         child: Text(item?.subject ?? '',
-                            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
-              value: controller.subjectsController.selectedSubject.value == ''? null
-                  : controller.subjectsController.subjectItems.firstWhere((SubjectsListModelData? item) =>
-                          item?.subject == controller.subjectsController.selectedSubject.value),
+                            style: TextStyleUtil.kText16_5(
+                                fontWeight: FontWeight.w400)),
+                      ))
+                  .toList(),
+              value: controller.subjectsController.selectedSubject.value == ''
+                  ? null
+                  : controller.subjectsController.subjectItems.firstWhere(
+                      (SubjectsListModelData? item) =>
+                          item?.subject ==
+                          controller.subjectsController.selectedSubject.value),
               onChanged: (SubjectsListModelData? value) {
-                controller.subjectsController.selectedSubject.value = value?.subject ?? '';
+                log('Selected Subject: ${value?.subject}');
+                Future.delayed(Duration.zero, () {
+                  controller.subjectsController.selectedSubject.value =
+                      value?.subject ?? '';
+                });
               },
             ),
           ),
         ));
   }
-}
+  }

@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:teaching_with_purpose/app/data/models/class_schedule_model.dart';
 import 'package:teaching_with_purpose/app/data/models/exam_sheet_model.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
@@ -10,6 +11,7 @@ class ScheduleController extends GetxController {
   final RxString formattedDate = ''.obs;
   Rx<ExamSheetModel> examsheetmodel= ExamSheetModel().obs;
   RxBool isLoding = false.obs;
+  RxList<ClassScheduleModel> scheduleList = <ClassScheduleModel>[].obs;
 
 
  @override
@@ -41,6 +43,31 @@ class ScheduleController extends GetxController {
     } catch (e) {
      log('error..$e');
     }finally{
+      isLoding(false);
+    }
+  }
+
+  //-----------------------Class Schedule-------------------------------
+
+  Future<void> classSchedule() async {
+    isLoding(true);
+    try {
+      final responce = await APIManager.getClassSchedule();
+
+      if (responce.data['status'] == true) {
+        final List<dynamic> scheduleDataList = responce.data['data'];
+
+        scheduleList.value = scheduleDataList
+            .map((data) => ClassScheduleModel.fromJson(data))
+            .toList();
+
+        //await examSheet();
+      } else {
+        Utils.showMySnackbar(desc: 'Something went wrong');
+      }
+    } catch (e) {
+      log('Error: $e');
+    } finally {
       isLoding(false);
     }
   }

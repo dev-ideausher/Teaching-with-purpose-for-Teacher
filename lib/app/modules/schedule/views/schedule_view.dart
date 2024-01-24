@@ -78,12 +78,7 @@ class ScheduleView extends GetView<ScheduleController> {
   }
 
 //examSheet Widget list
-  Widget examSheetWidget(
-    String text,
-    SvgGenImage img1,
-    SvgGenImage img2,
-    void Function() onTap,
-  ) {
+  Widget examSheetWidget(String text,SvgGenImage img1,SvgGenImage img2,void Function() onTap) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -131,17 +126,19 @@ Widget timeTable(){
         SizedBox(
           width: double.infinity,
           child: Column(
-            children: List.generate(6,
+            children: List.generate(
+              6,
                 (index) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text('10.00-11.00 AM',
+                  Text( '10.00-11.00 AM',
                       style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color:Get.context!.kLightTextColor)),
 
-                  Text('Mathematics',
+                  Text( 'Physics',
                       style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color:Get.context!.kLightTextColor)),
-                  Text('8-B',
+
+                  Text( '8-A',
                       style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color: Get.context!.kLightTextColor))
                 ],
               );

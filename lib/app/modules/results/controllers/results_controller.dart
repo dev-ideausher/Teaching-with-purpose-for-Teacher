@@ -1,4 +1,5 @@
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 
@@ -7,8 +8,10 @@ class ResultsController extends GetxController {
 
   @override
   void onInit() {
-    initilize();
     super.onInit();
+   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+     initilize();
+  });
   }
 
   void initilize() {

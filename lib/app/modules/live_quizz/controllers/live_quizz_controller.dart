@@ -28,9 +28,15 @@ class LiveQuizzController extends GetxController {
 
  @override
   void onInit() {
+  super.onInit();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+     initilize();
+  });
+  }
+
+  void initilize(){
   subjectsController.updateSubjectItems();
   subjectsController.updateClassItems();
-    super.onInit();
   }
 
 //-----------------------Date Picker-------------------------------
@@ -51,6 +57,9 @@ class LiveQuizzController extends GetxController {
     }
   }
 
+ String? selectedClass = Get.find<SubjectsController>().selectedClass.value;
+ String? selectedSub = Get.find<SubjectsController>().selectedSubject.value;
+
 //-----------------------create Quiz-------------------------------
 
   Future<void> createQuiz() async {
@@ -63,15 +72,15 @@ class LiveQuizzController extends GetxController {
     }
 
     var body = {
-      "subject": "english",
-      "class": "8-A",
+      "subject": selectedSub,
+      "class": selectedClass,
       "date": dateAndTimeController.value.text,
       "instructions": instructionsController.text,
       "question": [
         {
           "questionText": questionsController.text,
-          "answer": answerController.text,
-          "points": markController.text,
+          "answer": int.parse(answerController.text),
+          "points": int.parse(markController.text),
           "options": [
             option1Controller.text,
             option2Controller.text,
@@ -81,21 +90,6 @@ class LiveQuizzController extends GetxController {
         },
       ]
     };
-
-    // var body = {
-    //   "subject": "english",
-    //   "class": "8-A",
-    //   "date": "2023-11-23",
-    //   "instructions": "Read the questions carefully.",
-    //   "question": [
-    //     {
-    //       "questionText": "What is 2 + 2?",
-    //       "answer": 4,
-    //       "points": 5,
-    //       "options": ["3", "4", "5", "6"]
-    //     }
-    //   ]
-    // };
 
     try {
       final responce = await APIManager.createQuiz(body: body);

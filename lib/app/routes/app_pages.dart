@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/modules/assignments/views/select_sub_view.dart';
+import 'package:teaching_with_purpose/app/modules/feedback/views/principal_evaluation_view.dart';
+import 'package:teaching_with_purpose/app/modules/feedback/views/student_rating_view.dart';
 
 import '../modules/add_assignment/bindings/add_assignment_binding.dart';
 import '../modules/add_assignment/views/add_assignment_view.dart';
@@ -16,7 +19,6 @@ import '../modules/announcements/views/announcements_view.dart';
 import '../modules/assignment_completion/bindings/assignment_completion_binding.dart';
 import '../modules/assignment_completion/views/assignment_completion_view.dart';
 import '../modules/assignments/bindings/assignments_binding.dart';
-import '../modules/assignments/views/assignment_uploded_screen.dart';
 import '../modules/assignments/views/assignments_view.dart';
 import '../modules/attendance/bindings/attendance_binding.dart';
 import '../modules/attendance/views/attendance_view.dart';
@@ -33,6 +35,8 @@ import '../modules/events/bindings/events_binding.dart';
 import '../modules/events/views/events_view.dart';
 import '../modules/exam_score/bindings/exam_score_binding.dart';
 import '../modules/exam_score/views/exam_score_view.dart';
+import '../modules/feedback/bindings/feedback_binding.dart';
+import '../modules/feedback/views/feedback_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/help_center/bindings/help_center_binding.dart';
@@ -149,6 +153,19 @@ class AppPages {
       binding: AttendanceBinding(),
     ),
     GetPage(
+      name: _Paths.FEEDBACK,
+      page: () => const FeedbackView(),
+      binding: FeedbackBinding(),
+    ),
+    GetPage(
+      name: _Paths.STUDENT_RATING,
+      page: () => const StudentRatingView(),
+    ),
+    GetPage(
+      name: _Paths.PRINCIPALS_EVALUATION,
+      page: () => const PrincipalEvaluationView(),
+    ),
+    GetPage(
       name: _Paths.EDIT_PROFILE,
       page: () => const EditProfileView(),
       binding: EditProfileBinding(),
@@ -168,8 +185,8 @@ class AppPages {
       binding: AssignmentsBinding(),
     ),
     GetPage(
-        name: _Paths.ASSIGNMENT_UPLODED,
-        page: () => const AssignmentUplodedScreen()),
+        name: _Paths.SELECT_SUB,
+        page: () => const SelectSubView()),
     GetPage(
       name: _Paths.SUBJECTS,
       page: () => const SubjectsView(),

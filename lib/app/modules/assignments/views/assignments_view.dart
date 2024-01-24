@@ -25,7 +25,7 @@ class AssignmentsView extends GetView<AssignmentsController> {
               Text('My classes',
                   style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600)),
               16.kheightBox,
-              GridView(
+              GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -33,13 +33,10 @@ class AssignmentsView extends GetView<AssignmentsController> {
                     crossAxisCount: 3,
                     crossAxisSpacing: 15,
                     mainAxisSpacing: 16),
-                children: [
-                  classContainer('8-A', () => Get.toNamed(Routes.ASSIGNMENT_UPLODED)),
-                  classContainer('8-B', () {}),
-                  classContainer('9-D', () {}),
-                  classContainer('10-A', () {}),
-                  classContainer('10-C', () {}),
-                ],
+                itemCount: controller.subjectsController.classModel.value.data?.length,
+                itemBuilder: (context, index) => classContainer(
+                  controller.subjectsController.classModel.value.data?[index]?.className?? '', 
+                  () => Get.toNamed(Routes.SELECT_SUB)),
               ),
             ],
           ),

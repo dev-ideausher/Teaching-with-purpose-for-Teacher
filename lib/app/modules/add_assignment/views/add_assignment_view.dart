@@ -75,6 +75,14 @@ class AddAssignmentView extends GetView<AddAssignmentController> {
             buildAddButton(
               text: 'Upload File',
                   onTap: () async{controller.pickFile();}),
+            Obx(() =>Visibility(
+              visible: controller.addedFile.value.isNotEmpty,
+              replacement: const SizedBox.shrink(),
+                 child: Text(
+                  controller.addedFile.value,
+                  style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
+                   ),
+               ),),
           32.kheightBox, 
                 SizedBox(
                     width: 343.kw,

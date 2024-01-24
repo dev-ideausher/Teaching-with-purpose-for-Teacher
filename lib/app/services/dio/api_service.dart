@@ -51,6 +51,8 @@ static Future<Response> getExamSheet() async => await DioClient(Dio(), showSnakb
 
 static Future<Response> getClasses() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.getClasses);  
 
+static Future<Response> getClassSchedule() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.timeTable);  
+
 
 
 ///Patch API
