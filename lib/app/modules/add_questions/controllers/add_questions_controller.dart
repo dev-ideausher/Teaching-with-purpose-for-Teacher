@@ -18,6 +18,15 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
   var options2 = TextEditingController();
   var options3 = TextEditingController();
   var options4 = TextEditingController();
+
+  RxString previewQuestion = ''.obs;
+  RxString previewOptions1 = ''.obs;
+  RxString previewOptions2 = ''.obs;
+  RxString previewOptions3 = ''.obs;
+  RxString previewOptions4 = ''.obs;
+  RxString previewSolution = ''.obs;
+
+  RxBool isPreviewing = false.obs;
    
   @override
   void onInit() {
@@ -33,6 +42,18 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
     subjectName = arguments['subjectName'];
   }
   
+  void togglePreviewMode() {
+    isPreviewing.toggle();
+    if (isPreviewing.isTrue) {
+      previewQuestion.value = questionController.text;
+      previewOptions1.value = options1.text;
+      previewOptions2.value = options2.text;
+      previewOptions3.value = options3.text;
+      previewOptions4.value = options4.text;
+      previewSolution.value = solutionController.text;
+    }
+  }
+
 //-----------------------Add Question-------------------------------
   Future<void> addQuestions() async {
     if(questionController.text.isEmpty || solutionController.text.isEmpty || options1.text.isEmpty ||

@@ -112,7 +112,7 @@ Widget ratingWidget({required String qText}) {
             child: Text(
               text,
               style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w500,
-                color: Get.context!.kPrimary,
+              color: Get.context!.kPrimary,
               ),
             ),
           ),

@@ -31,11 +31,19 @@ class AddChaptersController extends GetxController {
 
   final subjectsController = Get.find<SubjectsController>();
 
+  RxString previewChapterName = ''.obs;
+  RxString previewTopicName = ''.obs;
+  RxString previewTopicDescription = ''.obs;
+  RxString previewSelectedFile = ''.obs;
+  RxString previewSelectedPdf = ''.obs;
+
+  RxBool isPreviewing = false.obs;
+
+
   @override
   void onInit() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-     getArguments();
-  });
+     getArguments();});
     super.onInit();
   }
 
@@ -47,6 +55,18 @@ class AddChaptersController extends GetxController {
     log('id...$subjectId');
     subjectsController.updateClassItems();
     await getChapters();
+  }
+
+
+  void previewMode() {
+    isPreviewing.toggle();
+    if (isPreviewing.isTrue) {
+      previewChapterName.value = chapterNameController.text;
+      previewTopicName.value = topicNameController.text;
+      previewTopicDescription.value = topicDescriptionController.text;
+      previewSelectedFile.value = selectedFile.value;
+      previewSelectedPdf.value = selectedPdf.value;
+    }
   }
 
 
@@ -146,9 +166,7 @@ Future<void> addChapter() async {
 
       Utils.showMySnackbar(desc: 'Chapter created successfully');
 
-      Get.offAllNamed(Routes.ADD_QUESTIONS,arguments: {
-       'subjectName':subjectName
-      });
+      Get.offAllNamed(Routes.ADD_QUESTIONS,arguments: {'subjectName':subjectName});
     } else {
       Utils.showMySnackbar(desc: response.data['message']);
     }

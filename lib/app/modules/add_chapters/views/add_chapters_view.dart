@@ -83,7 +83,6 @@ class AddChaptersView extends GetView<AddChaptersController> {
                ),),
             16.kheightBox,
             // buildAddQuestionWidget(title: 'Add Questions', onTap:()=> Get.toNamed(Routes.ADD_QUESTIONS)),
-            40.kheightBox,
             buildAddButton(text: 'Upload PDF Content',
                   onTap: () async {
                 controller.pickPdfFile();            
@@ -102,7 +101,15 @@ class AddChaptersView extends GetView<AddChaptersController> {
                 SizedBox(
                     width: 343.kw,
                     height: 56.kh,
-                    child: TButton(title: StringConstants.save, onTap: (){controller.addChapter();}))          
+                    child: TButton(title: controller.isPreviewing.isTrue ? 'Submit' : StringConstants.save, 
+                    onTap: (){
+                    if(controller.isPreviewing.isTrue){
+                    controller.addChapter();
+                    }else{
+                    controller.previewMode();
+                    showPreviewPopup(context);
+                    }
+                    }))          
             ],
           ),
         ),
@@ -138,25 +145,102 @@ Widget buildAddButton({required String text,required void Function() onTap}){
 }
 
 
-  Widget buildAddQuestionWidget({ required String title, required void Function() onTap}) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: 57.kh,
-        width: 343.kw,
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),color: Get.context!.kWhite),
-        child: Row(
-          children: [
-            Text(
-                title,
-                textAlign: TextAlign.center,
-                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500)),
-            const Spacer(),
-             const Icon(Icons.arrow_forward_ios,size: 15)
-          ],
+void showPreviewPopup(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0)),
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        child: SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildPreview(),
+                16.kheightBox,
+                SizedBox(
+                  height: 56.kh,
+                  width: double.infinity,
+                  child: SizedBox(
+                  height: 56.kh,
+                  width: double.infinity,
+                  child: TButton(
+                    title: 'Edit',
+                    onTap: () {
+                      Get.back();
+                      controller.previewMode();
+                    },
+                  ),
+                ),
+                ),
+              ],
+            ),
+          ),
         ),
+      );
+    },
+  );
+}
+
+  Widget buildPreview() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+           Text(
+            'Preview:',
+            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
+          ),
+          16.kheightBox,
+          buildPreviewRow('Chapter Name',controller. previewChapterName.value),
+          buildPreviewRow('Topic Name', controller. previewTopicName.value),
+          buildPreviewRow('Topic Description',controller. previewTopicDescription.value),
+          buildPreviewRow('Selected File',controller. previewSelectedFile.value),
+          buildPreviewRow('Selected PDF',controller. previewSelectedPdf.value),
+        ],
+      ),
+    );
+  }
+
+  Widget buildPreviewRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 120.kw,
+            child: Text(
+              '$label:',
+              style:TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
+            ),
+          ),
+          Expanded(
+            child: Text(value,style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400)),
+          ),
+        ],
       ),
     );
   }
 }
+
