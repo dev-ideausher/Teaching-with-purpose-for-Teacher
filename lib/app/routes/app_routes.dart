@@ -42,8 +42,9 @@ abstract class Routes {
   static const EXAM_SCORE = _Paths.EXAM_SCORE;
   static const STUDENT_BEHAVIOR = _Paths.STUDENT_BEHAVIOR;
   static const FEEDBACK = _Paths.FEEDBACK;
-  static const STUDENT_RATING  = _Paths.STUDENT_RATING;
-  static const PRINCIPALS_EVALUATION  = _Paths.PRINCIPALS_EVALUATION;
+  static const STUDENT_RATING = _Paths.STUDENT_RATING;
+  static const PRINCIPALS_EVALUATION = _Paths.PRINCIPALS_EVALUATION;
+  static const ADD_ASSIGNMENT_FEEDBACK = _Paths.ADD_ASSIGNMENT_FEEDBACK;
 }
 
 abstract class _Paths {
@@ -89,4 +90,5 @@ abstract class _Paths {
   static const FEEDBACK = '/feedback';
   static const STUDENT_RATING = '/student-rating';
   static const PRINCIPALS_EVALUATION = '/principal-evaluation';
+  static const ADD_ASSIGNMENT_FEEDBACK = '/add-assignment-feedback';
 }

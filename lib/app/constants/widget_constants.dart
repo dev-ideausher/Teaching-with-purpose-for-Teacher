@@ -107,59 +107,49 @@ static   Widget buildStudentCard({required Widget image, required String name, r
       ),
     );
   }
+
+
+static Widget assignedWidget(
+{required String assignment, required String dueDate, void Function()? onTap,void Function()? onEdit,void Function()? onDelete}){
+  return  InkWell(
+    onTap: onTap,
+    child: SizedBox(
+            height: 69.kh,
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+              child: Row(
+                children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                     Text(
+                      assignment,
+                          style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500)) ,
+                    4.kheightBox,
+                     Text(
+                      dueDate,
+                      style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400)) ,
+                    ],
+                  ),
+                ),
+                111.kwidthBox,
+                InkWell(
+                  onTap:onEdit ,
+                  child: Assets.svg.editPencil.svg(height: 20.kh,width: 20.kw)),
+                8.kwidthBox,
+                InkWell(
+                  onTap: onDelete,
+                  child: Icon(Icons.delete_outline,size: 20,color: Get.context!.kPrimary,))
+                ],
+              ),
+            ),
+           ),
+  );
+}
 }
 
-// void showPreviewBottomSheet(BuildContext context) {
-//   showModalBottomSheet(
-//     context: context,
-//     builder: (context) {
-//       return SingleChildScrollView(
-//         child: Container(
-//           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               buildPreview(),
-//               16.kheightBox,
-//               SizedBox(
-//                 height: 56.kh,
-//                 width: double.infinity,
-//                 child: TButton(
-//                   title: 'Edit',
-//                   onTap: () {
-//                     Get.back();
-//                     controller.previewMode();
-//                   },
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       );
-//     },
-//   );
-// }
 
 
-  // Widget buildAddQuestionWidget({ required String title, required void Function() onTap}) {
-  //   return InkWell(
-  //     onTap: onTap,
-  //     child: Container(
-  //       height: 57.kh,
-  //       width: 343.kw,
-  //       padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-  //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),color: Get.context!.kWhite),
-  //       child: Row(
-  //         children: [
-  //           Text(
-  //               title,
-  //               textAlign: TextAlign.center,
-  //               style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500)),
-  //           const Spacer(),
-  //            const Icon(Icons.arrow_forward_ios,size: 15)
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
+

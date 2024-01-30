@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
 import 'package:teaching_with_purpose/gen/assets.gen.dart';
+import '../../../data/models/time_table_model.dart';
 import '../controllers/schedule_controller.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -52,7 +54,7 @@ class ScheduleView extends GetView<ScheduleController> {
                     style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
                   )),
               16.kheightBox,
-              timeTable(),
+              Obx(() => timeTable()),
               32.kheightBox,
               Text(
               'Exam Datesheet',
@@ -109,6 +111,27 @@ class ScheduleView extends GetView<ScheduleController> {
 
 
 Widget timeTable(){
+    RxList<TimeTableModel>? selectedDayTable;
+
+    switch (DateFormat('EEEE').format(controller.selectedDate.value)) {
+      case 'Monday':
+        selectedDayTable = controller.mondayTable;
+        break;
+      case 'Tuesday':
+        selectedDayTable = controller.tuesdayTable;
+        break;
+      case 'Wednesday':
+        selectedDayTable = controller.wednesdayTable;
+        break;
+      case 'Thursday':
+        selectedDayTable = controller.thursdayTable;
+        break;
+      case 'Friday':
+        selectedDayTable = controller.fridayTable;
+        break;
+      default:
+        selectedDayTable = <TimeTableModel>[].obs ;
+    }
   return Column(
       children: [
         SizedBox(
@@ -127,18 +150,19 @@ Widget timeTable(){
           width: double.infinity,
           child: Column(
             children: List.generate(
-              6,
+              selectedDayTable.length,
                 (index) {
+              final data = selectedDayTable![index];
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text( '10.00-11.00 AM',
+                  Text( data.time?? '',
                       style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color:Get.context!.kLightTextColor)),
 
-                  Text( 'Physics',
+                  Text( data.subject?? '',
                       style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color:Get.context!.kLightTextColor)),
 
-                  Text( '8-A',
+                  Text( controller.classSchedule.value.data?[index]?.className?? '',
                       style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color: Get.context!.kLightTextColor))
                 ],
               );

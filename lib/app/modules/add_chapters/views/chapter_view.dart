@@ -112,10 +112,10 @@ class ChapterView extends GetView<AddChaptersController>{
                       color: Get.context!.kLightTextColor),
                 ),
                 const Spacer(),
-                Icon(Icons.edit, color: Get.context!.kPrimary, size: 15),
+                Icon(Icons.edit, color: Get.context!.kPrimary, size: 20),
                 Icon(
                   Icons.delete_outline_outlined,
-                  size: 15,
+                  size: 20,
                   color: Get.context!.kPrimary,
                 )
               ],

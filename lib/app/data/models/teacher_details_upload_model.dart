@@ -149,9 +149,7 @@ class TeacherDetailsUploadModel {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['status'] = status;
-    if (data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
+    data['data'] = this.data!.toJson();
+      return data;
   }
 }
