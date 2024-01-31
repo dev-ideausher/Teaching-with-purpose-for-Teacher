@@ -95,7 +95,7 @@ class EditProfileController extends GetxController {
 
       if (responce.statusCode == 200) {
 
-      updateTeacher.value = TeacherDetailsUploadModel.fromJson(responce.data);
+      // updateTeacher.value = TeacherDetailsUploadModel.fromJson(responce.data);
 
       log('teacher..${responce.data}');
 

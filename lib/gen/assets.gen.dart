@@ -204,6 +204,9 @@ class $AssetsSvgGen {
   SvgGenImage get decroationLight =>
       const SvgGenImage('assets/svg/decroation_light.svg');
 
+  /// File path: assets/svg/delete.svg
+  SvgGenImage get delete => const SvgGenImage('assets/svg/delete.svg');
+
   /// File path: assets/svg/discusion_dec.svg
   SvgGenImage get discusionDec =>
       const SvgGenImage('assets/svg/discusion_dec.svg');
@@ -311,6 +314,7 @@ class $AssetsSvgGen {
         chat,
         chemistry,
         decroationLight,
+        delete,
         discusionDec,
         download,
         editPencil,

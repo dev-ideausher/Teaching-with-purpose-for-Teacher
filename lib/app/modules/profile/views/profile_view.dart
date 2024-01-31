@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:teaching_with_purpose/app/components/commom_loader.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_bottomsheet.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
@@ -22,7 +23,7 @@ class ProfileView extends GetView<ProfileController> {
         appBar:PreferredSize(preferredSize: Size.fromHeight(46.kh),
         child: CustomAppBar(title: 'Profile', isBack: false)),
         body: Obx(() => controller.isLoding.value?
-        Center(child: CircularProgressIndicator(color: context.kPrimary)):
+        const Loader():
          SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(

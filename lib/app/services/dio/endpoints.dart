@@ -44,6 +44,8 @@ class Endpoints {
 
   static const String addAssignment = "api/assignment/save";
 
+  static const String getAssignments = "api/assignment/get";
+
   static const String updateAssignment = "api/assignment/update";
 
   static const String examSheet = "api/examdate/get";

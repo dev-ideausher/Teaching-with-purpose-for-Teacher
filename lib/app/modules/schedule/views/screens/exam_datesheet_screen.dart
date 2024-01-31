@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/components/commom_loader.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_exam_sheet.dart';
 import 'package:teaching_with_purpose/app/modules/schedule/controllers/schedule_controller.dart';
@@ -17,7 +18,7 @@ class ExamDateSheetScreen extends GetView<ScheduleController> {
         child: CustomAppBar(title: 'Exam Datesheet', isBack: true),
       ),
     body: Obx(() => controller.isLoding.value?
-    Center(child: CircularProgressIndicator(color: context.kPrimary)):
+    const Loader():
     SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(

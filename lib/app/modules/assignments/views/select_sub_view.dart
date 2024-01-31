@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/components/commom_loader.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/constants/widget_constants.dart';
 import 'package:teaching_with_purpose/app/data/models/subjects_list_model.dart';
@@ -45,7 +46,8 @@ class SelectSubView extends GetView<AssignmentsController> {
             ),
             Expanded(
               child: TabBarView(
-              controller: controller.tabController, 
+              controller: controller.tabController,
+              physics: const NeverScrollableScrollPhysics(),
               children: [
               buildBody(),
               buildBody(),
@@ -55,10 +57,12 @@ class SelectSubView extends GetView<AssignmentsController> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: context.kPrimary,
         shape: const CircleBorder(),
         elevation: 0,
-        onPressed: () => Get.toNamed(Routes.ADD_ASSIGNMENT),
-        backgroundColor: context.kPrimary,
+        onPressed: () {
+          Get.toNamed(Routes.ADD_ASSIGNMENT);
+        },
         child: Icon(Icons.add, color: context.kWhite),
       ),
     );
@@ -74,27 +78,24 @@ class SelectSubView extends GetView<AssignmentsController> {
             child: DropdownButton2<SubjectsListModelData?>(
               isExpanded: true,
               hint: Text('Select Subject',
-                  style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
+                    style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
               items: controller.subjectsController.subjectItems
                   .map((SubjectsListModelData? item) =>
                       DropdownMenuItem<SubjectsListModelData?>(
                         value: item,
-                        child: Text(item?.subject ?? '',
-                            style: TextStyleUtil.kText16_5(
-                                fontWeight: FontWeight.w400)),
-                      ))
-                  .toList(),
+                        child: Text(
+                          item?.subject ?? '',
+                          style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
+                      )).toList(),
               value: controller.subjectsController.selectedSubject.value == ''
                   ? null
                   : controller.subjectsController.subjectItems.firstWhere(
                       (SubjectsListModelData? item) =>
-                          item?.subject ==
-                          controller.subjectsController.selectedSubject.value),
+                      item?.subject == controller.subjectsController.selectedSubject.value),
               onChanged: (SubjectsListModelData? value) {
                 log('Selected Subject: ${value?.subject}');
                 Future.delayed(Duration.zero, () {
-                  controller.subjectsController.selectedSubject.value =
-                      value?.subject ?? '';
+                  controller.subjectsController.selectedSubject.value = value?.subject ?? '';
                 });
               },
             ),
@@ -111,11 +112,7 @@ class SelectSubView extends GetView<AssignmentsController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
          controller.selctedTabIndex.value == 0 ?
-         WidgetConstants.assignedWidget(
-          assignment: 'Assignment 1', 
-          dueDate: 'Due Date: 07 July 2023',
-          onTap: (){},
-        ):
+         assignedWidget():
          const Text('build')
         ],
       ),
@@ -123,8 +120,28 @@ class SelectSubView extends GetView<AssignmentsController> {
     ));
   }
 
+
  Widget assignedWidget(){
-  return Column();
+  return Obx(() => controller.isLoding.value?
+  const Loader():
+    Column(
+    children: [
+    ListView.separated(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    separatorBuilder: (context, index) => 8.kheightBox,
+    itemCount: controller.assignmentsList.value.data?.length?? 0,
+    itemBuilder:(context, index) => WidgetConstants.assignedWidget(
+      assignment: controller.assignmentsList.value.data?[index]?.title?? '', 
+      dueDate: controller.assignmentsList.value.data?[index]?.dueDate?? '',
+      onEdit: (){
+      final data = controller.assignmentsList.value.data?[index];
+      // Get.offNamed(Routes.ADD_ASSIGNMENT, arguments: data);
+      }
+     ),
+     )
+    ],
+  ));
  } 
 
  Widget submittedWidget(){

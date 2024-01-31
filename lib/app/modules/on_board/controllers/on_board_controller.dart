@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 
+
 class OnBoardController extends GetxController {
   PageController pageController = PageController();
 
   RxInt pageCount = 0.obs;
-
+  
   onTapNext() {
     if (pageCount.value != 2) {
       pageCount.value++;
@@ -21,4 +22,10 @@ class OnBoardController extends GetxController {
     pageController.jumpToPage(pageCount.value);
   }
 
+
+@override
+  void onClose() {
+    pageController.dispose();
+    super.onClose();
+  }
 }

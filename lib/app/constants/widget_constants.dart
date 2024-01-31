@@ -126,22 +126,24 @@ static Widget assignedWidget(
                     children: [
                      Text(
                       assignment,
-                          style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500)) ,
+                      maxLines: 1,
+                      style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500)) ,
                     4.kheightBox,
                      Text(
-                      dueDate,
+                      'duedate:$dueDate',
+                      maxLines: 1,
                       style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400)) ,
                     ],
                   ),
                 ),
                 111.kwidthBox,
-                InkWell(
+                GestureDetector(
                   onTap:onEdit ,
                   child: Assets.svg.editPencil.svg(height: 20.kh,width: 20.kw)),
                 8.kwidthBox,
-                InkWell(
+                GestureDetector(
                   onTap: onDelete,
-                  child: Icon(Icons.delete_outline,size: 20,color: Get.context!.kPrimary,))
+                  child: Assets.svg.delete.svg(height: 20.kh,width: 20.kw))
                 ],
               ),
             ),

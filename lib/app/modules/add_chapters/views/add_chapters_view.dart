@@ -236,7 +236,9 @@ void showPreviewPopup(BuildContext context) {
             ),
           ),
           Expanded(
-            child: Text(value,style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400)),
+            child: Text(
+              value,
+              style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400)),
           ),
         ],
       ),

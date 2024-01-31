@@ -4,61 +4,72 @@
 class AssignmentModel {
 /*
 {
-  "subject": "english",
-  "class": "8-A",
+  "_id": "658e78ba5092cee4528feb57",
   "title": "Essay on Global Warming",
   "desc": "Write an essay discussing the impact of global warming on the environment.",
   "totalMarks": "50",
-  "dueDate": "2023-12-01",
-  "uploadFile": "https://example.com/global-warming-essay.pdf",
+  "dueDate": "2023-12-01T00:00:00.000Z",
   "isAssign": true,
-  "isSubmit": false
+  "isSubmit": false,
+  "isDeleted": false,
+  "createdAt": "2023-12-29T07:43:54.786Z",
+  "updatedAt": "2023-12-29T07:43:54.786Z",
+  "__v": 0
 } 
 */
 
-  String? subject;
-  String? theClass;
+  String? Id;
   String? title;
   String? desc;
   String? totalMarks;
   String? dueDate;
-  String? uploadFile;
   bool? isAssign;
   bool? isSubmit;
+  bool? isDeleted;
+  String? createdAt;
+  String? updatedAt;
+  int? V;
 
   AssignmentModel({
-    this.subject,
-    this.theClass,
+    this.Id,
     this.title,
     this.desc,
     this.totalMarks,
     this.dueDate,
-    this.uploadFile,
     this.isAssign,
     this.isSubmit,
+    this.isDeleted,
+    this.createdAt,
+    this.updatedAt,
+    this.V,
   });
   AssignmentModel.fromJson(Map<String, dynamic> json) {
-    subject = json['subject']?.toString();
-    theClass = json['class']?.toString();
+    Id = json['_id']?.toString();
     title = json['title']?.toString();
     desc = json['desc']?.toString();
     totalMarks = json['totalMarks']?.toString();
     dueDate = json['dueDate']?.toString();
-    uploadFile = json['uploadFile']?.toString();
     isAssign = json['isAssign'];
     isSubmit = json['isSubmit'];
+    isDeleted = json['isDeleted'];
+    createdAt = json['createdAt']?.toString();
+    updatedAt = json['updatedAt']?.toString();
+    V = json['__v']?.toInt();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['subject'] = subject;
-    data['class'] = theClass;
+    data['_id'] = Id;
     data['title'] = title;
     data['desc'] = desc;
     data['totalMarks'] = totalMarks;
     data['dueDate'] = dueDate;
-    data['uploadFile'] = uploadFile;
     data['isAssign'] = isAssign;
     data['isSubmit'] = isSubmit;
+    data['isDeleted'] = isDeleted;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = V;
     return data;
   }
 }
+

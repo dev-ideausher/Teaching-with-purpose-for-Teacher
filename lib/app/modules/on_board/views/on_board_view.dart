@@ -36,11 +36,11 @@ class OnBoardView extends GetView<OnBoardController> {
                     title: StringConstants.onBoardTexttitle1,
                     subTitle: StringConstants.onBoardTextSubtitle2),
                 onboardingWidget(
-                    img: Assets.images.onBoardtwo.image(height: 305.kh,width: 355.kw),
+                    img: Assets.images.onBoardtwo.image(height: 242.kh,width: 363.kw),
                     title: StringConstants.onBoardTexttitle1,
                     subTitle: StringConstants.onBoardTextSubtitle2),
                 onboardingWidget(
-                    img: Assets.images.onBoardthree.image(height: 305.kh,width: 355.kw),
+                    img: Assets.images.onBoardthree.image(height: 242.kh,width: 363.kw),
                     title: StringConstants.onBoardTexttitle1,
                     subTitle: StringConstants.onBoardTextSubtitle2),
               ],
@@ -86,7 +86,7 @@ class OnBoardView extends GetView<OnBoardController> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image(image: img.image),
+        Expanded(child: Image(image: img.image)),
         43.kheightBox,
         ListTile(
           title: Text(

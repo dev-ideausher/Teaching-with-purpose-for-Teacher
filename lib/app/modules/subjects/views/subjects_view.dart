@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/components/commom_loader.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_richtext.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
@@ -18,7 +19,7 @@ class SubjectsView extends GetView<SubjectsController> {
       appBar: PreferredSize(preferredSize: Size.fromHeight(46.kh),
        child: CustomAppBar(title: 'Subjects',isBack: true)),
       body: Obx(() => controller.isLoding.value?
-      Center(child: CircularProgressIndicator(color: context.kPrimary)):
+      const Loader():
       SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),

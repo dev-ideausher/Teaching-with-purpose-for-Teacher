@@ -53,11 +53,15 @@ static Future<Response> getClasses() async => await DioClient(Dio(), showSnakbar
 
 static Future<Response> getClassSchedule() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.timeTable);  
 
+static Future<Response> getAssignments() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.getAssignments); 
+
 
 
 ///Patch API
 
   static Future<Response> updateUser({required String id,required dynamic body}) async =>await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch("${Endpoints.updateTeacher}/$id",data: jsonEncode(body));
+
+  static Future<Response> updateAssignment({required String id,required dynamic body}) async =>await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch("${Endpoints.updateAssignment}/$id",data: jsonEncode(body));
 
 
  

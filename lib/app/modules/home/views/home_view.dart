@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/components/commom_loader.dart';
 import 'package:teaching_with_purpose/app/components/custom_card_vertical.dart';
 import 'package:teaching_with_purpose/app/components/custom_class_card.dart';
 import 'package:teaching_with_purpose/app/constants/string_constants.dart';
@@ -18,7 +19,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() => controller.isLoding.value?
-      Center(child: CircularProgressIndicator(color: context.kPrimary)):
+      const Loader():
       SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Padding(

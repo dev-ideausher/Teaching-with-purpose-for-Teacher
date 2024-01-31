@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/components/commom_loader.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/data/models/class_model.dart';
 import 'package:teaching_with_purpose/app/modules/add_chapters/controllers/add_chapters_controller.dart';
@@ -23,7 +24,7 @@ class ChapterView extends GetView<AddChaptersController>{
           preferredSize: Size.fromHeight(46.kh),
           child: CustomAppBar(title: selectedSubjectName, isBack: true)),
       body: Obx(() => controller.isLoding.value?
-      Center(child: CircularProgressIndicator(color: context.kPrimary)):
+      const Loader():
         SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -55,7 +56,9 @@ class ChapterView extends GetView<AddChaptersController>{
       ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {Get.toNamed(Routes.ADD_CHAPTERS);},
+        shape: const CircleBorder(),
+        elevation: 0,
+        onPressed: ()=>Get.toNamed(Routes.ADD_CHAPTERS),
         backgroundColor: context.kPrimary,
         child: Icon(Icons.add, color: context.kWhite),
       ),
@@ -94,7 +97,8 @@ class ChapterView extends GetView<AddChaptersController>{
   }
 
 //
-  Widget chapterWidget({required String chapterName,required String conceptName, required String dec, required String text}) {
+  Widget chapterWidget(
+  {required String chapterName,required String conceptName, required String dec, required String text}) {
     return SizedBox(
       height: 211.kh,
       width: 343.kw,
