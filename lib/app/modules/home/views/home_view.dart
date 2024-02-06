@@ -5,6 +5,7 @@ import 'package:teaching_with_purpose/app/components/commom_loader.dart';
 import 'package:teaching_with_purpose/app/components/custom_card_vertical.dart';
 import 'package:teaching_with_purpose/app/components/custom_class_card.dart';
 import 'package:teaching_with_purpose/app/constants/string_constants.dart';
+import 'package:teaching_with_purpose/app/constants/widget_constants.dart';
 import 'package:teaching_with_purpose/app/modules/profile/controllers/profile_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
@@ -40,11 +41,11 @@ class HomeView extends GetView<HomeController> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 0.84,
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 24,
-                          mainAxisSpacing: 27.5),
+                const SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 0.84,
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 24,
+                  mainAxisSpacing: 27.5),
                   children: [
                     CustomClassCard(
                         imageWidget: Assets.svg.myClass.svg(),text: StringConstants.myclass, onTap: () => Get.toNamed(Routes.MY_CLASSES)),
@@ -61,11 +62,11 @@ class HomeView extends GetView<HomeController> {
                   ],
                 ),
                 32.kheightBox,
-                rowWidget('Announcements', 'See all', () => Get.toNamed(Routes.ANNOUNCEMENTS)),
+               WidgetConstants.rowWidget('Announcements', 'See all', () => Get.toNamed(Routes.ANNOUNCEMENTS)),
                 16.kheightBox,
                 announcementWidget(),
                 32.kheightBox,
-                rowWidget('Events', 'See all', () => Get.toNamed(Routes.EVENTS)),
+              WidgetConstants.rowWidget('Events', 'See all', () => Get.toNamed(Routes.EVENTS)),
                 16.kheightBox,
                 SizedBox(
                   height: 156.kh,
@@ -111,13 +112,11 @@ class HomeView extends GetView<HomeController> {
               children: [
                 Text(
                   'Hi, ${Get.find<ProfileController>().teachermodel.value.data?.first?.name ?? ''}',
-                  textAlign: TextAlign.center,
                   style: TextStyleUtil.kText20_6(fontWeight: FontWeight.w600),
                 ),
                 8.kheightBox,
                 Text(
                   'Subject: Mathematics',
-                  textAlign: TextAlign.center,
                   style: TextStyleUtil.kText14_4(
                       fontWeight: FontWeight.w400,
                       color: Get.context!.kNeutral),
@@ -216,26 +215,6 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
-    );
-  }
-
-// insted of use multiple row in  a single tree
-  rowWidget(String title, String subtitle, void Function() onTap) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(title,
-            textAlign: TextAlign.center,
-            style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600)),
-        149.kwidthBox,
-        InkWell(
-          onTap: onTap,
-          child: Text(subtitle,
-              textAlign: TextAlign.center,
-              style: TextStyleUtil.kText14_4(
-                  fontWeight: FontWeight.w400, color: Get.context!.kPrimary)),
-        )
-      ],
     );
   }
 

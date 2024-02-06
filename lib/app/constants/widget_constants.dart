@@ -9,7 +9,7 @@ import '../services/text_style_util.dart';
 
 class WidgetConstants{
 
-static   Widget buildStudentCard({required Widget image, required String name, required String rollNber, required void Function() onTap}){
+static  Widget buildStudentCard({required Widget image, required String name, required String rollNber, required void Function() onTap}){
     return InkWell(
       onTap: onTap,
       child: SizedBox(
@@ -150,6 +150,105 @@ static Widget assignedWidget(
            ),
   );
 }
+
+static Widget customLogoutDialog(
+{required BuildContext context,required VoidCallback onNoPressed,required VoidCallback onLogoutPressed,
+  }) {
+    return AlertDialog(
+      contentPadding: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      content: Container(
+        height: 198.kh,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Get.context!.kWhite,
+          borderRadius: BorderRadius.circular(15)
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Confirm Logout',
+                  style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600)),
+              8.kheightBox,
+              Text(
+                'Are you sure you want to logout?',
+                style: TextStyleUtil.kText14_4(
+                    fontWeight: FontWeight.w400,
+                    color: Get.context!.kLightTextColor),
+              ),
+              32.kheightBox,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: onNoPressed,
+                    child: Container(
+                      width: 120,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Get.context!.kPrimary),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'No',
+                          style: TextStyleUtil.kText16_5(
+                              fontWeight: FontWeight.w500,
+                              color: Get.context!.kPrimary),
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: onLogoutPressed,
+                    child: Container(
+                      width: 120,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Get.context!.kRed),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Logout',
+                          style: TextStyleUtil.kText16_5(
+                              fontWeight: FontWeight.w500,
+                              color: Get.context!.kRed),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+static   rowWidget(String title, String subtitle, void Function() onTap) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+            style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600)),
+        149.kwidthBox,
+        InkWell(
+          onTap: onTap,
+          child: Text(
+            subtitle,
+              style: TextStyleUtil.kText14_4(
+                  fontWeight: FontWeight.w400, color: Get.context!.kPrimary)),
+        )
+      ],
+    );
+  }
 }
 
 

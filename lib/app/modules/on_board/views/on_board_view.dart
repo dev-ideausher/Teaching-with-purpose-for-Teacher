@@ -16,39 +16,38 @@ class OnBoardView extends GetView<OnBoardController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 35),
+            padding: const EdgeInsets.fromLTRB(265, 68, 16, 0),
             child:
                 skipButton(StringConstants.skip, Get.context!.dotNotActive, () {
               controller.pageCount.value = 2;
               controller.pageController.jumpToPage(controller.pageCount.value);
             }),
           ),
+          32.kheightBox,
           Expanded(
             child: PageView(
               controller: controller.pageController,
               onPageChanged: (value) => controller.pageCount.value = value,
               children: [
                 onboardingWidget(
-                    img: Assets.images.onBoardone.image(height: 242.kh,width: 363.kw),
+                    img: Assets.images.onBoardone.image(height: 300.kh, width: 300.kw),
                     title: StringConstants.onBoardTexttitle1,
                     subTitle: StringConstants.onBoardTextSubtitle2),
                 onboardingWidget(
-                    img: Assets.images.onBoardtwo.image(height: 242.kh,width: 363.kw),
+                    img: Assets.images.onBoardtwo.image(height: 300.kh, width: 300.kw),
                     title: StringConstants.onBoardTexttitle1,
                     subTitle: StringConstants.onBoardTextSubtitle2),
                 onboardingWidget(
-                    img: Assets.images.onBoardthree.image(height: 242.kh,width: 363.kw),
+                    img: Assets.images.onBoardthree.image(height: 300.kh, width: 300.kw),
                     title: StringConstants.onBoardTexttitle1,
                     subTitle: StringConstants.onBoardTextSubtitle2),
               ],
             ),
           ),
-          78.kheightBox,
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
+            padding: const EdgeInsets.fromLTRB(35, 78, 35, 33),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -61,7 +60,7 @@ class OnBoardView extends GetView<OnBoardController> {
                         dotHeight: 10.kh,
                         spacing: 10.kh,
                         dotWidth: 10.kh,
-                        expansionFactor: 1.1),
+                        expansionFactor: 1.4),
                     onDotClicked: (index) => controller.onDotClicked(index)),
                 SizedBox(
                   width: 113.kw,
@@ -116,7 +115,6 @@ class OnBoardView extends GetView<OnBoardController> {
         onTap: onTap,
         child: Center(
           child: Text(
-            textAlign: TextAlign.center,
             text,
             style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
           ),

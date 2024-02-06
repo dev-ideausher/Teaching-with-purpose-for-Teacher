@@ -7,6 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'package:teaching_with_purpose/app/components/commom_loader.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_bottomsheet.dart';
+import 'package:teaching_with_purpose/app/constants/widget_constants.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
@@ -55,8 +56,9 @@ class ProfileView extends GetView<ProfileController> {
                 profileSectionWidget(Assets.svg.helpCircle, 'Help Center',
                     () => Get.toNamed(Routes.HELP_CENTER)),
                 8.kheightBox,
-                profileSectionWidget(Assets.svg.logout, 'Logout', () {
-                  logoutWidget();
+                profileSectionWidget(Assets.svg.logout, 'Logout', 
+                () {
+                  showLogout(context);
                 }),
               ],
             ),
@@ -133,19 +135,15 @@ class ProfileView extends GetView<ProfileController> {
     return showModalBottomSheet(
       enableDrag: false,
       isScrollControlled: true,
-      isDismissible: false,
+      isDismissible: true,
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => ResponseBottomSheet(
         onTap: (double selectedRating){
         if(selectedRating > 0){
-
         controller.giveRating(selectedRating.toString());
-
         Get.back();
-
        } else{
-
         Utils.showMySnackbar(desc: 'Please select rating, Before Submitting');
           }
         },
@@ -158,19 +156,18 @@ class ProfileView extends GetView<ProfileController> {
   }
 
   // dialo box for log-out
-  logoutWidget() {
-    return Get.defaultDialog(
-        title: 'Confirm Logout',
-        titleStyle: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
-        middleText: 'Are you sure you want to logout ?',
-        middleTextStyle: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400, color: Get.context!.kLightTextColor),
-        cancel: TextButton(onPressed: ()=> Get.back(), child: const Text('No')),
-        confirm: TextButton(
-        onPressed: (){
-          log('onTap');
-          controller.logout();
-
-        }, child: const Text('Logout'))
-      );
+  showLogout(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return WidgetConstants.customLogoutDialog(
+          context: context,
+          onNoPressed: () => Get.back(),
+          onLogoutPressed: () {
+           controller.logout();
+          },
+        );
+      },
+    );
   }
 }

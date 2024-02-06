@@ -14,9 +14,9 @@ class APIManager {
 
   static Future<Response> createQuiz({required dynamic body}) async => await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true).post(Endpoints.createQuiz, data: jsonEncode(body)); 
 
-  static Future<Response> createChapter({required dynamic body}) async => await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true).post(Endpoints.createChapter, data: jsonEncode(body)); 
+  static Future<Response> createChapter({required dynamic body}) async => await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true).post(Endpoints.addChapter, data: jsonEncode(body)); 
 
-  static Future<Response> createQuestion({required dynamic body}) async => await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true).post(Endpoints.createQuestions, data: jsonEncode(body)); 
+  static Future<Response> createQuestion({required dynamic body}) async => await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true).post(Endpoints.addQuestions, data: jsonEncode(body)); 
 
   static Future<Response> createAssignment({required dynamic body}) async => await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true).post(Endpoints.addAssignment, data: jsonEncode(body)); 
 
@@ -26,6 +26,7 @@ class APIManager {
 
   static Future<Response> addResult({required dynamic body}) async => await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true).post(Endpoints.addResult, data: jsonEncode(body));
 
+ static Future<Response> addReviseQuestions({required dynamic body}) async => await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true).post(Endpoints.reviseQuestions, data: jsonEncode(body));
 
 ///Get API 
 

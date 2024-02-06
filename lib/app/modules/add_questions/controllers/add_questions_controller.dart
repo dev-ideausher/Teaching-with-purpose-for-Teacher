@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
-import 'package:teaching_with_purpose/app/services/global_services.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
 
 class AddQuestionsController extends GetxController with GetSingleTickerProviderStateMixin{
@@ -12,12 +11,19 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
   var selectedTabIndex = 0.obs;
   RxBool isLoding = false.obs;
   String subjectName = '';
+  String chapterId = '';
   var questionController = TextEditingController();
   var solutionController = TextEditingController();
   var options1 = TextEditingController();
   var options2 = TextEditingController();
   var options3 = TextEditingController();
   var options4 = TextEditingController();
+  var reviseQuestionController = TextEditingController();
+  var reviseSolutionController = TextEditingController();
+  var reviseOptions1 = TextEditingController();
+  var reviseOptions2 = TextEditingController();
+  var reviseOptions3 = TextEditingController();
+  var reviseOptions4 = TextEditingController();
 
   RxString previewQuestion = ''.obs;
   RxString previewOptions1 = ''.obs;
@@ -40,6 +46,7 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
     tabController.addListener(() => selectedTabIndex.value = tabController.index);
     final Map<String, dynamic> arguments = Get.arguments;
     subjectName = arguments['subjectName'];
+     chapterId = arguments['chapterId'];
   }
   
   void togglePreviewMode() {
@@ -61,13 +68,18 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
       Utils.showMySnackbar(desc: 'Please fill all the fields');
       return;
     }
-    String id = Get.find<GlobalData>().chapterId.value;
+    
     var body = {
-      "chapterId": id,
-      "question": questionController.text,
-      "option": [options1.text, options2.text, options3.text, options4.text],
-      "solution": solutionController.text
+      "chapterId": chapterId,
+      "question": [
+        {
+          "questionText": questionController.text,
+          "answer": solutionController.text,
+          "options": [options1.text, options2.text, options3, options4],
+        }
+      ],
     };
+
     try {
       final responce = await APIManager.createQuestion(body: body);
 
@@ -85,6 +97,46 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
       log('questionError..$e');
     }
   }
+//-----------------------Add-revise-Questions-------------------------------
+  Future<void> addReviseQuestions() async {
+    if(reviseQuestionController.text.isEmpty || reviseSolutionController.text.isEmpty || reviseOptions1.text.isEmpty ||
+       reviseOptions2.text.isEmpty || reviseOptions3.text.isEmpty || reviseOptions4.text.isEmpty){
+      Utils.showMySnackbar(desc: 'Please fill all the fields');
+      return;
+    }
+    
+    var body = {
+      "chapterId": chapterId,
+      "question": [
+        {
+          "questionText": "What is the capital of France?",
+          "answer": 2,
+          "options": ["London", "Paris", "Berlin", "Madrid"],
+          "solution": "The capital of France is Paris."
+        }
+      ],
+    };
+
+    try {
+      final responce = await APIManager.addReviseQuestions(body: body);
+
+      //log('$body');
+
+      if (responce.data['status'] == true) {
+
+        log('question responce...${responce.data}');
+
+        Utils.showMySnackbar(desc: 'ReviseQuestion added sucessfully');
+        
+        Get.offAllNamed(Routes.BOTTOM_NAV);
+      } else {
+        Utils.showMySnackbar(desc: responce.data['message']);
+      }
+    } catch (e) {
+      log('questionError..$e');
+    }
+  
+
 
 @override
   void onClose() {
@@ -94,6 +146,14 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
   options2.dispose();
   options3.dispose();
   options4.dispose();
-    super.onClose();
+  reviseQuestionController.dispose();
+  reviseSolutionController.dispose();
+  reviseOptions1.dispose();
+  reviseOptions2.dispose();
+  reviseOptions3.dispose();
+  reviseOptions4.dispose();
+  super.onClose();
   }
+}
+
 }

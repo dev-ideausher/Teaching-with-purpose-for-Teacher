@@ -14,7 +14,6 @@ import 'package:teaching_with_purpose/app/data/models/file_upload_model.dart';
 import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
-import 'package:teaching_with_purpose/app/services/global_services.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
 
 class AddChaptersController extends GetxController {
@@ -162,11 +161,14 @@ Future<void> addChapter() async {
 
       log('chapter response...${response.data}');
 
-      Get.find<GlobalData>().chapterId.value = response.data['data']['_id'].toString();
+      String chapterId = response.data['data']['_id'].toString();
+      log('id.....$chapterId');
 
       Utils.showMySnackbar(desc: 'Chapter created successfully');
 
-      Get.offAllNamed(Routes.ADD_QUESTIONS,arguments: {'subjectName':subjectName});
+      Get.offAllNamed(Routes.ADD_QUESTIONS,
+      arguments: {'subjectName':subjectName, 'chapterId': chapterId}
+    );
     } else {
       Utils.showMySnackbar(desc: response.data['message']);
     }

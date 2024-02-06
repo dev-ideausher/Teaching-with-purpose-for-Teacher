@@ -15,24 +15,20 @@ class GetStartedView extends GetView<OnBoardController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 86, 24, 32),
+        padding: const EdgeInsets.fromLTRB(20, 142, 20, 32),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
               child: getStartedWidget(
-                  img: Assets.images.getStarted.image(height: 300.kh,width: 355.kw),
+                  img: Assets.images.getStarted.image(height: 300.kh,width: 300.kw),
                   title: StringConstants.getStarted,
                   subTitle: StringConstants.getStartedText),
             ),
             123.kheightBox,
-            SizedBox(
-              width: 343.kw,
-              height: 56.kh,
-              child: TButton(
-                  title: StringConstants.login,
-                  onTap: () => Get.toNamed(Routes.LOGIN)),
-            ),
+            TButton(
+                title: StringConstants.login,
+                onTap: () => Get.toNamed(Routes.LOGIN)),
           ],
         ),
       ),
@@ -47,19 +43,17 @@ class GetStartedView extends GetView<OnBoardController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Image(image: img.image),
-        50.kheightBox,
-        ListTile(
-          title: Text(
-            textAlign: TextAlign.center,
-            title,
-            style: TextStyleUtil.kText24_6(fontWeight: FontWeight.w700),
-          ),
-          subtitle: Text(
-            textAlign: TextAlign.center,
-            subTitle,
-            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400,color: Get.context!.kNeutral),
-          ),
-        )
+        38.kheightBox,
+        Text(
+          title,
+          style: TextStyleUtil.kText24_6(fontWeight: FontWeight.w700),
+        ),
+        16.kheightBox,
+        Text(
+          subTitle,
+          style: TextStyleUtil.kText16_5(
+              fontWeight: FontWeight.w400, color: Get.context!.kNeutral),
+        ),
       ],
     );
   }

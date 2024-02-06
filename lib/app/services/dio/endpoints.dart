@@ -28,7 +28,7 @@ class Endpoints {
 
   static const String results = "api/result/get";
 
-  static const String createChapter = "api/chapter/save";
+  static const String addChapter = "api/chapter/save";
 
   static const String getChapter = "api/chapter/get?subjectId=";
 
@@ -36,7 +36,7 @@ class Endpoints {
 
   static const String getEvents = "api/event/get";
   
-  static const String createQuestions = "api/question/save";
+  static const String addQuestions = "api/question/save";
 
   static const String updateQuestions = "api/question/update";
 
@@ -59,5 +59,7 @@ class Endpoints {
   static const String ratings = "api/rating/save";
 
   static const String addResult = "api/result/save";
+
+  static const String reviseQuestions = "api/revisedquestion/save";
 
 }

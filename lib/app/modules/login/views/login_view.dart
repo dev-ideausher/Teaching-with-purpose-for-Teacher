@@ -63,7 +63,7 @@ class LoginView extends GetView<LoginController> {
                               controller.isPassVisible.value
                                   ? Icons.visibility
                                   : Icons.visibility_off_outlined,
-                              color: context.kPrimary))),
+                              color: context.kNotActive))),
                 ),
                 16.kheightBox,
                 Row(

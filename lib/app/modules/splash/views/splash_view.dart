@@ -12,7 +12,7 @@ class SplashView extends GetView<SplashController> {
       children: [
         Image.asset(controller.bgImg,fit: BoxFit.cover,height: double.maxFinite,width: double.infinity),
         Center(
-          child: Image.asset(controller.splash,width: 343.kw,height: 115.kh),
+          child: Image.asset(controller.splash,width: 343.kw,height: 115.kh,),
         )
       ],
      ),

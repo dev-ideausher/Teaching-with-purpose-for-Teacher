@@ -53,7 +53,7 @@ class TButton extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          height: height??48.kh,
+          height: height??56.kh,
           alignment: Alignment.center,
           decoration: !outline
               ? BoxDecoration(
