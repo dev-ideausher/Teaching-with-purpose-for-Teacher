@@ -25,12 +25,12 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
   var reviseOptions3 = TextEditingController();
   var reviseOptions4 = TextEditingController();
 
-  RxString previewQuestion = ''.obs;
-  RxString previewOptions1 = ''.obs;
-  RxString previewOptions2 = ''.obs;
-  RxString previewOptions3 = ''.obs;
-  RxString previewOptions4 = ''.obs;
-  RxString previewSolution = ''.obs;
+  // RxString previewQuestion = ''.obs;
+  // RxString previewOptions1 = ''.obs;
+  // RxString previewOptions2 = ''.obs;
+  // RxString previewOptions3 = ''.obs;
+  // RxString previewOptions4 = ''.obs;
+  // RxString previewSolution = ''.obs;
 
   RxBool isPreviewing = false.obs;
    
@@ -49,17 +49,17 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
      chapterId = arguments['chapterId'];
   }
   
-  void togglePreviewMode() {
-    isPreviewing.toggle();
-    if (isPreviewing.isTrue) {
-      previewQuestion.value = questionController.text;
-      previewOptions1.value = options1.text;
-      previewOptions2.value = options2.text;
-      previewOptions3.value = options3.text;
-      previewOptions4.value = options4.text;
-      previewSolution.value = solutionController.text;
-    }
-  }
+  // void togglePreviewMode() {
+  //   isPreviewing.toggle();
+  //   if (isPreviewing.isTrue) {
+  //     previewQuestion.value = questionController.text;
+  //     previewOptions1.value = options1.text;
+  //     previewOptions2.value = options2.text;
+  //     previewOptions3.value = options3.text;
+  //     previewOptions4.value = options4.text;
+  //     previewSolution.value = solutionController.text;
+  //   }
+  // }
 
 //-----------------------Add Question-------------------------------
   Future<void> addQuestions() async {
@@ -74,12 +74,12 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
       "question": [
         {
           "questionText": questionController.text,
-          "answer": solutionController.text,
-          "options": [options1.text, options2.text, options3, options4],
+          "options": [options1.text, options2.text, options3.text, options4.text],
+          "solution":solutionController.text
         }
       ],
     };
-
+    
     try {
       final responce = await APIManager.createQuestion(body: body);
 
@@ -98,6 +98,7 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
     }
   }
 //-----------------------Add-revise-Questions-------------------------------
+
   Future<void> addReviseQuestions() async {
     if(reviseQuestionController.text.isEmpty || reviseSolutionController.text.isEmpty || reviseOptions1.text.isEmpty ||
        reviseOptions2.text.isEmpty || reviseOptions3.text.isEmpty || reviseOptions4.text.isEmpty){
@@ -109,10 +110,9 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
       "chapterId": chapterId,
       "question": [
         {
-          "questionText": "What is the capital of France?",
-          "answer": 2,
-          "options": ["London", "Paris", "Berlin", "Madrid"],
-          "solution": "The capital of France is Paris."
+          "questionText": reviseQuestionController.text,
+          "options": [reviseOptions1.text, reviseOptions2.text, reviseOptions3.text, reviseOptions4.text],
+          "solution":reviseSolutionController.text
         }
       ],
     };
@@ -136,7 +136,7 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
       log('questionError..$e');
     }
   
-
+}
 
 @override
   void onClose() {
@@ -154,6 +154,5 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
   reviseOptions4.dispose();
   super.onClose();
   }
-}
 
 }

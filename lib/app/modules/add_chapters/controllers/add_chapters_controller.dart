@@ -25,6 +25,7 @@ class AddChaptersController extends GetxController {
   var chapterNameController = TextEditingController();
   var topicNameController = TextEditingController();
   var topicDescriptionController = TextEditingController();
+  var pdfController = TextEditingController();
   Rx<FileUploadModel> fileUpload = FileUploadModel().obs;
   Rx<ChaptersModel> chapters = ChaptersModel().obs;
 
@@ -70,28 +71,29 @@ class AddChaptersController extends GetxController {
 
 
 
-Future<String?> pickPdfFile() async {
-  List<String> pdfPaths = await Utils.pickMultipleFilesWithFilter(['pdf']);
-  if (pdfPaths.isNotEmpty) {
-    String pdfFilePath = pdfPaths.first;
-    log('Selected PDF file path: $pdfFilePath');
-    selectedPdf.value = pdfFilePath;
-    await uploadFile(pdfFilePath);
+  Future<String?> pickPdfFile() async {
+    List<String> pdfPaths = await Utils.pickMultipleFilesWithFilter(['pdf']);
+    if (pdfPaths.isNotEmpty) {
+      String pdfFilePath = pdfPaths.first;
+      log('Selected PDF file path: $pdfFilePath');
+      selectedPdf.value = pdfFilePath;
+      pdfController.text = pdfFilePath;
+      await uploadFile(pdfFilePath);
+    }
+    return null;
   }
-  return null;
-}
 
-Future<String?> pickVideoFile() async {
-  List<String> videoPaths = await Utils.pickMultipleFilesWithFilter(['mp4', 'mov', 'avi', 'mkv']);
-  if (videoPaths.isNotEmpty) {
-    String videoFilePath = videoPaths.first;
-    log('Selected video file path: $videoFilePath');
-    selectedFile.value = videoFilePath;
-    await uploadFile(videoFilePath);
-    
+  Future<String?> pickVideoFile() async {
+    List<String> videoPaths =
+        await Utils.pickMultipleFilesWithFilter(['mp4', 'mov', 'avi', 'mkv']);
+    if (videoPaths.isNotEmpty) {
+      String videoFilePath = videoPaths.first;
+      log('Selected video file path: $videoFilePath');
+      selectedFile.value = videoFilePath;
+      await uploadFile(videoFilePath);
+    }
+    return null;
   }
-  return null;
-}
 
 //-----------------------File upload-------------------------------
 
@@ -201,6 +203,7 @@ Future<void> addChapter() async {
     chapterNameController.dispose();
     topicNameController.dispose();
     topicDescriptionController.dispose();
+    pdfController.dispose();
     super.onClose();
   }
 }

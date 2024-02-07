@@ -83,39 +83,77 @@ class AddChaptersView extends GetView<AddChaptersController> {
                ),),
             16.kheightBox,
             // buildAddQuestionWidget(title: 'Add Questions', onTap:()=> Get.toNamed(Routes.ADD_QUESTIONS)),
-            buildAddButton(text: 'Upload PDF Content',
-                  onTap: () async {
-                controller.pickPdfFile();            
-            }
-          ),
-          16.kheightBox,
-            Obx(() =>Visibility(
-              visible: controller.selectedPdf.value.isNotEmpty,
-              replacement: const SizedBox.shrink(),
-                 child: Text(
-                  controller.selectedPdf.value,
-                  style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
-                   ),
-               ),),
+          buildAddButton(
+            text: 'Upload PDF Content',
+            onTap: ()  {
+              showPickPdfBottomSheet();
+          }),
           32.kheightBox,
-                SizedBox(
-                    width: 343.kw,
-                    height: 56.kh,
-                    child: TButton(title: controller.isPreviewing.isTrue ? 'Submit' : StringConstants.save, 
-                    onTap: (){
-                    if(controller.isPreviewing.isTrue){
-                    controller.addChapter();
-                    }else{
-                    controller.previewMode();
-                    showPreviewPopup(context);
-                    }
-                    }))          
+                TButton(title: controller.isPreviewing.isTrue ? 'Submit' : StringConstants.save, 
+                onTap: (){
+                controller.addChapter();
+                // if(controller.isPreviewing.isTrue){
+                // controller.addChapter();
+                // }else{
+                // controller.previewMode();
+                // showPreviewPopup(context);
+                // }
+                })  
             ],
           ),
         ),
        ),
     );
   }
+
+ void showPickPdfBottomSheet() {
+    Get.bottomSheet(
+      backgroundColor: Get.context!.kWhite,
+      Container(
+        width: 375.kw,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 53),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('File Upload',
+              style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400,
+              color: Get.context!.kLightTextColor)),
+              16.kheightBox,
+              Text('File Name',
+              style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500)),
+              16.kheightBox,
+              Obx(
+                () => Visibility(
+                  visible: controller.selectedPdf.value.isNotEmpty,
+                  replacement: const SizedBox.shrink(),
+                  child: CustomTextField(
+                  hint: 'Enter File Name', 
+                  controller: controller.pdfController,
+                  readOnly: true,
+                 )
+                ),
+              ),
+              32.kheightBox,
+              buildAddButton(
+                  text: 'Upload PDF',
+                  onTap: () async {
+                    controller.pickPdfFile();
+                  }),
+              16.kheightBox,
+              TButton(
+                  title: 'Continue',
+                  onTap: () {
+                    Get.back();
+                  })
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
 
 Widget buildAddButton({required String text,required void Function() onTap}){
   return InkWell(
