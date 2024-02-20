@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:teaching_with_purpose/app/data/models/announcement_model.dart';
@@ -9,14 +7,11 @@ import 'package:teaching_with_purpose/app/data/models/events_model.dart';
 import 'package:teaching_with_purpose/app/data/models/students_model.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
-import 'package:teaching_with_purpose/gen/assets.gen.dart';
 
 class HomeController extends GetxController {
-
-
-@override
+  @override
   void onInit() {
-  showAnnouncements();
+    showAnnouncements();
     super.onInit();
   }
 
@@ -25,36 +20,21 @@ class HomeController extends GetxController {
   Rx<DateTime> startTime = DateTime.now().obs;
   Timer? timer;
   RxBool isLoding = false.obs;
-  
+
   Rx<EventsModel> eventModel = EventsModel().obs;
   Rx<AnnouncementModel> announcement = AnnouncementModel().obs;
   Rx<StudentsModel> studentsmodel = StudentsModel().obs;
 
-  
-// event items to list
-  List<String> eventsTitile = [
-    'Sports Day',
-    'Annual Day',
-    'Parent-Teacher Meeting',
-  ];
-  List<String> time = ['Friday, 3:00 pm', 'Friday, 3:00 pm', 'Friday, 3:00 pm'];
-  List<String> detailsText = [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  ];
-  List<Image> eventImages = [
-    Assets.images.sportsImg.image(),
-    Assets.images.sportsImg.image(),
-    Assets.images.sportsImg.image(),
-  ];
 
-//functon forthe clock in the home page 
+  List<String> time = ['Friday, 3:00 pm', 'Friday, 3:00 pm', 'Friday, 3:00 pm'];
+
+
+//functon for the clock in the home page
   void toggleClock() {
     if (isClockIn.value) {
       isClockIn.value = false;
       startTime.value = DateTime.now();
-      timer = Timer.periodic(const Duration(seconds: 0), (_) {
+      timer = Timer.periodic(const Duration(seconds: 1), (_) {
         final duration = DateTime.now().difference(startTime.value);
         final formattedDuration = _formatDuration(duration);
         timerText.value = 'Work Duration: $formattedDuration';
@@ -62,6 +42,7 @@ class HomeController extends GetxController {
     } else {
       isClockIn.value = true;
       timer?.cancel();
+      markAttendence();
     }
   }
 
@@ -72,20 +53,44 @@ class HomeController extends GetxController {
     return '$hours:$minutes:$seconds';
   }
 
+ //-----------------------Time -formact -------------------------------
 
-String formatTimestamp(String timestamp) {
-  // Parse the timestamp
-  DateTime dateTime = DateTime.parse(timestamp);
+  String formatTimestamp(String timestamp) {
+    DateTime dateTime = DateTime.parse(timestamp);
+    String formattedTime = DateFormat('HH:mm').format(dateTime);
+    return formattedTime;
+  }
 
-  // Format the time
-  String formattedTime = DateFormat('HH:mm').format(dateTime);
+  //-----------------------Mark-Attendence-------------------------------
 
-  return formattedTime;
-}
+  Future<void> markAttendence() async {
+    final duration = DateTime.now().difference(startTime.value).inSeconds;
+
+    final body = {
+      "duration": duration.toString(), 
+      "isPresent": true
+    };
+
+    try {
+      isLoding(true);
+      final responce = await APIManager.markAttendence(body: body);
+      if (responce.data['status'] == true) {
+        log('attendence marked....${responce.data}');
+
+        Utils.showMySnackbar(desc: 'Attendnce marked');
+      } else {
+        Utils.showMySnackbar(desc: 'Error occured');
+      }
+    } catch (e) {
+      log('error..*$e');
+    } finally {
+      isLoding(false);
+    }
+  }
 
 //-----------------------Announcements-------------------------------
 
-   Future<void> showAnnouncements()async{
+  Future<void> showAnnouncements() async {
     isLoding(true);
     try {
       final responce = await APIManager.getAnnouncements();
@@ -95,52 +100,49 @@ String formatTimestamp(String timestamp) {
         await showEvents();
       }
     } catch (e) {
-     log('error..$e');
-    }finally{
+      log('error..$e');
+    } finally {
       isLoding(false);
     }
   }
 
- 
- //-----------------------Events-------------------------------
+  //-----------------------Events-------------------------------
 
-  Future<void> showEvents()async{
+  Future<void> showEvents() async {
     isLoding(true);
     try {
       final responce = await APIManager.getEvents();
       if (responce.statusCode == 200) {
         // log('events...${responce.data}');
-        eventModel .value = EventsModel.fromJson(responce.data);
+        eventModel.value = EventsModel.fromJson(responce.data);
         await listAllStudents();
       }
     } catch (e) {
-     log('error..$e');
-    }finally{
+      log('error..$e');
+    } finally {
       isLoding(false);
     }
   }
 
 //-----------------------Students list -------------------------------
 
-  Future<void> listAllStudents()async{
+  Future<void> listAllStudents() async {
     isLoding(true);
-  try {
-    final responce = await APIManager.getAllStudent();
-    if(responce.statusCode == 200){
+    try {
+      final responce = await APIManager.getAllStudent();
+      if (responce.statusCode == 200) {
+        studentsmodel.value = StudentsModel.fromJson(responce.data);
 
-      studentsmodel.value = StudentsModel.fromJson(responce.data);
-
-      //log('studentslist..${responce.data}');
-    } else{
-
-      Utils.showMySnackbar(desc: responce.data['message']);
+        //log('studentslist..${responce.data}');
+      } else {
+        Utils.showMySnackbar(desc: responce.data['message']);
+      }
+    } catch (error) {
+      log('error...$error');
+    } finally {
+      isLoding(false);
     }
-  } catch (error) {
-    log('error...$error');
-  }finally{
-    isLoding(false);
-  }
-
   }
 
 }
+ 

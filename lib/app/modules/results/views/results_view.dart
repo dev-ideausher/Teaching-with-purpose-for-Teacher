@@ -90,10 +90,8 @@ Widget buildClassDropdawn() {
                       ))
                   .toList(),
               onChanged: (ClassModelData? value) {
-                Future.delayed(Duration.zero, () {
                   controller.subjectsController.selectedClass.value =
                       value?.className ?? '';
-                });
               },
             ),
           ),
@@ -127,10 +125,8 @@ Widget buildSubjectDropdawn() {
                           controller.subjectsController.selectedSubject.value),
               onChanged: (SubjectsListModelData? value) {
                 log('Selected Subject: ${value?.subject}');
-                Future.delayed(Duration.zero, () {
                   controller.subjectsController.selectedSubject.value =
                       value?.subject ?? '';
-                });
               },
             ),
           ),

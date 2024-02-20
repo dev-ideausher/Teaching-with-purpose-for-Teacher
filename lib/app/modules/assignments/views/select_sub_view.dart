@@ -131,14 +131,16 @@ class SelectSubView extends GetView<AssignmentsController> {
     physics: const NeverScrollableScrollPhysics(),
     separatorBuilder: (context, index) => 8.kheightBox,
     itemCount: controller.assignmentsList.value.data?.length?? 0,
-    itemBuilder:(context, index) => WidgetConstants.assignedWidget(
+    itemBuilder:(context, index) {
+      return WidgetConstants.assignedWidget(
       assignment: controller.assignmentsList.value.data?[index]?.title?? '', 
       dueDate: controller.assignmentsList.value.data?[index]?.dueDate?? '',
       onEdit: (){
-      final data = controller.assignmentsList.value.data?[index];
+      //final data = controller.assignmentsList.value.data?[index];
       // Get.offNamed(Routes.ADD_ASSIGNMENT, arguments: data);
       }
-     ),
+     );
+    },
      )
     ],
   ));

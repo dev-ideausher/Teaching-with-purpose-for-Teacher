@@ -31,7 +31,7 @@ class SubjectsController extends GetxController {
     try {
       final responce = await APIManager.getSubjects();
       if (responce.statusCode == 200) {
-        // log('subjects...${responce.data}');
+         log('subjects...${responce.data}');
         subjectLists.value = SubjectsListModel.fromJson(responce.data);
         await getClasses();
       }else{
@@ -51,7 +51,7 @@ class SubjectsController extends GetxController {
     try {
       final responce = await APIManager.getClasses();
       if (responce.statusCode == 200) {
-        // log('classes...${responce.data}');
+         log('classes...${responce.data}');
         classModel.value = ClassModel.fromJson(responce.data);
       }else{
       Utils.showMySnackbar(desc: responce.data['message']);

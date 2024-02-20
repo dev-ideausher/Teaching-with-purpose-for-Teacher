@@ -38,10 +38,7 @@ class LiveQuizzSucessView extends GetView<LiveQuizzController>{
                   style: TextStyleUtil.kText16_5(
                       fontWeight: FontWeight.w400, color: Get.context!.kNeutral)),
               189.kheightBox,
-              SizedBox(
-                  width: 343.kw,
-                  height: 56.kh,
-                  child: TButton(title: 'Go To Homepage', onTap: ()=> Get.offNamed(Routes.BOTTOM_NAV))),
+              TButton(title: 'Go To Homepage', onTap: ()=> Get.offNamed(Routes.BOTTOM_NAV)),
             ],
           ),
         ),

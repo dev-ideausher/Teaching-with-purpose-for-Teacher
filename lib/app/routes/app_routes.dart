@@ -45,6 +45,7 @@ abstract class Routes {
   static const STUDENT_RATING = _Paths.STUDENT_RATING;
   static const PRINCIPALS_EVALUATION = _Paths.PRINCIPALS_EVALUATION;
   static const ADD_ASSIGNMENT_FEEDBACK = _Paths.ADD_ASSIGNMENT_FEEDBACK;
+  static const EDIT_ASSIGNMENT = _Paths.EDIT_ASSIGNMENT;
 }
 
 abstract class _Paths {
@@ -91,4 +92,5 @@ abstract class _Paths {
   static const STUDENT_RATING = '/student-rating';
   static const PRINCIPALS_EVALUATION = '/principal-evaluation';
   static const ADD_ASSIGNMENT_FEEDBACK = '/add-assignment-feedback';
+  static const EDIT_ASSIGNMENT = '/edit-assignment';
 }

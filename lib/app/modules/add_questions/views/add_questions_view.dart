@@ -16,35 +16,33 @@ class AddQuestionsView extends GetView<AddQuestionsController> {
   @override
   Widget build(BuildContext context) {
   String selectedSubjectName = controller.subjectName;
-    return DefaultTabController(
-      initialIndex: controller.selectedTabIndex.value,
-      length: 2,
-      child: Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(100.kh),
-            child: CustomAppBar(
-                title: selectedSubjectName,
-                isBack: true,
-                actions: [
-                Assets.svg.upload.svg(height: 20.kh,width: 20.kw)
-                ],
-                bottom: TabBar(
-                    controller: controller.tabController,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    indicatorColor: context.kPrimary,
-                    labelColor: context.kPrimary,
-                    unselectedLabelColor: context.kLightTextColor,
-                    tabs: [
-                      SizedBox(width: 171.kw, child: const Tab(text: 'Questions')),
-                      SizedBox(width: 171.kw, child: const Tab(text: 'Revsion Questions')),
-                    ]))),
-          body: TabBarView(
-          controller: controller.tabController, 
-          children: [
-          buildBody(context),
-          buildBody(context),
-        ]),
-      ),
+    return Scaffold(
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(100.kh),
+          child: CustomAppBar(
+              title: selectedSubjectName,
+              isBack: true,
+              actions: [
+              Assets.svg.upload.svg(height: 20.kh,width: 20.kw)
+              ],
+              bottom: TabBar(
+                  controller: controller.tabController,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  indicatorColor: context.kPrimary,
+                  labelColor: context.kPrimary,
+                  unselectedLabelColor: context.kLightTextColor,
+                  tabs: [
+                    SizedBox(width: 171.kw, child: const Tab(text: 'Questions')),
+                    SizedBox(width: 171.kw, child: const Tab(text: 'Revsion Questions')),
+                  ],
+          onTap: (value) => controller.selectedTabIndex.value,
+        ))),
+        body: TabBarView(
+        controller: controller.tabController, 
+        children: [
+        buildBody(context),
+        buildBody(context),
+      ]),
     );
   }
 

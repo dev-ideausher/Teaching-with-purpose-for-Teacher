@@ -34,9 +34,12 @@ class AssignmentsView extends GetView<AssignmentsController> {
                     crossAxisSpacing: 15,
                     mainAxisSpacing: 16),
                 itemCount: controller.subjectsController.classModel.value.data?.length,
-                itemBuilder: (context, index) => classContainer(
+                itemBuilder: (context, index) => 
+                classContainer(
                   controller.subjectsController.classModel.value.data?[index]?.className?? '', 
-                  () => Get.toNamed(Routes.SELECT_SUB)),
+                  () {
+                    Get.toNamed(Routes.SELECT_SUB);
+                  }),
               ),
             ],
           ),

@@ -135,6 +135,7 @@ class AddAssignmentController extends GetxController{
     }
   }
 
+  //-----------------------Choose Date-------------------------------
   void chooseDate(BuildContext context) async {
     DateTime? selectedDateValue;
     await showDialog(
@@ -169,15 +170,14 @@ class AddAssignmentController extends GetxController{
     }
   }
 
-
-
 //-----------------------Update Assignment-------------------------------
 
 Future<void> updateAssignment() async {
 
-
+    String? selectedSub =
+        route.Get.find<SubjectsController>().selectedSubject.value;
     var body = {
-      "subject": "english",
+      "subject": selectedSub,
       "class": "7-A",
       "title": titleController.text,
       "desc":decriptionController.text,

@@ -157,7 +157,7 @@ Widget timeTable(){
                   Text( data.subject?? '',
                       style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color:Get.context!.kLightTextColor)),
 
-                  Text( controller.classSchedule.value.data?[index]?.className?? '',
+                  Text("${controller.classSchedule.value.data?[index]?.className?? ''}-${controller.classSchedule.value.data?[index]?.section?? ''}",
                       style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color: Get.context!.kLightTextColor))
                 ],
               );

@@ -4,9 +4,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
+import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
+import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
 
 class LiveQuizzController extends GetxController {
@@ -42,17 +45,35 @@ class LiveQuizzController extends GetxController {
 //-----------------------Date Picker-------------------------------
 
   void chooseDate(BuildContext context) async {
-    final datePicker = await showDatePicker(
+    DateTime? selectedDateValue;
+    await showDialog(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now().subtract(const Duration(days: 365 * 100)),
-      lastDate: DateTime.now(),
+      barrierColor: Colors.white,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: SizedBox(
+            height: 450.kh,
+            width: double.infinity,
+            child: SfDateRangePicker(
+              selectionColor: context.kPrimary,
+              selectionMode: DateRangePickerSelectionMode.single,
+              onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
+                selectedDateValue = args.value;
+                if (selectedDateValue != null) {
+                  Get.back();
+                }
+              },
+              minDate: DateTime.now(),
+              maxDate: DateTime.now().add(const Duration(days: 30)),
+            ),
+          ),
+        );
+      },
     );
-    if (datePicker == null) {
-      return;
-    } else {
+
+    if (selectedDateValue != null) {
       final DateFormat formatter = DateFormat('yyyy-MM-dd');
-      selectedDate.value = formatter.format(datePicker);
+      selectedDate.value = formatter.format(selectedDateValue!);
       dateAndTimeController.value.text = selectedDate.value;
     }
   }
@@ -86,7 +107,7 @@ class LiveQuizzController extends GetxController {
             option2Controller.text,
             option3Controller.text,
             option4Controller.text
-          ]
+            ]
         },
       ]
     };
@@ -99,11 +120,11 @@ class LiveQuizzController extends GetxController {
         Get.toNamed(Routes.LIVE_QUIZZ_SUCESS);
 
       } else {
-        Utils.showMySnackbar(title: '${responce.statusCode}', desc: 'Error while adding quizz');
+        Utils.showMySnackbar( desc: 'Error while adding quizz');
       }
     } catch (error) {
       log('error....$error');
-      // Utils.showMySnackbar(desc: 'Error: $error');
+      Utils.showMySnackbar(desc: 'Error: $error');
     
     }
   }

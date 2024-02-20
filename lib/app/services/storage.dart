@@ -27,6 +27,14 @@ class GetStorageService extends GetxService {
 
   set id(String id) => _runData.write('id', id);
 
+  String get clockInTime => _runData.read('clockInTime') ?? '';
+
+  set clockInTime(String clockInTime) => _runData.write('clockInTime', clockInTime);
+
+  String get clockOutTime => _runData.read('clockOutTime') ?? '';
+
+  set clockOutTime(String clockOutTime) => _runData.write('clockOutTime', clockOutTime);
+
 
   
 

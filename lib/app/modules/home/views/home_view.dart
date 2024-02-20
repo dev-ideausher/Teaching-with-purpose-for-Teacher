@@ -151,7 +151,7 @@ class HomeView extends GetView<HomeController> {
 // custom clock widget
   clockWidget() {
     return SizedBox(
-      height: 192.kh,
+      height: 194.kh,
       width: 343.kw,
       child: Card(
         elevation: 0.2,

@@ -15,7 +15,7 @@ class GetStartedView extends GetView<OnBoardController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 142, 20, 32),
+        padding: const EdgeInsets.fromLTRB(20, 142, 20, 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -25,7 +25,7 @@ class GetStartedView extends GetView<OnBoardController> {
                   title: StringConstants.getStarted,
                   subTitle: StringConstants.getStartedText),
             ),
-            123.kheightBox,
+            80.kheightBox,
             TButton(
                 title: StringConstants.login,
                 onTap: () => Get.toNamed(Routes.LOGIN)),

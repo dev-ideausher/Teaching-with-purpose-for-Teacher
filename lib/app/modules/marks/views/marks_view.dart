@@ -125,10 +125,8 @@ class MarksView extends GetView<MarksController> {
                           controller.subjectsController.selectedSubject.value),
               onChanged: (SubjectsListModelData? value) {
                 log('Selected Subject: ${value?.subject}');
-                Future.delayed(Duration.zero, () {
                   controller.subjectsController.selectedSubject.value =
                       value?.subject ?? '';
-                });
               },
             ),
           ),
@@ -155,10 +153,8 @@ class MarksView extends GetView<MarksController> {
                       ))
                   .toList(),
               onChanged: (ClassModelData? value) {
-                Future.delayed(Duration.zero, () {
                   controller.subjectsController.selectedClass.value =
                       value?.className ?? '';
-                });
               },
             ),
           ),

@@ -62,4 +62,6 @@ class Endpoints {
 
   static const String reviseQuestions = "api/revisedquestion/save";
 
+  static const String markAttendence = "api/teacher/save";
+
 }
