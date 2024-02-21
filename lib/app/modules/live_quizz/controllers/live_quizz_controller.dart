@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:teaching_with_purpose/app/data/models/class_model.dart';
+import 'package:teaching_with_purpose/app/data/models/subjects_list_model.dart';
 import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
@@ -41,6 +43,22 @@ class LiveQuizzController extends GetxController {
   subjectsController.updateSubjectItems();
   subjectsController.updateClassItems();
   }
+
+  void selectSubject(SubjectsListModelData? value) {
+    if (value != null) {
+      subjectsController.selectedSubject.value = value.subject ?? '';
+      subjectsController.selectedSubjectId.value = value.Id ?? '';
+    }
+  }
+
+  void selectClass(ClassModelData? value) {
+    if (value != null) {
+      subjectsController.selectedClass.value =
+          "${value.className}-${value.section}";
+      subjectsController.selectedClassId.value = value.Id ?? '';
+    }
+  }
+
 
 //-----------------------Date Picker-------------------------------
 
@@ -93,8 +111,8 @@ class LiveQuizzController extends GetxController {
     }
 
     var body = {
-      "subject": selectedSub,
-      "class": selectedClass,
+      "subject": subjectsController.selectedSubjectId.value,
+      "class": subjectsController.selectedClassId.value,
       "date": dateAndTimeController.value.text,
       "instructions": instructionsController.text,
       "question": [

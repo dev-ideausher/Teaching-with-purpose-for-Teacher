@@ -31,20 +31,6 @@ class AddAssignmentController extends GetxController{
   Rx<AssignmentModel> assignmentModel = AssignmentModel().obs;
 
 
-//    @override
-//   void onInit() {
-//     getArguments();
-//     super.onInit();
-//   }
-
-//  void getArguments(){
-//   assignmentModel.value = route.Get.arguments;
-//   titleController.value = TextEditingValue(text: assignmentModel.value.title?? '');
-//   decriptionController.value = TextEditingValue(text: assignmentModel.value.desc?? '');
-//   markController.value = TextEditingValue(text: assignmentModel.value.totalMarks?? '');
-
-//  }
-
 
   Future<String?> pickFile() async {
     List<String> filePath =
@@ -88,7 +74,6 @@ class AddAssignmentController extends GetxController{
   }
 
 //-----------------------Add Assignment -------------------------------
-
   Future<void> addAssignment() async {
     if (titleController.text.isEmpty ||
         decriptionController.text.isEmpty ||
@@ -171,7 +156,6 @@ class AddAssignmentController extends GetxController{
   }
 
 //-----------------------Update Assignment-------------------------------
-
 Future<void> updateAssignment() async {
 
     String? selectedSub =

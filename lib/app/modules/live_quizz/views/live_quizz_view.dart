@@ -158,23 +158,24 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
                 'Select Subject',
                 style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
               items: controller.subjectsController.subjectItems
-                  .map((SubjectsListModelData? item) =>
-                      DropdownMenuItem<SubjectsListModelData?>(
+                  .map((SubjectsListModelData? item) {
+                    return DropdownMenuItem<SubjectsListModelData?>(
                         value: item,
                         child: Text(
                           item?.subject ?? '',
                           style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-                      ))
-                  .toList(),
+                      );
+                  }).toList(),
               value: controller.subjectsController.selectedSubject.value == ''
                   ? null
                   : controller.subjectsController.subjectItems.firstWhere(
                       (SubjectsListModelData? item) =>
                       item?.subject == controller.subjectsController.selectedSubject.value),
               onChanged: (SubjectsListModelData? value) {
-                log('Selected Subject: ${value?.subject}');
-                  controller.subjectsController.selectedSubject.value =
-                      value?.subject ?? '';
+                // log('Selected Subject: ${value?.subject}');
+                //   controller.subjectsController.selectedSubject.value =
+                //       value?.subject ?? '';
+              controller.selectSubject(value);
               },
 
             ),
@@ -184,31 +185,43 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
 
 // subject dropDawn
   Widget selectClassDropDawn() {
-    return Obx(() => Container(
-          decoration: BoxDecoration(
-              color: Get.context!.kWhite,
-              borderRadius: BorderRadius.circular(8)),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton2<ClassModelData?>(
-              isExpanded: true,
-              hint: Text(
-                  'Select Class',
-                  style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-              items: controller.subjectsController.classItems
-                  .map((ClassModelData? item) =>
-                      DropdownMenuItem<ClassModelData?>(
-                        value: item,
-                        child: Text(
-                          "${item?.className ?? ''}-${item?.section ?? ''}",
-                            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-                      ))
-                  .toList(),
-              onChanged: (ClassModelData? value) {
-                  controller.subjectsController.selectedClass.value =
-                      "${value?.className ?? ''}-${value?.section ?? ''}";
-              },
-            ),
+    return  Obx(() => Container(
+  decoration: BoxDecoration(
+    color: Get.context!.kWhite,
+    borderRadius: BorderRadius.circular(8),
+  ),
+  child: DropdownButtonHideUnderline(
+    child: DropdownButton2<ClassModelData?>(
+      isExpanded: true,
+      hint: Text(
+        'Select Class',
+        style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400),
+      ),
+      items: controller.subjectsController.classItems
+          .map((ClassModelData? item) {
+        return DropdownMenuItem<ClassModelData?>(
+          value: item,
+          child: Text(
+            "${item?.className ?? ''}-${item?.section ?? ''}",
+            style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400),
           ),
-        ));
+        );
+      }).toList(),
+      // value: controller.subjectsController.selectedClass.value != ''
+      //     ? controller.subjectsController.classItems.firstWhere(
+      //         (ClassModelData? item) =>
+      //             "${item?.className}-${item?.section}" ==
+      //             controller.subjectsController.selectedClass.value,
+      //       )
+      //     : null,
+      onChanged: (ClassModelData? value) {
+        // log('Selected Class: ${value?.className}-${value?.section}');
+        // controller.subjectsController.selectedClass.value =
+        //   "${value?.className}-${value?.section}";
+      controller.selectClass(value);
+      },
+    ),
+  ),
+));
   }
 }

@@ -28,7 +28,7 @@ class APIManager {
 
  static Future<Response> addReviseQuestions({required dynamic body}) async => await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true).post(Endpoints.reviseQuestions, data: jsonEncode(body));
 
- static Future<Response> markAttendence({required dynamic body}) async => await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true).post(Endpoints.markAttendence, data: jsonEncode(body));
+ static Future<Response> markAttendence({required dynamic body}) async => await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false).post(Endpoints.markAttendence, data: jsonEncode(body));
 
 ///Get API 
 

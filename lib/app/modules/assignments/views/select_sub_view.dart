@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,10 +9,13 @@ import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/constants/widget_constants.dart';
 import 'package:teaching_with_purpose/app/data/models/subjects_list_model.dart';
 import 'package:teaching_with_purpose/app/modules/assignments/controllers/assignments_controller.dart';
+import 'package:teaching_with_purpose/app/modules/home/controllers/home_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
+
+import '../../../../gen/assets.gen.dart';
 
 class SelectSubView extends GetView<AssignmentsController> {
   const SelectSubView({Key? key}) : super(key: key);
@@ -31,13 +35,16 @@ class SelectSubView extends GetView<AssignmentsController> {
               width: double.infinity,
               child: TabBar(
                 controller: controller.tabController,
-                indicatorWeight: 3,
                 indicatorColor: context.kPrimary,
                 labelColor: context.kPrimary,
                 unselectedLabelColor: context.kLightTextColor,
-                tabs: const [
-                  Tab(text: 'Assigned'),
-                  Tab(text: 'Submitted'),
+                tabs: [
+                  SizedBox(
+                    width: 171.kw,
+                    child: const Tab(text: 'Assigned')),
+                  SizedBox(
+                    width: 171.kw,
+                    child: const Tab(text: 'Submitted')),
                 ],
                 onTap: (index) {
                   controller.selctedTabIndex.value;
@@ -94,9 +101,7 @@ class SelectSubView extends GetView<AssignmentsController> {
                       item?.subject == controller.subjectsController.selectedSubject.value),
               onChanged: (SubjectsListModelData? value) {
                 log('Selected Subject: ${value?.subject}');
-                Future.delayed(Duration.zero, () {
-                  controller.subjectsController.selectedSubject.value = value?.subject ?? '';
-                });
+               controller.subjectsController.selectedSubject.value = value?.subject ?? '';
               },
             ),
           ),
@@ -113,7 +118,7 @@ class SelectSubView extends GetView<AssignmentsController> {
         children: [
          controller.selctedTabIndex.value == 0 ?
          assignedWidget():
-         const Text('build')
+         submittedWidget()
         ],
       ),
       ),
@@ -136,8 +141,8 @@ class SelectSubView extends GetView<AssignmentsController> {
       assignment: controller.assignmentsList.value.data?[index]?.title?? '', 
       dueDate: controller.assignmentsList.value.data?[index]?.dueDate?? '',
       onEdit: (){
-      //final data = controller.assignmentsList.value.data?[index];
-      // Get.offNamed(Routes.ADD_ASSIGNMENT, arguments: data);
+      final data = controller.assignmentsList.value.data?[index];
+      Get.offNamed(Routes.EDIT_ASSIGNMENT, arguments: data);
       }
      );
     },
@@ -146,7 +151,28 @@ class SelectSubView extends GetView<AssignmentsController> {
   ));
  } 
 
- Widget submittedWidget(){
-  return Column();
- }
+  Widget submittedWidget() {
+    return Column(
+      children: [
+      ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        separatorBuilder: (context, index) => 8.kheightBox, 
+        itemCount:Get.find<HomeController>().studentsmodel.value.data?.length?? 0,
+        itemBuilder: (context, index) {
+          return WidgetConstants.studentAssignmentCard(
+            image: Get.find<HomeController>().studentsmodel.value.data?[index]?.image == null?
+                  Assets.images.studImg1.image(height: 40.kh,width: 40.kw,fit: BoxFit.cover):
+                  CachedNetworkImage(imageUrl:Get.find<HomeController>().studentsmodel.value.data?[index]?.image?? ''),
+            name: Get.find<HomeController>().studentsmodel.value.data?[index]?.name?? '', 
+            rollNber: 'Roll No. ${Get.find<HomeController>().studentsmodel.value.data?[index]?.rollNumber?? ''}', 
+            onTap: (){
+              Get.toNamed(Routes.ADD_ASSIGNMENT_FEEDBACK);
+            }
+            );
+        },
+        )
+      ],
+    );
+  }
 }

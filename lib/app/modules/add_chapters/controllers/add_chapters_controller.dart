@@ -58,16 +58,16 @@ class AddChaptersController extends GetxController {
   }
 
 
-  void previewMode() {
-    isPreviewing.toggle();
-    if (isPreviewing.isTrue) {
-      previewChapterName.value = chapterNameController.text;
-      previewTopicName.value = topicNameController.text;
-      previewTopicDescription.value = topicDescriptionController.text;
-      previewSelectedFile.value = selectedFile.value;
-      previewSelectedPdf.value = selectedPdf.value;
-    }
-  }
+  // void previewMode() {
+  //   isPreviewing.toggle();
+  //   if (isPreviewing.isTrue) {
+  //     previewChapterName.value = chapterNameController.text;
+  //     previewTopicName.value = topicNameController.text;
+  //     previewTopicDescription.value = topicDescriptionController.text;
+  //     previewSelectedFile.value = selectedFile.value;
+  //     previewSelectedPdf.value = selectedPdf.value;
+  //   }
+  // }
 
 
 

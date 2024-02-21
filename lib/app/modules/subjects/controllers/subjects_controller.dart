@@ -15,7 +15,10 @@ class SubjectsController extends GetxController {
   RxList<ClassModelData?> classItems = <ClassModelData?>[].obs;
 
   RxString selectedSubject = 'English'.obs;
-  RxString selectedClass = '8-A'.obs;
+  RxString selectedClass = '8'.obs;
+
+  RxString selectedSubjectId = ''.obs;
+  RxString selectedClassId = ''.obs;
 
   @override
   void onInit() {
@@ -63,9 +66,9 @@ class SubjectsController extends GetxController {
     }
   }
 
-void updateSubjectItems() {
-  subjectItems.assignAll(subjectLists.value.data ?? []);
-}
+  void updateSubjectItems() {
+    subjectItems.assignAll(subjectLists.value.data ?? []);
+  }
 
   void updateClassItems() {
     classItems.assignAll(classModel.value.data ?? []);
