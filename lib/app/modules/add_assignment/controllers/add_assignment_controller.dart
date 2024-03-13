@@ -82,8 +82,8 @@ class AddAssignmentController extends GetxController{
       Utils.showMySnackbar(desc: 'Please fill all the fields');
       return;
     }
-    String? selectedSub =
-        route.Get.find<SubjectsController>().selectedSubject.value;
+
+    String? selectedSub = route.Get.find<SubjectsController>().selectedSubjectId.value;
 
     try {
       String? url = '';

@@ -87,21 +87,21 @@ class SelectSubView extends GetView<AssignmentsController> {
               hint: Text('Select Subject',
                     style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
               items: controller.subjectsController.subjectItems
-                  .map((SubjectsListModelData? item) =>
-                      DropdownMenuItem<SubjectsListModelData?>(
+                  .map((SubjectsListModelData? item) {
+                    return DropdownMenuItem<SubjectsListModelData?>(
                         value: item,
                         child: Text(
                           item?.subject ?? '',
                           style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-                      )).toList(),
+                      );
+                  }).toList(),
               value: controller.subjectsController.selectedSubject.value == ''
                   ? null
                   : controller.subjectsController.subjectItems.firstWhere(
                       (SubjectsListModelData? item) =>
                       item?.subject == controller.subjectsController.selectedSubject.value),
               onChanged: (SubjectsListModelData? value) {
-                log('Selected Subject: ${value?.subject}');
-               controller.subjectsController.selectedSubject.value = value?.subject ?? '';
+                 controller.selectSubject(value);
               },
             ),
           ),

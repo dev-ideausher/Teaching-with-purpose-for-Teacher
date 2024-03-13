@@ -30,6 +30,10 @@ class APIManager {
 
  static Future<Response> markAttendence({required dynamic body}) async => await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false).post(Endpoints.markAttendence, data: jsonEncode(body));
 
+ static Future<Response> addAssignmentFeedback({required dynamic body}) async => await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false).post(Endpoints.addAssignmentFeedback, data: jsonEncode(body));
+
+ 
+
 ///Get API 
 
 static Future<Response> getAllStudent() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.getStudents);  
@@ -57,6 +61,15 @@ static Future<Response> getClasses() async => await DioClient(Dio(), showSnakbar
 static Future<Response> getClassSchedule() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.timeTable);  
 
 static Future<Response> getAssignments() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.getAssignments); 
+
+static Future<Response> getAssignmentCompletion({required String studentId,String? subjectId}) async {String url = '${Endpoints.getAssignmentCompletion}/$studentId${subjectId != null ? '?subjectId=$subjectId' : ''}';
+return await DioClient(Dio(), isOverlayLoader: false, showSnakbar: true).get(url);} 
+
+static Future<Response> getPerformance({required String resultType, String? subject}) async {String url = '${Endpoints.getPerformance}?resultType=$resultType${subject != null ? '&subject=$subject' : ''}';
+return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(url);}
+
+static Future<Response> getCourseCompletion({required String studentId,String? subject}) async {String url = '${Endpoints.getCourseCompletion}/$studentId${subject != null ? '?subjectId=$subject' : ''}';
+return await DioClient(Dio(), isOverlayLoader: false, showSnakbar: true).get(url);}
 
 
 

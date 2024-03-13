@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:teaching_with_purpose/app/components/commom_loader.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_result_card.dart';
+import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
@@ -18,8 +20,11 @@ class AssignmentCompletionView extends GetView<AssignmentCompletionController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(preferredSize: Size.fromHeight(46.kh),
-       child: CustomAppBar(title: 'Assignment Completion',isBack: true)),
-      body: SingleChildScrollView(
+       child: CustomAppBar(title: 'Assignment Completion',isBack: true)
+      ),
+      body: Obx(() => controller.isLoading.value
+      ? const Loader()
+      : SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 40,horizontal: 16),
@@ -34,8 +39,10 @@ class AssignmentCompletionView extends GetView<AssignmentCompletionController> {
                 child: Stack(
                   children: [
                     Center(
-                        child: percentageIndicater(
-                            0.75, '75%', 'Assignment Performance', () {})),
+                    child: percentageIndicater(
+                     double.parse(controller.assignmentTracking.value.data?.percentageSubmitted?? '0')/100, 
+                    "${controller.assignmentTracking.value.data?.percentageSubmitted?? ''}%", 
+                    'Assignment Performance', () {})),
                     Align(
                       alignment: Alignment.topRight,
                       child: Assets.images.gpdEllipsLargeright.image(),
@@ -52,46 +59,35 @@ class AssignmentCompletionView extends GetView<AssignmentCompletionController> {
               'Assignment Submitted',
               style:TextStyleUtil.kText18_6(fontWeight: FontWeight.w600)),
             16.kheightBox,
-            CustomResultCard(
+              ListView.separated(
+                separatorBuilder: (context, index) => 8.kheightBox, 
+                itemCount: controller.assignmentTracking.value.data?.allAssignments?.length ?? 0,
+                itemBuilder: (context, index) => CustomResultCard(
                   svg1: Assets.svg.editPencil,
-                  title: 'Assignment 1',
-                  subtitle: 'Topic: Ordered Pair',
+                  title: 'Assignment',
+                  subtitle: "Topic : ${controller.assignmentTracking.value.data?.allAssignments?[index]?.assignmentId?.title ?? ''}",
                   text1: 'Marks obtained: ',
-                  text2: '23/30',
+                  text2: controller.assignmentTracking.value.data?.allAssignments?[index]?.assignmentId?.totalMarks ?? '',
                   svg2: Assets.svg.eye,
-                  svg3: Assets.svg.download),
-              8.kheightBox,
-            CustomResultCard(
-                  svg1: Assets.svg.editPencil,
-                  title: 'Assignment 1',
-                  subtitle: 'Topic: Ordered Pair',
-                  text1: 'Marks obtained: ',
-                  text2: '23/30',
-                  svg2: Assets.svg.eye,
-                  svg3: Assets.svg.download),
-              8.kheightBox, 
-            CustomResultCard(
-                  svg1: Assets.svg.editPencil,
-                  title: 'Assignment 1',
-                  subtitle: 'Topic: Ordered Pair',
-                  text1: 'Marks obtained: ',
-                  text2: '23/30',
-                  svg2: Assets.svg.eye,
-                  svg3: Assets.svg.download),                    
+                  svg3: Assets.svg.download,
+              ), 
+            ),                
             ],
           ),
         ),
       ),
+     )
     );
   }
 
   // display subjects
   Widget subjectsWidget() {
+  final subjectLists = Get.find<SubjectsController>().subjectLists.value.data;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          textAlign: TextAlign.center,
           'Subjects',
           style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
         ),
@@ -101,15 +97,17 @@ class AssignmentCompletionView extends GetView<AssignmentCompletionController> {
           child: ListView.separated(
               scrollDirection: Axis.horizontal,
               separatorBuilder: (context, index) => 16.kwidthBox,
-              itemCount: controller.subjectImage.length,
+              itemCount: subjectLists?.length ?? 0,
               itemBuilder: (context, index) => Obx(() {
-                    final isSelected =
-                        controller.selectedSubjectIndex.value == index;
+                    final isSelected = controller.selectedSubjectIndex.value == index;
+                    String? selectedSubjectId = subjectLists?[index]?.Id;
                     return InkWell(
-                      onTap: () =>
-                          controller.selectedSubjectIndex.value = index,
+                      onTap: () async{
+                        controller.selectedSubjectIndex.value = index;
+                        await controller.assignmentCompletionTracking(selectedSub: selectedSubjectId);
+                      },
                       child: CustomSubjectCardVertical(
-                        text: controller.subjectText[index],
+                        text: subjectLists?[index]?.subject ?? '',
                         color: isSelected ? context.kRed : context.kWhite,
                         svgImage: controller.subjectImage[index],
                       ),

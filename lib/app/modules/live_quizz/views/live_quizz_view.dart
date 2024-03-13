@@ -1,6 +1,5 @@
 
 
-import 'dart:developer';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +58,18 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
                       color: context.kPrimary,
                     ),
                   )),
-              32.kheightBox,
+              16.kheightBox,
+              Text(
+                'Duration of the quiz',
+                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
+              ),
+              16.kheightBox,
+              CustomTextField(
+                hint: 'Enter duration of the quiz',
+                textInputType: TextInputType.number,
+                controller: controller.questionsController,
+              ),
+              24.kheightBox,
               Text(
                 'Instructions',
                 style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
@@ -70,6 +80,11 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
                 controller: controller.instructionsController,
                 minLine: 6,
                 maxLines: 8,
+              ),
+              40.kheightBox,
+              Text(
+                'Add Questions',
+                style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
               ),
               24.kheightBox,
               Text(
@@ -221,7 +236,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
       controller.selectClass(value);
       },
     ),
-  ),
-));
+   ),
+  ));
   }
 }

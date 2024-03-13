@@ -16,6 +16,7 @@ import 'package:teaching_with_purpose/app/utils/utils.dart';
 
 class LiveQuizzController extends GetxController {
   var dateAndTimeController = TextEditingController().obs;
+  var quizdurationController  = TextEditingController().obs;
   var instructionsController = TextEditingController();
   var questionsController = TextEditingController();
   var option1Controller = TextEditingController();
@@ -48,20 +49,20 @@ class LiveQuizzController extends GetxController {
     if (value != null) {
       subjectsController.selectedSubject.value = value.subject ?? '';
       subjectsController.selectedSubjectId.value = value.Id ?? '';
+      log('Selected Subject ID:.... ${subjectsController.selectedSubjectId.value}');
     }
   }
 
   void selectClass(ClassModelData? value) {
     if (value != null) {
-      subjectsController.selectedClass.value =
-          "${value.className}-${value.section}";
+      subjectsController.selectedClass.value = "${value.className}-${value.section}";
       subjectsController.selectedClassId.value = value.Id ?? '';
+      log('Selected Class ID:.... ${subjectsController.selectedClassId.value}');
     }
   }
 
 
 //-----------------------Date Picker-------------------------------
-
   void chooseDate(BuildContext context) async {
     DateTime? selectedDateValue;
     await showDialog(
@@ -96,14 +97,14 @@ class LiveQuizzController extends GetxController {
     }
   }
 
- String? selectedClass = Get.find<SubjectsController>().selectedClass.value;
- String? selectedSub = Get.find<SubjectsController>().selectedSubject.value;
+//  String? selectedClass = Get.find<SubjectsController>().selectedClass.value;
+//  String? selectedSub = Get.find<SubjectsController>().selectedSubject.value;
 
 //-----------------------create Quiz-------------------------------
 
   Future<void> createQuiz() async {
     if (dateAndTimeController.value.text.isEmpty || instructionsController.value.text.isEmpty ||
-        questionsController.value.text.isEmpty ||  option1Controller.value.text.isEmpty ||
+        quizdurationController.value.text.isEmpty|| questionsController.value.text.isEmpty ||  option1Controller.value.text.isEmpty ||
         option2Controller.value.text.isEmpty ||option3Controller.value.text.isEmpty ||
         option4Controller.value.text.isEmpty || answerController.text.isEmpty || markController.text.isEmpty) {
       Utils.showMySnackbar(desc: 'Please fill all the fields');
@@ -134,9 +135,7 @@ class LiveQuizzController extends GetxController {
       final responce = await APIManager.createQuiz(body: body);
       if (responce.data['status'] == true) {
         log('responce ...${responce.data}');
-
         Get.toNamed(Routes.LIVE_QUIZZ_SUCESS);
-
       } else {
         Utils.showMySnackbar( desc: 'Error while adding quizz');
       }
@@ -152,6 +151,7 @@ class LiveQuizzController extends GetxController {
   void onClose() {
     super.onClose();
     dateAndTimeController.value.dispose();
+    questionsController.dispose();
     instructionsController.dispose();
     questionsController.dispose();
     option1Controller.dispose();

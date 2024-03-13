@@ -4,6 +4,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/data/models/assignments_list_model.dart';
+import 'package:teaching_with_purpose/app/data/models/class_model.dart';
+import 'package:teaching_with_purpose/app/data/models/subjects_list_model.dart';
 import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
@@ -31,6 +33,24 @@ class AssignmentsController extends GetxController with GetSingleTickerProviderS
     tabController.addListener(() => selctedTabIndex.value = tabController.index);
     await assignedAssignments();
  }
+
+
+   void selectSubject(SubjectsListModelData? value) {
+    if (value != null) {
+      subjectsController.selectedSubject.value = value.subject ?? '';
+      subjectsController.selectedSubjectId.value = value.Id ?? '';
+      log('Selected Subject ID:.... ${subjectsController.selectedSubjectId.value}');
+    }
+  }
+
+  void selectClass(ClassModelData? value) {
+    if (value != null) {
+      subjectsController.selectedClass.value = "${value.className}-${value.section}";
+      subjectsController.selectedClassId.value = value.Id ?? '';
+      log('Selected Class ID:.... ${subjectsController.selectedClassId.value}');
+    }
+  }
+
 
   //-----------------------assigned Assignment-------------------------------
 

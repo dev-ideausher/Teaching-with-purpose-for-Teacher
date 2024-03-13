@@ -168,6 +168,9 @@ class $AssetsSvgGen {
   /// File path: assets/svg/add_plus.svg
   SvgGenImage get addPlus => const SvgGenImage('assets/svg/add_plus.svg');
 
+  /// File path: assets/svg/add_small.svg
+  SvgGenImage get addSmall => const SvgGenImage('assets/svg/add_small.svg');
+
   /// File path: assets/svg/all_subjects.svg
   SvgGenImage get allSubjects =>
       const SvgGenImage('assets/svg/all_subjects.svg');
@@ -303,6 +306,7 @@ class $AssetsSvgGen {
         person,
         schedule,
         addPlus,
+        addSmall,
         allSubjects,
         arrowFwd,
         assignment,

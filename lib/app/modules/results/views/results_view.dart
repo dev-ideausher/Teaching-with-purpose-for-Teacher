@@ -90,8 +90,7 @@ Widget buildClassDropdawn() {
                       ))
                   .toList(),
               onChanged: (ClassModelData? value) {
-                  controller.subjectsController.selectedClass.value =
-                      value?.className ?? '';
+                controller.selectClass(value);
               },
             ),
           ),
@@ -124,9 +123,7 @@ Widget buildSubjectDropdawn() {
                           item?.subject ==
                           controller.subjectsController.selectedSubject.value),
               onChanged: (SubjectsListModelData? value) {
-                log('Selected Subject: ${value?.subject}');
-                  controller.subjectsController.selectedSubject.value =
-                      value?.subject ?? '';
+                controller.selectSubject(value);
               },
             ),
           ),

@@ -17,7 +17,8 @@ class SubjectsView extends GetView<SubjectsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(preferredSize: Size.fromHeight(46.kh),
-       child: CustomAppBar(title: 'Subjects',isBack: true)),
+       child: CustomAppBar(title: 'Subjects', isBack: true)
+    ),
       body: Obx(() => controller.isLoding.value?
       const Loader():
       SingleChildScrollView(
@@ -40,8 +41,7 @@ class SubjectsView extends GetView<SubjectsController> {
                         image: Assets.svg.mathsSmall, 
                         onTap: (){
                         final selectedSubject = controller.subjectLists.value.data?[index];
-                        Get.toNamed(
-                        Routes.CHAPTER,
+                        Get.toNamed(Routes.CHAPTER,
                       arguments: {
                         'subjectId': selectedSubject?.Id,
                         'subjectName':selectedSubject?.subject

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:teaching_with_purpose/app/components/commom_loader.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_chapterwise_card.dart';
+import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
@@ -17,8 +19,11 @@ class CourseCompletionView extends GetView<CourseCompletionController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(preferredSize: Size.fromHeight(46.kh),
-       child: CustomAppBar(title: 'Course Completion',isBack: true)),
-      body:SingleChildScrollView(
+       child: CustomAppBar(title: 'Course Completion', isBack: true)
+    ),
+      body: Obx(() => controller.isLoading.value
+      ? const Loader()
+      : SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
@@ -33,8 +38,11 @@ class CourseCompletionView extends GetView<CourseCompletionController> {
                 child: Stack(
                   children: [
                     Center(
-                        child: percentageIndicater(
-                            0.75, '75%', 'Course completion', () {})),
+                    child: percentageIndicater(
+                    double.parse(controller.courseCompletion.value.data?.overallPercentage ?? '0')/300, 
+                    "${controller.courseCompletion.value.data?.overallPercentage??''}%", 
+                    'Course completion', (){},
+                    )),
                     Align(
                       alignment: Alignment.topRight,
                       child: Assets.images.gpdEllipsLargeright.image(),
@@ -51,62 +59,40 @@ class CourseCompletionView extends GetView<CourseCompletionController> {
               'Chapter Wise',
               style:TextStyleUtil.kText18_6(fontWeight: FontWeight.w600)),
               16.kheightBox,
-              CustomChapterWiseCard(
+              ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              separatorBuilder: (context, index) => 8.kheightBox, 
+              itemCount: controller.courseCompletion.value.data?.chaptersWithProgress?.length??0,
+              itemBuilder: (context, index) => CustomChapterWiseCard(
                   img: Assets.svg.editPencil,
-                  text1: 'Chapter 1 : ',
-                  text2: 'Relations and Functions I',
-                  text3: 'Progress : 100%',
-                  widget:LinearPercentIndicator(
+                  text1: "${controller.courseCompletion.value.data?.chaptersWithProgress?[index]?.chapterDetails?.chapterName?? ''} :",
+                  text2: controller.courseCompletion.value.data?.chaptersWithProgress?[index]?.chapterDetails?.concept?? '',
+                  text3: "Progress : ${controller.courseCompletion.value.data?.chaptersWithProgress?[index]?.progress}",
+                  widget: LinearPercentIndicator(
                   animation: true,
                   width: 253.kw,
                   lineHeight: 4.kh,
-                  percent: 1,
+                  percent: double.parse(controller.courseCompletion.value.data?.chaptersWithProgress?[index]?.progress ?? '0')/100,
                   progressColor: Get.context!.kPrimary,
                 ),
               ),
-              8.kheightBox,
-              CustomChapterWiseCard(
-                  img: Assets.svg.editPencil,
-                  text1: 'Chapter 1 : ',
-                  text2: 'Relations and Functions I',
-                  text3: 'Progress : 100%',
-                  widget:LinearPercentIndicator(
-                  animation: true,
-                  width: 253.kw,
-                  lineHeight: 4.kh,
-                  percent: 1,
-                  progressColor: Get.context!.kPrimary,
-                ),
-              ),
-              8.kheightBox,
-              CustomChapterWiseCard(
-                  img: Assets.svg.editPencil,
-                  text1: 'Chapter 1 : ',
-                  text2: 'Relations and Functions I',
-                  text3: 'Progress : 100%',
-                  widget:LinearPercentIndicator(
-                  animation: true,
-                  width: 253.kw,
-                  lineHeight: 4.kh,
-                  percent: 1,
-                  progressColor: Get.context!.kPrimary,
-                ),
               ),
             ],
           ),
         ),
       ),
+     )
     );
   }
-
-
   // display subjects
   Widget subjectsWidget() {
+  final subjectLists = Get.find<SubjectsController>().subjectLists.value.data;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          textAlign: TextAlign.center,
           'Subjects',
           style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
         ),
@@ -116,16 +102,18 @@ class CourseCompletionView extends GetView<CourseCompletionController> {
           child: ListView.separated(
               scrollDirection: Axis.horizontal,
               separatorBuilder: (context, index) => 16.kwidthBox,
-              itemCount: controller.subjectImage.length,
+              itemCount: subjectLists?.length ?? 0,
               itemBuilder: (context, index) => Obx(() {
-                    final isSelected =
-                        controller.selectedSubjectIndex.value == index;
+                    final isSelected = controller.selectedSubjectIndex.value == index;
+                    String? selectedSubjectId = subjectLists?[index]?.Id;
                     return InkWell(
-                      onTap: () =>
-                          controller.selectedSubjectIndex.value = index,
+                      onTap: () async{
+                        controller.selectedSubjectIndex.value = index;
+                        await controller.courseCompletionTracking(selectedSub: selectedSubjectId);
+                      },
                       child: CustomSubjectCardVertical(
-                        text: controller.subjectText[index],
-                        color: isSelected ? context.kPrimary : context.kWhite,
+                        text: subjectLists?[index]?.subject ?? '',
+                        color: isSelected ? context.kRed : context.kWhite,
                         svgImage: controller.subjectImage[index],
                       ),
                     );
@@ -134,7 +122,6 @@ class CourseCompletionView extends GetView<CourseCompletionController> {
       ],
     );
   }
-
 //percentage indicater .........
   Widget percentageIndicater(
       double percent, String text1, String text2, void Function() onTap) {
@@ -159,8 +146,8 @@ class CourseCompletionView extends GetView<CourseCompletionController> {
               ),
               8.kheightBox,
               Text(
-                textAlign: TextAlign.center,
                 text2,
+                textAlign: TextAlign.center,
                 style: TextStyleUtil.kText12_4(fontWeight: FontWeight.w400),
               ),
             ],

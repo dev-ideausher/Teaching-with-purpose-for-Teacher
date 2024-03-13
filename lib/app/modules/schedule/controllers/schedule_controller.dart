@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:teaching_with_purpose/app/data/models/class_schedule_model.dart';
 import 'package:teaching_with_purpose/app/data/models/exam_sheet_model.dart';
-import 'package:teaching_with_purpose/app/data/models/time_table_model.dart';
+import 'package:teaching_with_purpose/app/data/models/days_table_model.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
 
@@ -13,11 +13,12 @@ class ScheduleController extends GetxController {
   Rx<ExamSheetModel> examsheetmodel = ExamSheetModel().obs;
   RxBool isLoding = false.obs;
   Rx<ClassScheduleModel> classSchedule = ClassScheduleModel().obs;
-  final RxList<TimeTableModel> mondayTable = <TimeTableModel>[].obs;
-  final RxList<TimeTableModel> tuesdayTable = <TimeTableModel>[].obs;
-  final RxList<TimeTableModel> wednesdayTable = <TimeTableModel>[].obs;
-  final RxList<TimeTableModel> thursdayTable = <TimeTableModel>[].obs;
-  final RxList<TimeTableModel> fridayTable = <TimeTableModel>[].obs;
+  final RxList<DaysTableModel> mondayTable = <DaysTableModel>[].obs;
+  final RxList<DaysTableModel> tuesdayTable = <DaysTableModel>[].obs;
+  final RxList<DaysTableModel> wednesdayTable = <DaysTableModel>[].obs;
+  final RxList<DaysTableModel> thursdayTable = <DaysTableModel>[].obs;
+  final RxList<DaysTableModel> fridayTable = <DaysTableModel>[].obs;
+
 
   @override
   void onInit() {
@@ -35,7 +36,7 @@ class ScheduleController extends GetxController {
   Future<void> teacherClassSchedule() async {
     isLoding(true);
     try {
-      final responce = await APIManager.getClassSchedule();
+      final responce = await APIManager.getClasses();
 
       if (responce.data['status'] == true) {
         clearTimetableLists();
@@ -44,7 +45,7 @@ class ScheduleController extends GetxController {
 
         for (final element in classSchedule.value.data!) {
           for (final data in element!.timeTable!) {
-            switch (data!.day!.toLowerCase()) {
+            switch (data.day!.toLowerCase()) {
               case 'monday':
                 mondayTable.add(data);
                 break;

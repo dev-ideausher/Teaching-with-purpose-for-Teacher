@@ -7,7 +7,7 @@ import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
 import 'package:teaching_with_purpose/gen/assets.gen.dart';
-import '../../../data/models/time_table_model.dart';
+import '../../../data/models/days_table_model.dart';
 import '../controllers/schedule_controller.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -106,7 +106,7 @@ class ScheduleView extends GetView<ScheduleController> {
 
 
 Widget timeTable(){
-    RxList<TimeTableModel>? selectedDayTable;
+    RxList<DaysTableModel>? selectedDayTable;
 
     switch (DateFormat('EEEE').format(controller.selectedDate.value)) {
       case 'Monday':
@@ -125,7 +125,7 @@ Widget timeTable(){
         selectedDayTable = controller.fridayTable;
         break;
       default:
-        selectedDayTable = <TimeTableModel>[].obs ;
+        selectedDayTable = <DaysTableModel>[].obs ;
     }
   return Column(
       children: [
@@ -144,20 +144,18 @@ Widget timeTable(){
         SizedBox(
           width: double.infinity,
           child: Column(
-            children: List.generate(
-              selectedDayTable.length,
-                (index) {
+            children: List.generate(selectedDayTable.length,(index) {
               final data = selectedDayTable![index];
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text( data.time?? '',
+                  Text( data.time?? '**',
                       style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color:Get.context!.kLightTextColor)),
 
-                  Text( data.subject?? '',
+                  Text( data.subject?.subject?? '**',
                       style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color:Get.context!.kLightTextColor)),
 
-                  Text("${controller.classSchedule.value.data?[index]?.className?? ''}-${controller.classSchedule.value.data?[index]?.section?? ''}",
+                  Text("${controller.classSchedule.value.data?[index]?.className?? ''}-${controller.classSchedule.value.data?[index]?.section?? '**'}",
                       style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color: Get.context!.kLightTextColor))
                 ],
               );

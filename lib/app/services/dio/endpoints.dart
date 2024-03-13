@@ -64,4 +64,12 @@ class Endpoints {
 
   static const String markAttendence = "api/teacher/save";
 
+  static const String addAssignmentFeedback = "api/assigmnentfeedback/save";
+
+  static const String getAssignmentCompletion= "api/assigmentsubmit/assignment-performance";
+
+  static const String getPerformance = "api/result/get";
+
+  static const String getCourseCompletion = "api/assigmentsubmit/percentage";
+
 }

@@ -152,9 +152,7 @@ static Widget assignedWidget(
   );
 }
 
-static Widget customLogoutDialog(
-{required BuildContext context,required VoidCallback onNoPressed,required VoidCallback onLogoutPressed,
-  }) {
+static Widget customLogoutDialog({required BuildContext context,required VoidCallback onNoPressed,required VoidCallback onLogoutPressed}) {
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
@@ -232,7 +230,7 @@ static Widget customLogoutDialog(
     );
   }
 
-static   rowWidget(String title, String subtitle, void Function() onTap) {
+ static rowWidget(String title, String subtitle, void Function() onTap) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -288,8 +286,122 @@ static   rowWidget(String title, String subtitle, void Function() onTap) {
       ),
     );
   }
-}
 
+  static Widget assignmentRowWidget({required void Function() onTap, required void Function() onDawnload}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 81),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              InkWell(onTap: onTap, child: Assets.svg.eye.svg(height: 20.kh,width: 20.kw)),
+              6.kwidthBox,
+              Text(
+                'View Assignment',
+                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,
+                color: Get.context!.kLightTextColor,
+                )),
+            ],
+          ),
+          12.kheightBox,
+          Row(
+            children: [
+              InkWell(onTap: onDawnload, child: Assets.svg.download.svg(height: 20.kh,width: 20.kw)),
+              6.kwidthBox,
+              Text(
+                'Download Assignment',
+                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,
+                color: Get.context!.kLightTextColor
+              )),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+static Widget studentSection({required Widget image,required String name, required String rolNumber, required String submitedOn}){
+  return SizedBox(
+    height: 94.kh,
+    width: double.infinity,
+    child: Padding(
+      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+      child: Row(
+             children: [
+             ClipRRect(
+              borderRadius: BorderRadius.circular(35),
+              child: image,
+             ),
+             16.kwidthBox,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name, 
+                      style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
+                    ),
+                    6.kheightBox,
+                    ReUsableRichText(
+                      text1: 'Roll No. : ', 
+                      text2: rolNumber, 
+                      style1: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400),
+                      style2: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,
+                              color: Get.context!.kLightTextColor), 
+                    ),
+                    6.kheightBox,
+                    ReUsableRichText(
+                      text1: 'Submitted on ', 
+                      text2: submitedOn, 
+                      style1: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400),
+                      style2: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,
+                              color: Get.context!.kLightTextColor), 
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
+        );
+       }
+
+  static Widget subjectViewHorizontal({required String subject,void Function()? onTap}){
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+            height: 56.kh,
+            width: 343.kw,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+              child: Row(
+                children: [
+                  Stack(
+                    children: [
+                      SizedBox(
+                        height: 40.kh,
+                        width: 40.kw,
+                        child: Center(
+                          child: Assets.svg.mathsSmall.svg(),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Assets.images.grupedEllipseSmall.image(),
+                      )
+                    ],
+                  ),
+                  16.kwidthBox,
+                  Text(
+                    subject,
+                    style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w500),
+                  )
+                ],
+              ),
+            ),
+          ),
+    );
+  }
+}
 
 
 

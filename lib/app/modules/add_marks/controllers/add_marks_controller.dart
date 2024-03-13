@@ -6,6 +6,7 @@ import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/app/services/global_services.dart';
+import 'package:teaching_with_purpose/app/services/storage.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
 
 import '../../../data/models/students_model.dart';
@@ -30,8 +31,8 @@ Rx<StudentsModelData> studentModel = StudentsModelData().obs;
     studentModel.value = Get.arguments;
  }
 
-     String? selectedSubject = Get.find<SubjectsController>().selectedSubject.value;
-     String? selectedClass = Get.find<SubjectsController>().selectedClass.value;
+     String? selectedSubject = Get.find<SubjectsController>().selectedSubjectId.value;
+     String? selectedClass = Get.find<SubjectsController>().selectedClassId.value;
 
 
 //-----------------------Add Marks-------------------------------
@@ -63,9 +64,9 @@ Future<void> addMarkstoStudent() async {
       log('${responce.data}');
         String markId = responce.data['data']['_id'] ?? '';
 
-        Get.find<GlobalData>().markId.value = markId;  
+        Get.find<GetStorageService>().markId = markId;  
 
-        //log('id..${Get.find<GlobalData>().markId.value}');   
+        //log('id..${Get.find<GetStorageService>().markId}');   
 
        Get.toNamed(Routes.BOTTOM_NAV);
 

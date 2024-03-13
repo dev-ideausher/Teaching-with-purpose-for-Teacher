@@ -7,6 +7,7 @@ import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/app/services/global_services.dart';
+import 'package:teaching_with_purpose/app/services/storage.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
 
 class AddResultsController extends GetxController {
@@ -30,9 +31,9 @@ class AddResultsController extends GetxController {
   }
 
 
-     String? selectedSubject = Get.find<SubjectsController>().selectedSubject.value;
-     String? selectedClass = Get.find<SubjectsController>().selectedClass.value;
-     String markId = Get.find<GlobalData>().markId.value;
+     String? selectedSubject = Get.find<SubjectsController>().selectedSubjectId.value;
+     String? selectedClass = Get.find<SubjectsController>().selectedClassId.value;
+     String markId = Get.find<GetStorageService>().markId;
 
 
 //-----------------------Post results-------------------------------
@@ -43,14 +44,14 @@ Future<void> postResults() async {
       return;
     }
     var body = {
-      "subject": "English",
-      "class": "8-A",
-      "studentId": "603bb054d9a7c8bcdc48a824",
-      "resultType": "yearly",
-      "markId": "603bb054d9a7c8bcdc48a825",
-      "topic": "Grammar",
-      "remarks": "Excellent performance!",
-      "performance": "excellent"
+      "subject": selectedSubject,
+      "class": selectedClass,
+      "studentId": studentsData.value.Id,
+      "resultType": selectedExamType.value,
+      "markId": markId,
+      "topic": topicController.text,
+      "remarks": remarksController.text,
+      "performance": selectedPerformance.value
     };
 
     try {

@@ -127,12 +127,6 @@ class AddQuestionsView extends GetView<AddQuestionsController> {
                 title: 'Add',
                 onTap: () {
                 controller.addQuestions();
-                  // if (controller.isPreviewing.isTrue) {
-                  //   controller.addQuestions();
-                  // } else {
-                  //   controller.togglePreviewMode();
-                  //   showPreviewPopup(context);
-                  // }
         }))
       ],
     );
@@ -143,9 +137,23 @@ class AddQuestionsView extends GetView<AddQuestionsController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Add Questions',
-          style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
+        Row(
+          children: [
+            Text(
+              'Add Questions',
+              style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
+            ),
+            const Spacer(),
+            Assets.svg.addSmall.svg(width: 16.kw, height: 16.kh),
+            GestureDetector(
+              onTap: (){},
+              child: Text(
+                'Add',
+                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,
+                color: Get.context!.kPrimary),
+              ),
+            ),
+          ],
         ),
         32.kheightBox,
         Text(
