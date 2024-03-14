@@ -60,6 +60,8 @@ class AssignmentCompletionView extends GetView<AssignmentCompletionController> {
               style:TextStyleUtil.kText18_6(fontWeight: FontWeight.w600)),
             16.kheightBox,
               ListView.separated(
+                shrinkWrap: true,
+                physics: const  NeverScrollableScrollPhysics(),
                 separatorBuilder: (context, index) => 8.kheightBox, 
                 itemCount: controller.assignmentTracking.value.data?.allAssignments?.length ?? 0,
                 itemBuilder: (context, index) => CustomResultCard(

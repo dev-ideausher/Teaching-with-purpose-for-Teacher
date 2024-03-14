@@ -7,6 +7,7 @@ import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/custom_button.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
+import 'package:teaching_with_purpose/gen/assets.gen.dart';
 
 import '../controllers/add_chapters_controller.dart';
 
@@ -35,10 +36,24 @@ class AddChaptersView extends GetView<AddChaptersController> {
                 controller: controller.chapterNameController,
               ),
             32.kheightBox,
-               Text(
-                'Add Concepts',
-                style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
+        Row(
+          children: [
+            Text(
+              'Add Concepts',
+              style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
+            ),
+             Spacer(),
+            Assets.svg.plusCircle.svg(),
+            GestureDetector(
+              onTap: (){},
+              child: Text(
+                'Add concepts',
+                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,
+                color: Get.context!.kPrimary),
               ),
+            ),
+          ],
+        ),
             32.kheightBox,
                Text(
                 'Name',

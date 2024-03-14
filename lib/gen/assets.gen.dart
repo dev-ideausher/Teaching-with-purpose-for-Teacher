@@ -279,6 +279,9 @@ class $AssetsSvgGen {
   /// File path: assets/svg/physics_red.svg
   SvgGenImage get physicsRed => const SvgGenImage('assets/svg/physics_red.svg');
 
+  /// File path: assets/svg/plus_circle.svg
+  SvgGenImage get plusCircle => const SvgGenImage('assets/svg/plus_circle.svg');
+
   /// File path: assets/svg/q_a.svg
   SvgGenImage get qA => const SvgGenImage('assets/svg/q_a.svg');
 
@@ -341,6 +344,7 @@ class $AssetsSvgGen {
         myClass,
         password,
         physicsRed,
+        plusCircle,
         qA,
         quiz,
         ratingOutline,

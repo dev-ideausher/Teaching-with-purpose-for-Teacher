@@ -42,7 +42,6 @@ Future<void> addMarkstoStudent() async {
       Utils.showMySnackbar(desc: 'Please fill the fields');
       return;
     }
-
       var body = {
         "subject": selectedSubject,
         "class": selectedClass,
@@ -71,7 +70,6 @@ Future<void> addMarkstoStudent() async {
        Get.toNamed(Routes.BOTTOM_NAV);
 
       Utils.showMySnackbar(desc: 'Marks Added Successfully');
-
       } else {
         Utils.showMySnackbar(desc: responce.data['message']);
       }

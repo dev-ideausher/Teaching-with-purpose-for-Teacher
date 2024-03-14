@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:teaching_with_purpose/app/data/models/class_model.dart';
+import 'package:teaching_with_purpose/app/data/models/quizz_question_model.dart';
 import 'package:teaching_with_purpose/app/data/models/subjects_list_model.dart';
 import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
@@ -25,11 +26,11 @@ class LiveQuizzController extends GetxController {
   var option4Controller = TextEditingController();
   var answerController = TextEditingController();
   var markController = TextEditingController();
+  List<QuizQuestion> quizQuestions = [];
 
 
   RxBool isLoding = false.obs;
   RxString selectedDate = ''.obs;
-
   final subjectsController = Get.find<SubjectsController>();
 
  @override
@@ -61,8 +62,7 @@ class LiveQuizzController extends GetxController {
     }
   }
 
-
-//-----------------------Date Picker-------------------------------
+  //-----------------------Date Picker-------------------------------
   void chooseDate(BuildContext context) async {
     DateTime? selectedDateValue;
     await showDialog(
@@ -97,17 +97,45 @@ class LiveQuizzController extends GetxController {
     }
   }
 
+ //-----------------------Add-new-quizz-------------------------------
+  void addNewQuestion() {
+  String newQuestionText = questionsController.text;
+  List<String> options = [
+    option1Controller.text,
+    option2Controller.text,
+    option3Controller.text,
+    option4Controller.text,
+  ];
+  int correctAnswerIndex = int.tryParse(answerController.text) ?? 0;
+  int marks = int.tryParse(markController.text) ?? 0;
+
+  QuizQuestion newQuestion = QuizQuestion(
+    questionText: newQuestionText,
+    options: options,
+    correctAnswerIndex: correctAnswerIndex,
+    marks: marks,
+  );
+
+  quizQuestions.add(newQuestion);
+
+    questionsController.clear();
+    option1Controller.clear();
+    option2Controller.clear();
+    option3Controller.clear();
+    option4Controller.clear();
+    answerController.clear();
+    markController.clear();
+  }
+
 //  String? selectedClass = Get.find<SubjectsController>().selectedClass.value;
 //  String? selectedSub = Get.find<SubjectsController>().selectedSubject.value;
 
 //-----------------------create Quiz-------------------------------
 
   Future<void> createQuiz() async {
-    if (dateAndTimeController.value.text.isEmpty || instructionsController.value.text.isEmpty ||
-        quizdurationController.value.text.isEmpty|| questionsController.value.text.isEmpty ||  option1Controller.value.text.isEmpty ||
-        option2Controller.value.text.isEmpty ||option3Controller.value.text.isEmpty ||
-        option4Controller.value.text.isEmpty || answerController.text.isEmpty || markController.text.isEmpty) {
-      Utils.showMySnackbar(desc: 'Please fill all the fields');
+    if (dateAndTimeController.value.text.isEmpty ||instructionsController.value.text.isEmpty ||
+        quizdurationController.value.text.isEmpty ||quizQuestions.isEmpty) {
+      Utils.showMySnackbar(desc: 'Please fill all the fields and add questions');
       return;
     }
 
@@ -116,19 +144,7 @@ class LiveQuizzController extends GetxController {
       "class": subjectsController.selectedClassId.value,
       "date": dateAndTimeController.value.text,
       "instructions": instructionsController.text,
-      "question": [
-        {
-          "questionText": questionsController.text,
-          "answer": int.parse(answerController.text),
-          "points": int.parse(markController.text),
-          "options": [
-            option1Controller.text,
-            option2Controller.text,
-            option3Controller.text,
-            option4Controller.text
-            ]
-        },
-      ]
+      "question": quizQuestions.map((question) => question.toJson()).toList(),
     };
 
     try {
@@ -137,19 +153,15 @@ class LiveQuizzController extends GetxController {
         log('responce ...${responce.data}');
         Get.toNamed(Routes.LIVE_QUIZZ_SUCESS);
       } else {
-        Utils.showMySnackbar( desc: 'Error while adding quizz');
+        Utils.showMySnackbar(desc: 'Error while adding quizz');
       }
     } catch (error) {
       log('error....$error');
-      Utils.showMySnackbar(desc: 'Error: $error');
-    
     }
   }
 
-
   @override
   void onClose() {
-    super.onClose();
     dateAndTimeController.value.dispose();
     questionsController.dispose();
     instructionsController.dispose();
@@ -160,5 +172,19 @@ class LiveQuizzController extends GetxController {
     option4Controller.dispose();
     answerController.dispose();
     markController.dispose();
+    super.onClose();
   }
 }
+// [
+//         {
+//           "questionText": questionsController.text,
+//           "answer": int.parse(answerController.text),
+//           "points": int.parse(markController.text),
+//           "options": [
+//             option1Controller.text,
+//             option2Controller.text,
+//             option3Controller.text,
+//             option4Controller.text
+//           ]
+//         },
+//       ]

@@ -41,7 +41,7 @@ class AssignmentCompletionController extends GetxController {
       final response = await APIManager.getAssignmentCompletion(studentId:id,subjectId: selectedSub);
       if (response.data['status'] == true) {
         assignmentTracking.value = AssignmentCompletionModel.fromJson(response.data);
-        //log('Assignment completion data...${response.data}');
+        log('Assignment completion data...${response.data}');
       } else {
         Utils.showMySnackbar(desc: 'Something went wrong');
       }

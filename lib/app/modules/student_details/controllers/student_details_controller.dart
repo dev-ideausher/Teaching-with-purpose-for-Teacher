@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/data/models/assignmet_completion_model.dart';
 import 'package:teaching_with_purpose/app/data/models/course_completion_model.dart';
+import 'package:teaching_with_purpose/app/data/models/exam_mark_model.dart';
 import 'package:teaching_with_purpose/app/data/models/students_model.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
@@ -12,6 +13,7 @@ class StudentDetailsController extends GetxController {
  Rx<StudentsModelData> studentsData = StudentsModelData().obs;
  Rx<CourseCompletionModel> courseCompletion = CourseCompletionModel().obs;
  Rx<AssignmentCompletionModel> assignmentTracking = AssignmentCompletionModel().obs;
+ Rx<ExamMarkModel> examMarkModel = ExamMarkModel().obs;
 
 
  @override
@@ -33,7 +35,7 @@ class StudentDetailsController extends GetxController {
       final responce = await APIManager.getCourseCompletion(studentId: id,subject:selectedSub );
       if (responce.data['status'] == true) {
         courseCompletion.value = CourseCompletionModel.fromJson(responce.data);
-        log('Course completion data...${responce.data}');
+        //log('Course completion data...${responce.data}');
         await assignmentCompletionTracking();
       } else {
         Utils.showMySnackbar(desc: 'Something went wrong');
@@ -53,6 +55,7 @@ class StudentDetailsController extends GetxController {
       if (response.data['status'] == true) {
         assignmentTracking.value = AssignmentCompletionModel.fromJson(response.data);
         //log('Assignment completion data...${response.data}');
+        await examMark();
       } else {
         Utils.showMySnackbar(desc: 'Something went wrong');
       }
@@ -62,5 +65,21 @@ class StudentDetailsController extends GetxController {
       isLoading(false);
     }
   }
-
+ 
+  Future<void> examMark() async {
+    isLoading(true);
+    try {
+      final response = await APIManager.getExamMark();
+      if (response.data['status'] == true) {
+        examMarkModel.value = ExamMarkModel.fromJson(response.data);
+        //log('examMark....${response.data}');
+      } else {
+        Utils.showMySnackbar(desc: 'Something went wrong');
+      }
+    } catch (e) {
+      log('e...**$e');
+    } finally {
+      isLoading(false);
+    }
+ }
 }

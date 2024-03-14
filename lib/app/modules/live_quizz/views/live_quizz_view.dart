@@ -82,9 +82,26 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
                 maxLines: 8,
               ),
               40.kheightBox,
+              Row(
+                children: [
+                  Text(
+                    'Add Questions',
+                    style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                  onTap: (){
+                    controller.addNewQuestion();
+                  },
+                  child: Assets.svg.plusCircle.svg()),
+              4.kwidthBox,
               Text(
-                'Add Questions',
-                style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
+                'Add',
+                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,
+                color: context.kPrimary,
+                ),
+              ),
+                ],
               ),
               24.kheightBox,
               Text(

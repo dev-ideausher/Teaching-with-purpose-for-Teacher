@@ -17,7 +17,8 @@ class ExamScoreView extends GetView<ExamScoreController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(preferredSize: Size.fromHeight(46.kh),
-       child: CustomAppBar(title: 'Exam Score',isBack: true)),
+       child: CustomAppBar(title: 'Exam Score', isBack: true)
+    ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -74,7 +75,6 @@ class ExamScoreView extends GetView<ExamScoreController> {
       ),
     );
   }
-
    // display subjects
   Widget subjectsWidget() {
     return Column(
@@ -93,11 +93,11 @@ class ExamScoreView extends GetView<ExamScoreController> {
               separatorBuilder: (context, index) => 16.kwidthBox,
               itemCount: controller.subjectImage.length,
               itemBuilder: (context, index) => Obx(() {
-                    final isSelected =
-                        controller.selectedSubjectIndex.value == index;
+                    final isSelected = controller.selectedSubjectIndex.value == index;
                     return InkWell(
-                      onTap: () =>
-                          controller.selectedSubjectIndex.value = index,
+                      onTap: () {
+                        controller.selectedSubjectIndex.value = index;
+                      },
                       child: CustomSubjectCardVertical(
                         text: controller.subjectText[index],
                         color: isSelected ? context.kRed : context.kWhite,
@@ -109,7 +109,6 @@ class ExamScoreView extends GetView<ExamScoreController> {
       ],
     );
   }
-
 
 //.....percentagewidget........
    Widget percentageIndicater(

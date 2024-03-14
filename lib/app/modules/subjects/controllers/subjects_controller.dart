@@ -10,13 +10,10 @@ class SubjectsController extends GetxController {
   RxBool isLoding = false.obs;
   Rx<SubjectsListModel> subjectLists= SubjectsListModel().obs;
   Rx<ClassModel> classModel = ClassModel().obs;
-
   RxList<SubjectsListModelData?> subjectItems = <SubjectsListModelData?>[].obs;
   RxList<ClassModelData?> classItems = <ClassModelData?>[].obs;
-
   RxString selectedSubject = 'English'.obs;
   RxString selectedClass = '8'.obs;
-
   RxString selectedSubjectId = ''.obs;
   RxString selectedClassId = ''.obs;
 
@@ -26,7 +23,6 @@ class SubjectsController extends GetxController {
     super.onInit();
   }
 
-
  //-----------------------List Subjects -------------------------------
 
   Future<void> getSubjects()async{
@@ -34,7 +30,7 @@ class SubjectsController extends GetxController {
     try {
       final responce = await APIManager.getSubjects();
       if (responce.statusCode == 200) {
-         log('subjects...${responce.data}');
+         //log('subjects...${responce.data}');
         subjectLists.value = SubjectsListModel.fromJson(responce.data);
         await getClasses();
       }else{

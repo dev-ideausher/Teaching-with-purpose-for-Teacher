@@ -62,11 +62,10 @@ static Future<Response> getClassSchedule() async => await DioClient(Dio(), showS
 
 static Future<Response> getAssignments() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.getAssignments); 
 
+static Future<Response> getExamMark() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.getMarks); 
+
 static Future<Response> getAssignmentCompletion({required String studentId,String? subjectId}) async {String url = '${Endpoints.getAssignmentCompletion}/$studentId${subjectId != null ? '?subjectId=$subjectId' : ''}';
 return await DioClient(Dio(), isOverlayLoader: false, showSnakbar: true).get(url);} 
-
-static Future<Response> getPerformance({required String resultType, String? subject}) async {String url = '${Endpoints.getPerformance}?resultType=$resultType${subject != null ? '&subject=$subject' : ''}';
-return await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(url);}
 
 static Future<Response> getCourseCompletion({required String studentId,String? subject}) async {String url = '${Endpoints.getCourseCompletion}/$studentId${subject != null ? '?subjectId=$subject' : ''}';
 return await DioClient(Dio(), isOverlayLoader: false, showSnakbar: true).get(url);}

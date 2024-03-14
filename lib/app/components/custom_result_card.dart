@@ -46,6 +46,7 @@ class CustomResultCard extends StatelessWidget {
                   4.kheightBox,
                   Text(
                     subtitle,
+                    maxLines: 1,
                     style: TextStyleUtil.kText14_4(
                         fontWeight: FontWeight.w400,
                         color: context.kLightTextColor),

@@ -134,7 +134,7 @@ class StudentDetailsView extends GetView<StudentDetailsController> {
              percent:  0.75, 
              percentText:  '75%', 
              trackingText:  'Exam score tracking',
-              onTap: (){ 
+             onTap: (){ 
               Get.toNamed(Routes.EXAM_SCORE);
             }),
             percentageIndicater(
@@ -228,19 +228,22 @@ class StudentDetailsView extends GetView<StudentDetailsController> {
         SizedBox(
           width: double.infinity,
           child: Column(
-            children: List.generate(6,
+            children: List.generate(controller.examMarkModel.value.data?.length?? 0,
                 (index) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text('Physics',
-                      style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color:Get.context!.kLightTextColor)),
+                  Text(controller.examMarkModel.value.data?[index]?.subject?.subject?? '',
+                      style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,
+                      color:Get.context!.kLightTextColor)),
         
-                  Text('A',
-                      style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color:Get.context!.kLightTextColor)),
+                  Text(controller.examMarkModel.value.data?[index]?.markId?.grade?? '',
+                      style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,
+                      color:Get.context!.kLightTextColor)),
         
-                  Text('88',
-                      style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,color: Get.context!.kLightTextColor))
+                  Text(controller.examMarkModel.value.data?[index]?.markId?.marks.toString() ?? '',
+                      style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,
+                      color: Get.context!.kLightTextColor))
                 ],
               );
             }),

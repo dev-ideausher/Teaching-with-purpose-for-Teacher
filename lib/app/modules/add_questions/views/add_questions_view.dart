@@ -66,9 +66,25 @@ class AddQuestionsView extends GetView<AddQuestionsController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Add Questions',
-          style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
+        Row(
+          children: [
+            Text(
+              'Add Questions',
+              style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
+            ),
+             Spacer(),
+            Assets.svg.plusCircle.svg(),
+            GestureDetector(
+              onTap: (){
+                controller.addMoreQuestions();
+              },
+              child: Text(
+                'Add',
+                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,
+                color: Get.context!.kPrimary),
+              ),
+            ),
+          ],
         ),
         32.kheightBox,
         Text(
@@ -90,22 +106,22 @@ class AddQuestionsView extends GetView<AddQuestionsController> {
         16.kheightBox,
         CustomTextField(
           hint: 'Options1',
-          controller: controller.options1,
+          controller: controller.options1Controller,
         ),
         8.kheightBox,
         CustomTextField(
           hint: 'Options2',
-          controller: controller.options2,
+          controller: controller.options2Controller,
         ),
         8.kheightBox,
         CustomTextField(
           hint: 'Options3',
-          controller: controller.options3,
+          controller: controller.options3Controller,
         ),
         8.kheightBox,
         CustomTextField(
           hint: 'Options4',
-          controller: controller.options4,
+          controller: controller.options4Controller,
         ),
         35.kheightBox,
         Text(
@@ -143,8 +159,8 @@ class AddQuestionsView extends GetView<AddQuestionsController> {
               'Add Questions',
               style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
             ),
-            const Spacer(),
-            Assets.svg.addSmall.svg(width: 16.kw, height: 16.kh),
+             Spacer(),
+            Assets.svg.plusCircle.svg(),
             GestureDetector(
               onTap: (){},
               child: Text(
