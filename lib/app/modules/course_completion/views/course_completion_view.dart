@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/components/commom_loader.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_chapterwise_card.dart';
+import 'package:teaching_with_purpose/app/modules/home/controllers/home_controller.dart';
 import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
@@ -87,7 +88,7 @@ class CourseCompletionView extends GetView<CourseCompletionController> {
   }
   // display subjects
   Widget subjectsWidget() {
-  final subjectLists = Get.find<SubjectsController>().subjectLists.value.data;
+  final subjectLists = Get.find<HomeController>().subjectLists.value.data;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

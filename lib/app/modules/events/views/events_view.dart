@@ -15,10 +15,12 @@ class EventsView extends GetView<EventsController> {
   const EventsView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final events = Get.find<HomeController>().eventModel.value.data;
     return Scaffold(
       appBar:PreferredSize(
           preferredSize: Size.fromHeight(46.kh),
-          child: CustomAppBar(title: 'Events', isBack: true)),
+          child: CustomAppBar(title: 'Events', isBack: true)
+    ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -27,26 +29,39 @@ class EventsView extends GetView<EventsController> {
             children: [
               selectMonthDropDawn(),
               32.kheightBox,
-             SizedBox(
-              height: 842.kh,
-              width: 343.kw,
-              child:ListView.separated(
-                      separatorBuilder:(context, index) => 8.kheightBox,
-                      itemCount: 1,
-                      itemBuilder: (context, index){
-                      String time = Get.find<HomeController>().eventModel.value.data?[index]?.date ?? '';
-                      String formattedTime = Get.find<HomeController>().formatTimestamp(time);
-                    return eventCardWidget(
-                    image: Get.find<HomeController>().eventModel.value.data?[index]?.image == null?
-                    Image.asset(Assets.images.eventimg1.path,height: 55.kh,width: 55.kw,fit: BoxFit.cover):
-                    CachedNetworkImage(imageUrl:Get.find<HomeController>().eventModel.value.data?[index]?.image?? '',height: 55.kh,width: 55.kw,fit: BoxFit.cover),
-                    title: Get.find<HomeController>().eventModel.value.data?[index]?.name ?? 'Sports Day',
-                    date: formattedTime,
-                    description: Get.find<HomeController>().eventModel.value.data?[index]?.desc ?? ''
-                  ); 
-                },
-               )
-             )
+            if (events != null && events.isNotEmpty)
+             ListView.separated(
+               shrinkWrap: true,
+               physics: const NeverScrollableScrollPhysics(),
+               separatorBuilder:(context, index) => 8.kheightBox,
+               itemCount: events.length ,
+               itemBuilder: (context, index){
+               String time = events[index]?.date ?? '';
+               String formattedTime = Get.find<HomeController>().formatTimestamp(time);
+               return eventCardWidget(
+               image: events[index]?.image == null
+               ? Image.asset(Assets.images.eventimg1.path,height: 55.kh,width: 55.kw, fit: BoxFit.cover)
+               : CachedNetworkImage(imageUrl:events[index]?.image ?? '',
+                 height: 55.kh,width: 55.kw,fit: BoxFit.cover,
+                ),
+                 title: events[index]?.name ?? '',
+                 date: formattedTime,
+                 description: events[index]?.desc ?? ''
+                 ); 
+               },
+              )
+              else
+                Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        'No Events Found !',
+                        style: TextStyleUtil.kText18_6(
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                )
             ],
           ),
         ),
@@ -58,8 +73,9 @@ class EventsView extends GetView<EventsController> {
   Widget selectMonthDropDawn() {
     return Obx(() => Container(
           decoration: BoxDecoration(
-              color: Get.context!.kWhite,
-              borderRadius: BorderRadius.circular(8)),
+          color: Get.context!.kWhite,
+          borderRadius: BorderRadius.circular(8),
+        ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton2<String>(
               isExpanded: true,
@@ -69,15 +85,17 @@ class EventsView extends GetView<EventsController> {
                     fontWeight: FontWeight.w400,
                     color: Get.context!.kLightTextColor),
               ),
-              items: controller.items
-                  .map((String item) =>
-                      DropdownMenuItem<String>(value: item, child: Text(item,style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400))))
-                  .toList(),
+              items: controller.items.map((String item){
+                return DropdownMenuItem<String>(value: item, 
+                  child: Text( item,style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)));
+              }).toList(),
               value: controller.selectedValue.value,
-              onChanged: (String? value) => controller.selectedMonth(value!),
-            ),
-          ),
-        ));
+              onChanged: (String? value) { 
+                controller.selectedMonth(value!);
+              },
+        ),
+      ),
+    ));
   }
 
 // event card Widget
@@ -92,7 +110,8 @@ class EventsView extends GetView<EventsController> {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: image),
+                child: image
+          ),
             16.kwidthBox,
             Expanded(
               child: Column(
@@ -123,4 +142,5 @@ class EventsView extends GetView<EventsController> {
       ),
     );
   }
+
 }

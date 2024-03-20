@@ -2,10 +2,6 @@ import 'package:get/get.dart';
 
 class EventsController extends GetxController {
   var selectedValue = 'January'.obs;
-
-
-
-
   final List<String> items = [
     'January',
     'Febuary',

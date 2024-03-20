@@ -27,9 +27,9 @@ class MyClassesView extends GetView<MyClassesController> {
           indicatorColor: context.kPrimary,
           labelColor: context.kPrimary,
           unselectedLabelColor: context.kLightTextColor,
-            tabs:  [
-              const Text('Students'), 
-              const Text("Subject(s)"),
+            tabs:  const [
+              Text('Students'), 
+              Text("Subject(s)"),
         ],
       onTap: (index) => controller.selctedTabIndex.value,
       ),
@@ -91,11 +91,11 @@ class MyClassesView extends GetView<MyClassesController> {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           separatorBuilder: (context, index) => 8.kheightBox, 
-          itemCount: Get.find<SubjectsController>().subjectLists.value.data?.length?? 0,
+          itemCount: Get.find<HomeController>().subjectLists.value.data?.length?? 0,
           itemBuilder: (context, index) => WidgetConstants.subjectViewHorizontal(
-            subject: Get.find<SubjectsController>().subjectLists.value.data?[index]?.subject?? '',
+            subject: Get.find<HomeController>().subjectLists.value.data?[index]?.subject?? '',
             onTap:(){
-            final selectedSubject = Get.find<SubjectsController>().subjectLists.value.data?[index];
+            // final selectedSubject = Get.find<SubjectsController>().subjectLists.value.data?[index];
             }
           ), 
         )

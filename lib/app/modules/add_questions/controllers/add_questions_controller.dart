@@ -25,7 +25,7 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
   var reviseOptions2 = TextEditingController();
   var reviseOptions3 = TextEditingController();
   var reviseOptions4 = TextEditingController();
-  List<ChapterQuestion> questions = [];
+  RxList<ChapterQuestion> questions = <ChapterQuestion>[].obs;
 
   @override
   void onInit() {
@@ -41,7 +41,8 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
      chapterId = arguments['chapterId'];
   }
 //-----------------------Add Question-------------------------------
-   void addMoreQuestions() {
+
+void addMoreQuestions() {
     String questionText = questionController.text;
     String solution = solutionController.text;
     List<String> options = [
@@ -56,7 +57,8 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
       options: options,
       solution: solution,
     );
-    questions.add(newQuestion);
+
+    questions.addAll([newQuestion]);
 
     questionController.clear();
     solutionController.clear();
@@ -79,7 +81,7 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
 
     try {
       final responce = await APIManager.createQuestion(body: body);
-      log('*****$body');
+      //log('*****$body');
       if (responce.data['status'] == true) {
         log('question responce...${responce.data}');
         Utils.showMySnackbar(desc: 'Question added sucessfully');
@@ -92,7 +94,7 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
     }
   }
 //-----------------------Revise-Question-------------------------------
-    void addMoreReviseQuestions() {
+void addMoreReviseQuestions() {
     String questionText = reviseQuestionController.text;
     String solution = reviseSolutionController.text;
     List<String> options = [
@@ -101,14 +103,14 @@ class AddQuestionsController extends GetxController with GetSingleTickerProvider
       reviseOptions3.text,
       reviseOptions4.text,
     ];
-    
+
     ChapterQuestion newQuestion = ChapterQuestion(
       questionText: questionText,
       options: options,
       solution: solution,
     );
 
-    questions.add(newQuestion);
+    questions.addAll([newQuestion]);
 
     reviseQuestionController.clear();
     reviseSolutionController.clear();

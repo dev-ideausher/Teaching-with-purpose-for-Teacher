@@ -298,6 +298,9 @@ class $AssetsSvgGen {
   /// File path: assets/svg/settings.svg
   SvgGenImage get settings => const SvgGenImage('assets/svg/settings.svg');
 
+  /// File path: assets/svg/speaker.svg
+  SvgGenImage get speaker => const SvgGenImage('assets/svg/speaker.svg');
+
   /// File path: assets/svg/subjects.svg
   SvgGenImage get subjects => const SvgGenImage('assets/svg/subjects.svg');
 
@@ -350,6 +353,7 @@ class $AssetsSvgGen {
         ratingOutline,
         result,
         settings,
+        speaker,
         subjects,
         upload
       ];

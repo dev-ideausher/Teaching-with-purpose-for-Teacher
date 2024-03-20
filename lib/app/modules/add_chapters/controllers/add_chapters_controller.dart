@@ -11,7 +11,7 @@ import 'package:path/path.dart' as path;
 import 'package:teaching_with_purpose/app/data/models/chapter_model.dart';
 import 'package:teaching_with_purpose/app/data/models/chapters_list_model.dart';
 import 'package:teaching_with_purpose/app/data/models/file_upload_model.dart';
-import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
+import 'package:teaching_with_purpose/app/modules/home/controllers/home_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
@@ -29,15 +29,15 @@ class AddChaptersController extends GetxController {
   Rx<FileUploadModel> fileUpload = FileUploadModel().obs;
   Rx<ChaptersModel> chapters = ChaptersModel().obs;
 
-  final subjectsController = Get.find<SubjectsController>();
+  final homeController = Get.find<HomeController>();
 
-  RxString previewChapterName = ''.obs;
-  RxString previewTopicName = ''.obs;
-  RxString previewTopicDescription = ''.obs;
-  RxString previewSelectedFile = ''.obs;
-  RxString previewSelectedPdf = ''.obs;
+  // RxString previewChapterName = ''.obs;
+  // RxString previewTopicName = ''.obs;
+  // RxString previewTopicDescription = ''.obs;
+  // RxString previewSelectedFile = ''.obs;
+  // RxString previewSelectedPdf = ''.obs;
 
-  RxBool isPreviewing = false.obs;
+  // RxBool isPreviewing = false.obs;
 
 
   @override
@@ -53,7 +53,7 @@ class AddChaptersController extends GetxController {
     subjectName = arguments['subjectName'];
     subjectId = arguments['subjectId'];
     log('id...$subjectId');
-    subjectsController.updateClassItems();
+    homeController.updateClassItems();
     await getChapters();
   }
 

@@ -86,7 +86,7 @@ class SelectSubView extends GetView<AssignmentsController> {
               isExpanded: true,
               hint: Text('Select Subject',
                     style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-              items: controller.subjectsController.subjectItems
+              items: controller.homeController.subjectItems
                   .map((SubjectsListModelData? item) {
                     return DropdownMenuItem<SubjectsListModelData?>(
                         value: item,
@@ -95,11 +95,11 @@ class SelectSubView extends GetView<AssignmentsController> {
                           style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
                       );
                   }).toList(),
-              value: controller.subjectsController.selectedSubject.value == ''
+              value: controller.homeController.selectedSubject.value == ''
                   ? null
-                  : controller.subjectsController.subjectItems.firstWhere(
+                  : controller.homeController.subjectItems.firstWhere(
                       (SubjectsListModelData? item) =>
-                      item?.subject == controller.subjectsController.selectedSubject.value),
+                      item?.subject == controller.homeController.selectedSubject.value),
               onChanged: (SubjectsListModelData? value) {
                  controller.selectSubject(value);
               },

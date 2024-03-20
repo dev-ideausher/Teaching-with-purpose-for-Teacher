@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
+import 'package:teaching_with_purpose/app/modules/add_marks/controllers/add_marks_controller.dart';
 import '../controllers/home_controller.dart';
 
 class HomeBinding extends Bindings {
@@ -8,9 +8,8 @@ class HomeBinding extends Bindings {
     Get.lazyPut<HomeController>(
       () => HomeController(),
     );
-    Get.put<SubjectsController>(
-      SubjectsController(),
-      permanent: true
+    Get.lazyPut<AddMarksController>(
+      () => AddMarksController(),
     );
   }
 

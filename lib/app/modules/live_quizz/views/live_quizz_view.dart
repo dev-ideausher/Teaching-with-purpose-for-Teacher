@@ -1,6 +1,8 @@
 
 
 
+import 'dart:developer';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -67,7 +69,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
               CustomTextField(
                 hint: 'Enter duration of the quiz',
                 textInputType: TextInputType.number,
-                controller: controller.questionsController,
+                controller: controller.quizzDurationController,
               ),
               24.kheightBox,
               Text(
@@ -89,16 +91,18 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
                     style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w500),
                   ),
                   Spacer(),
-                  GestureDetector(
-                  onTap: (){
-                    controller.addNewQuestion();
-                  },
-                  child: Assets.svg.plusCircle.svg()),
+                  Assets.svg.plusCircle.svg(),
               4.kwidthBox,
-              Text(
-                'Add',
-                style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,
-                color: context.kPrimary,
+              GestureDetector(
+                onTap: (){
+                log('onTaped....');
+                controller.addNewQuizz();
+                },
+                child: Text(
+                  'Add',
+                  style: TextStyleUtil.kText14_4(fontWeight: FontWeight.w400,
+                  color: context.kPrimary,
+                  ),
                 ),
               ),
                 ],
@@ -189,7 +193,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
               hint: Text(
                 'Select Subject',
                 style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-              items: controller.subjectsController.subjectItems
+              items: controller.homeController.subjectItems
                   .map((SubjectsListModelData? item) {
                     return DropdownMenuItem<SubjectsListModelData?>(
                         value: item,
@@ -198,14 +202,14 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
                           style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
                       );
                   }).toList(),
-              value: controller.subjectsController.selectedSubject.value == ''
+              value: controller.homeController.selectedSubject.value == ''
                   ? null
-                  : controller.subjectsController.subjectItems.firstWhere(
+                  : controller.homeController.subjectItems.firstWhere(
                       (SubjectsListModelData? item) =>
-                      item?.subject == controller.subjectsController.selectedSubject.value),
+                      item?.subject == controller.homeController.selectedSubject.value),
               onChanged: (SubjectsListModelData? value) {
                 // log('Selected Subject: ${value?.subject}');
-                //   controller.subjectsController.selectedSubject.value =
+                //   controller.homeController.selectedSubject.value =
                 //       value?.subject ?? '';
               controller.selectSubject(value);
               },
@@ -229,7 +233,7 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
         'Select Class',
         style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400),
       ),
-      items: controller.subjectsController.classItems
+      items: controller.homeController.classItems
           .map((ClassModelData? item) {
         return DropdownMenuItem<ClassModelData?>(
           value: item,
@@ -239,16 +243,16 @@ class LiveQuizzView extends GetView<LiveQuizzController> {
           ),
         );
       }).toList(),
-      // value: controller.subjectsController.selectedClass.value != ''
-      //     ? controller.subjectsController.classItems.firstWhere(
+      // value: controller.homeController.selectedClass.value != ''
+      //     ? controller.homeController.classItems.firstWhere(
       //         (ClassModelData? item) =>
       //             "${item?.className}-${item?.section}" ==
-      //             controller.subjectsController.selectedClass.value,
+      //             controller.homeController.selectedClass.value,
       //       )
       //     : null,
       onChanged: (ClassModelData? value) {
         // log('Selected Class: ${value?.className}-${value?.section}');
-        // controller.subjectsController.selectedClass.value =
+        // controller.homeController.selectedClass.value =
         //   "${value?.className}-${value?.section}";
       controller.selectClass(value);
       },

@@ -79,7 +79,7 @@ class ChapterView extends GetView<AddChaptersController>{
               isExpanded: true,
               hint: Text('Select Class',
                   style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-              items: controller.subjectsController.classItems
+              items: controller.homeController.classItems
                   .map((ClassModelData? item) =>
                       DropdownMenuItem<ClassModelData?>(
                         value: item,
@@ -87,7 +87,7 @@ class ChapterView extends GetView<AddChaptersController>{
                             style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),)).toList(),
                 onChanged: (ClassModelData? value) {
                 Future.delayed(Duration.zero, () {
-                  controller.subjectsController.selectedClass.value = value?.className ?? '';
+                  controller.homeController.selectedClass.value = value?.className ?? '';
                 log('${value?.className}');
                 });
               },

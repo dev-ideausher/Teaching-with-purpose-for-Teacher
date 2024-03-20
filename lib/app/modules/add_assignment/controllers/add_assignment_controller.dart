@@ -12,7 +12,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:teaching_with_purpose/app/data/models/assignment_model.dart';
 import 'package:teaching_with_purpose/app/data/models/file_upload_model.dart';
 import 'package:teaching_with_purpose/app/modules/assignments/controllers/assignments_controller.dart';
-import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
+import 'package:teaching_with_purpose/app/modules/home/controllers/home_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
@@ -83,7 +83,7 @@ class AddAssignmentController extends GetxController{
       return;
     }
 
-    String? selectedSub = route.Get.find<SubjectsController>().selectedSubjectId.value;
+    String? selectedSub = route.Get.find<HomeController>().selectedSubjectId.value;
 
     try {
       String? url = '';
@@ -159,10 +159,10 @@ class AddAssignmentController extends GetxController{
 Future<void> updateAssignment() async {
 
     String? selectedSub =
-        route.Get.find<SubjectsController>().selectedSubject.value;
+        route.Get.find<HomeController>().selectedSubject.value;
     var body = {
       "subject": selectedSub,
-      "class": "7-A",
+      "class": "8-A",
       "title": titleController.text,
       "desc":decriptionController.text,
       "totalMarks": markController.text,

@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:teaching_with_purpose/app/data/models/announcement_model.dart';
+import 'package:teaching_with_purpose/app/data/models/class_model.dart';
 import 'package:teaching_with_purpose/app/data/models/events_model.dart';
 import 'package:teaching_with_purpose/app/data/models/students_model.dart';
+import 'package:teaching_with_purpose/app/data/models/subjects_list_model.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
 
@@ -24,6 +26,14 @@ class HomeController extends GetxController {
   Rx<EventsModel> eventModel = EventsModel().obs;
   Rx<AnnouncementModel> announcement = AnnouncementModel().obs;
   Rx<StudentsModel> studentsmodel = StudentsModel().obs;
+  Rx<SubjectsListModel> subjectLists= SubjectsListModel().obs;
+  Rx<ClassModel> classModel = ClassModel().obs;
+  RxList<SubjectsListModelData?> subjectItems = <SubjectsListModelData?>[].obs;
+  RxList<ClassModelData?> classItems = <ClassModelData?>[].obs;
+  RxString selectedSubject = 'English'.obs;
+  RxString selectedClass = '8'.obs;
+  RxString selectedSubjectId = ''.obs;
+  RxString selectedClassId = ''.obs;
 
 
   List<String> time = ['Friday, 3:00 pm', 'Friday, 3:00 pm', 'Friday, 3:00 pm'];
@@ -132,8 +142,8 @@ class HomeController extends GetxController {
       final responce = await APIManager.getAllStudent();
       if (responce.statusCode == 200) {
         studentsmodel.value = StudentsModel.fromJson(responce.data);
-
         //log('studentslist..${responce.data}');
+        await getSubjects();
       } else {
         Utils.showMySnackbar(desc: responce.data['message']);
       }
@@ -142,6 +152,53 @@ class HomeController extends GetxController {
     } finally {
       isLoding(false);
     }
+  }
+
+ //-----------------------List Subjects -------------------------------
+
+  Future<void> getSubjects()async{
+    isLoding(true);
+    try {
+      final responce = await APIManager.getSubjects();
+      if (responce.statusCode == 200) {
+         log('subjects...${responce.data}');
+        subjectLists.value = SubjectsListModel.fromJson(responce.data);
+        await getClasses();
+      }else{
+        Utils.showMySnackbar(desc: responce.data['message']);
+      }
+    } catch (e) {
+     log('error..$e');
+    }finally{
+      isLoding(false);
+    }
+  }
+
+//-----------------------Get Class List-------------------------------
+
+  Future<void> getClasses()async{
+    isLoding(true);
+    try {
+      final responce = await APIManager.getClasses();
+      if (responce.statusCode == 200) {
+         //log('classes...${responce.data}');
+        classModel.value = ClassModel.fromJson(responce.data);
+      }else{
+      Utils.showMySnackbar(desc: responce.data['message']);
+      }
+    } catch (e) {
+     log('error..$e');
+    }finally{
+      isLoding(false);
+    }
+  }
+
+  void updateSubjectItems() {
+    subjectItems.assignAll(subjectLists.value.data ?? []);
+  }
+
+  void updateClassItems() {
+    classItems.assignAll(classModel.value.data ?? []);
   }
 
 }

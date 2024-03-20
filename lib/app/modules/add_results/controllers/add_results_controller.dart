@@ -3,10 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teaching_with_purpose/app/data/models/students_model.dart';
-import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
+import 'package:teaching_with_purpose/app/modules/home/controllers/home_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/dio/api_service.dart';
-import 'package:teaching_with_purpose/app/services/global_services.dart';
 import 'package:teaching_with_purpose/app/services/storage.dart';
 import 'package:teaching_with_purpose/app/utils/utils.dart';
 
@@ -31,8 +30,8 @@ class AddResultsController extends GetxController {
   }
 
 
-     String? selectedSubject = Get.find<SubjectsController>().selectedSubjectId.value;
-     String? selectedClass = Get.find<SubjectsController>().selectedClassId.value;
+     String? selectedSubject = Get.find<HomeController>().selectedSubjectId.value;
+     String? selectedClass = Get.find<HomeController>().selectedClassId.value;
      String markId = Get.find<GetStorageService>().markId;
 
 

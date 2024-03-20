@@ -5,7 +5,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:teaching_with_purpose/app/components/commom_loader.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_result_card.dart';
-import 'package:teaching_with_purpose/app/modules/subjects/controllers/subjects_controller.dart';
+import 'package:teaching_with_purpose/app/modules/home/controllers/home_controller.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
@@ -84,7 +84,7 @@ class AssignmentCompletionView extends GetView<AssignmentCompletionController> {
 
   // display subjects
   Widget subjectsWidget() {
-  final subjectLists = Get.find<SubjectsController>().subjectLists.value.data;
+  final subjectLists = Get.find<HomeController>().subjectLists.value.data;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

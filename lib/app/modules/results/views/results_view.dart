@@ -80,7 +80,7 @@ Widget buildClassDropdawn() {
               isExpanded: true,
               hint: Text('Select Class',
                   style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-              items: controller.subjectsController.classItems
+              items: controller.homeController.classItems
                   .map((ClassModelData? item) =>
                       DropdownMenuItem<ClassModelData?>(
                         value: item,
@@ -107,7 +107,7 @@ Widget buildSubjectDropdawn() {
               isExpanded: true,
               hint: Text('Select Subject',
                   style: TextStyleUtil.kText16_5(fontWeight: FontWeight.w400)),
-              items: controller.subjectsController.subjectItems
+              items: controller.homeController.subjectItems
                   .map((SubjectsListModelData? item) =>
                       DropdownMenuItem<SubjectsListModelData?>(
                         value: item,
@@ -116,12 +116,12 @@ Widget buildSubjectDropdawn() {
                                 fontWeight: FontWeight.w400)),
                       ))
                   .toList(),
-              value: controller.subjectsController.selectedSubject.value == ''
+              value: controller.homeController.selectedSubject.value == ''
                   ? null
-                  : controller.subjectsController.subjectItems.firstWhere(
+                  : controller.homeController.subjectItems.firstWhere(
                       (SubjectsListModelData? item) =>
                           item?.subject ==
-                          controller.subjectsController.selectedSubject.value),
+                          controller.homeController.selectedSubject.value),
               onChanged: (SubjectsListModelData? value) {
                 controller.selectSubject(value);
               },

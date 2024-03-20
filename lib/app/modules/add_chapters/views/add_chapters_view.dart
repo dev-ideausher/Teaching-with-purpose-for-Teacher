@@ -104,7 +104,7 @@ class AddChaptersView extends GetView<AddChaptersController> {
               showPickPdfBottomSheet();
           }),
           32.kheightBox,
-                TButton(title: controller.isPreviewing.isTrue ? 'Submit' : StringConstants.save, 
+                TButton(title: StringConstants.save, 
                 onTap: (){
                 controller.addChapter();
                 // if(controller.isPreviewing.isTrue){

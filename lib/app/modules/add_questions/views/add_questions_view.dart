@@ -55,7 +55,9 @@ class AddQuestionsView extends GetView<AddQuestionsController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         controller.selectedTabIndex.value == 0? questionWidgets(context): reviseQuestions(context)
+         controller.selectedTabIndex.value == 0
+         ? questionWidgets(context)
+         : reviseQuestions(context)
         ],
       )
     ),

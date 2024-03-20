@@ -5,12 +5,14 @@ import 'package:teaching_with_purpose/app/modules/home/controllers/home_controll
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
 import 'package:teaching_with_purpose/app/services/text_style_util.dart';
+import 'package:teaching_with_purpose/gen/assets.gen.dart';
 import '../controllers/announcements_controller.dart';
 
 class AnnouncementsView extends GetView<AnnouncementsController> {
   const AnnouncementsView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final announcement = Get.find<HomeController>().announcement.value.data;
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(46.kh),
@@ -26,32 +28,47 @@ class AnnouncementsView extends GetView<AnnouncementsController> {
                 'Today',
                 style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
               ),
-            16.kheightBox,
-            SizedBox(
-              height: 352.kh,
-              width: 343.kw,
-              child: ListView.separated(
-                    separatorBuilder: (context, index) => 8.kheightBox,
-                    itemCount: Get.find<HomeController>().announcement.value.data?.length??0,
-                    itemBuilder: (context, index) {
-                      String time = Get.find<HomeController>().announcement.value.data?[index]?.date ?? '';
-                      String formattedTime = Get.find<HomeController>().formatTimestamp(time);
-                      return annoucementWidget(
-                      name: Get.find<HomeController>().announcement.value.data?[index]?.name?? '', 
-                      desc: Get.find<HomeController>().announcement.value.data?[index]?.desc?? '', 
-                      time: formattedTime
-                  );
-              },
-            )),
-            20.kheightBox,
-              Text(
-                'Yesterday',
-                style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
-              ),
-            16.kheightBox,
-            annoucementWidget(name: '', desc: '', time: ''),
-            8.kheightBox, 
-            annoucementWidget(name: '', desc: '', time: '')      
+              16.kheightBox,
+              if (announcement != null && announcement.isNotEmpty)
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  separatorBuilder: (context, index) => 8.kheightBox,
+                  itemCount: announcement.length,
+                  itemBuilder: (context, index) {
+                    String time = announcement[index]?.date ?? '';
+                    String formattedTime =
+                        Get.find<HomeController>().formatTimestamp(time);
+                    return annoucementWidget(
+                      name: announcement[index]?.name ?? '',
+                      desc: announcement[index]?.desc ?? '',
+                      time: formattedTime,
+                    );
+                  },
+                )
+              else
+                Center(
+                  child: Column(
+                    children: [
+                      Assets.svg.speaker.svg(),
+                      16.kheightBox,
+                      Text(
+                        'No announcements Found!',
+                        style: TextStyleUtil.kText18_6(
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+              // 20.kheightBox,
+              //   Text(
+              //     'Yesterday',
+              //     style: TextStyleUtil.kText18_6(fontWeight: FontWeight.w600),
+              //   ),
+              // 16.kheightBox,
+              // annoucementWidget(name: '', desc: '', time: ''),
+              // 8.kheightBox,
+              // annoucementWidget(name: '', desc: '', time: '')
             ],
           ),
         ),
@@ -60,7 +77,8 @@ class AnnouncementsView extends GetView<AnnouncementsController> {
   }
 
 //
-  Widget annoucementWidget({required String name, required String desc, required String time}) {
+  Widget annoucementWidget(
+      {required String name, required String desc, required String time}) {
     return SizedBox(
       height: 82.kh,
       width: 343.kw,

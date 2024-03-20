@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:teaching_with_purpose/app/components/commom_loader.dart';
 import 'package:teaching_with_purpose/app/components/custom_appbar.dart';
 import 'package:teaching_with_purpose/app/components/custom_richtext.dart';
+import 'package:teaching_with_purpose/app/modules/home/controllers/home_controller.dart';
 import 'package:teaching_with_purpose/app/routes/app_pages.dart';
 import 'package:teaching_with_purpose/app/services/colors.dart';
 import 'package:teaching_with_purpose/app/services/responsive_size.dart';
@@ -15,13 +15,14 @@ class SubjectsView extends GetView<SubjectsController> {
   const SubjectsView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final homeController = Get.find<HomeController>();
     return Scaffold(
       appBar: PreferredSize(preferredSize: Size.fromHeight(46.kh),
        child: CustomAppBar(title: 'Subjects', isBack: true)
     ),
-      body: Obx(() => controller.isLoding.value?
-      const Loader():
-      SingleChildScrollView(
+      body: Obx(() => Get.find<HomeController>().isLoding.value
+      ? Center(child: CircularProgressIndicator(color: context.kPrimary))
+      : SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
           child: Column(
@@ -32,15 +33,15 @@ class SubjectsView extends GetView<SubjectsController> {
                 width: 343.kw,
                 child: ListView.separated(
                     separatorBuilder: (context, index) => 16.kheightBox,
-                    itemCount: controller.subjectLists.value.data?.length?? 0,
+                    itemCount: homeController.subjectLists.value.data?.length?? 0,
                     itemBuilder: (context, index) {
                       return subjectWidget(
-                        title: controller.subjectLists.value.data?[index]?.subject?? '',
+                        title: homeController.subjectLists.value.data?[index]?.subject?? '',
                         text1: '',
                         text2: '', 
                         image: Assets.svg.mathsSmall, 
                         onTap: (){
-                        final selectedSubject = controller.subjectLists.value.data?[index];
+                        final selectedSubject = homeController.subjectLists.value.data?[index];
                         Get.toNamed(Routes.CHAPTER,
                       arguments: {
                         'subjectId': selectedSubject?.Id,
